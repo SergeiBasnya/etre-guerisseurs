@@ -98,6 +98,16 @@ function isActive(href: string): boolean {
     if (panel) panel.hidden = open;
     document.body.style.overflow = open ? '' : 'hidden';
   });
+
+  // Sous-menus desktop : ouverture au survol et au clavier (classe .open).
+  document.querySelectorAll('.has-sub').forEach((li) => {
+    li.addEventListener('mouseenter', () => li.classList.add('open'));
+    li.addEventListener('mouseleave', () => li.classList.remove('open'));
+    li.addEventListener('focusin', () => li.classList.add('open'));
+    li.addEventListener('focusout', (e) => {
+      if (!li.contains(e.relatedTarget)) li.classList.remove('open');
+    });
+  });
 </script>
 
 <style>
@@ -213,8 +223,7 @@ function isActive(href: string): boolean {
     right: 0;
     height: 16px;
   }
-  .has-sub:hover .submenu,
-  .has-sub:focus-within .submenu {
+  .has-sub.open > .submenu {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
