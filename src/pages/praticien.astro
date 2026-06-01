@@ -1,14 +1,104 @@
 ---
 import InnerPage from '../layouts/InnerPage.astro';
-import Placeholder from '../components/Placeholder.astro';
+import SplitFeature from '../components/sections/SplitFeature.astro';
+import Timeline from '../components/sections/Timeline.astro';
+import IconList from '../components/sections/IconList.astro';
+import CtaBanner from '../components/sections/CtaBanner.astro';
 import { ROUTES, SITE } from '../consts';
+
+const parcours = [
+  {
+    date: 'Formation initiale',
+    title: 'Lettres & pédagogie',
+    text: "Maîtrise de Lettres Modernes (mention, Université d'Avignon) et D.U. de Formateur-Animateur.",
+  },
+  {
+    date: 'Depuis 2011',
+    title: 'Coaching & PNL',
+    text: "Certification au métier de coach et à l'accompagnement professionnel, Praticien PNL (Formation Évolution & Synergie, avec Gilles Roy). Création du Coaching d'Être.",
+  },
+  {
+    date: '2012 – 2015',
+    title: 'CAFE-CO, Avignon',
+    text: "Fondateur et animateur d'un Café-Coaching réunissant quinze coaches et praticiens, touchant plusieurs centaines de personnes.",
+  },
+  {
+    date: 'La rencontre',
+    title: 'Don Miguel & Don José Ruiz',
+    text: "Initié à la voie toltèque par Don Miguel Ruiz : « Tu es la vérité. La vérité te rend libre. » Invitation à poursuivre la transmission, avec la validation de Don José Ruiz, co-auteur du Cinquième Accord.",
+    highlight: true,
+  },
+  {
+    date: 'Cercles & jeu',
+    title: 'Formé par Olivier Clerc',
+    text: 'Animateur du Jeu des Accords Toltèques et des Cercles de Pardon, formé auprès d’Olivier Clerc.',
+  },
+  {
+    date: 'Magnétisme',
+    title: 'École des Guérisseurs',
+    text: 'Formé au magnétisme par Jean-Marie Bataille, puis par George Bergoz, fondateur de l’École des Guérisseurs.',
+  },
+  {
+    date: 'Depuis 2017',
+    title: 'Transmettre, partout et pour tous',
+    text: 'Stages dans la voie toltèque en France, au Maroc, en Suisse ; ateliers pour expliquer les Accords Toltèques aux enfants en écoles maternelles.',
+  },
+];
+
+const formations = [
+  { icon: 'spark', title: 'Coach certifié', text: 'Métier de coach & accompagnement professionnel.' },
+  { icon: 'circle', title: 'Praticien PNL', text: 'Formation Évolution & Synergie (Gilles Roy).' },
+  { icon: 'leaf', title: 'Formateur-Animateur', text: "Diplôme universitaire (D.U.)." },
+  { icon: 'heart', title: 'Voie toltèque', text: 'Initié par Don Miguel & Don José Ruiz.' },
+  { icon: 'hand', title: 'Magnétisme', text: 'École des Guérisseurs (George Bergoz).' },
+  { icon: 'moon', title: 'Cercles de Pardon', text: 'Formé par Olivier Clerc.' },
+];
 ---
 
 <InnerPage
   eyebrow="Le praticien"
-  h1={SITE.intervenant}
-  lede="Éclaireur, instructeur et accompagnateur dans la voie toltèque, formé par Don Miguel Ruiz. Un parcours au service de la transmission, du soin et de la liberté intérieure."
+  h1="Pierre-Alexandre Morales"
+  lede="Enseignant et formateur, éclaireur dans la voie toltèque. La transmission est mon cœur de métier."
+  description="Pierre-Alexandre Morales : enseignant, coach et magnétiseur, formé à la voie toltèque par Don Miguel et Don José Ruiz. Parcours, formations et approche."
   crumbs={[{ label: 'Le praticien', href: ROUTES.praticien }]}
+  bandImage="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=2000&auto=format&fit=crop"
 >
-  <Placeholder note="Biographie complète : parcours, formation (Don Miguel Ruiz), approche, valeurs, photo. Page clé de confiance (E-E-A-T) et signature des articles du blog. Schema Person." />
+  <SplitFeature
+    eyebrow="Mon approche"
+    title="Transmettre par <span class='em'>l'exemple</span>"
+    paragraphs={[
+      "Je suis enseignant et formateur, c'est mon cœur de métier. Coach de vie en Coaching d'Être — une approche relationnelle dynamique que j'ai conçue avec les Accords Toltèques comme principal outil d'accompagnement au changement.",
+      "Les Accords Toltèques, outil de connaissance de soi, de communication et d'exploration de la conscience, sont le support numéro un que j'utilise en coaching comme en formation : d'abord en autodidacte auprès du public durant cinq ans, puis formé par Olivier Clerc, Don Miguel et Don José Ruiz.",
+      "Mon intention : aider chacun, au travers de ma démarche d'éclaireur dans la voie toltèque, à réaliser son rêve de liberté et de bonheur personnel — partout et pour tous.",
+    ]}
+    image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1400&auto=format&fit=crop"
+    imageAlt="Pierre-Alexandre Morales"
+    bg="cream"
+  />
+
+  <Timeline
+    eyebrow="Parcours & formations"
+    title="Un chemin au service de <span class='em'>la transmission</span>"
+    entries={parcours}
+    bg="warm"
+  />
+
+  <IconList
+    eyebrow="Formations & certifications"
+    title="Des <span class='em'>repères</span> solides"
+    items={formations}
+    columns={3}
+    bg="cream"
+  />
+
+  <CtaBanner
+    eyebrow="Faire connaissance"
+    title="« C'est en vous aimant que vous changerez <span class='em'>le monde.</span> »"
+    text="Don Miguel & Don José Ruiz — Échangeons sur votre chemin."
+    ctaLabel="Prendre contact"
+    ctaHref={ROUTES.contact}
+    altLabel="Voir l'agenda"
+    altHref={ROUTES.agenda}
+    variant="ink"
+  />
 </InnerPage>

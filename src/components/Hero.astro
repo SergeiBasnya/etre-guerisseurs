@@ -1,5 +1,5 @@
 ---
-import { ANCHORS } from '../consts';
+import { ANCHORS, ROUTES } from '../consts';
 
 const HERO_IMG =
   'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=2400&auto=format&fit=crop';
@@ -14,13 +14,16 @@ const avatars = [
 <section class="hero" style={`--hero-img:url('${HERO_IMG}')`}>
   <div class="container">
     <div class="hero-content">
-      <p class="kicker">Cabinet de soin & d'accompagnement · Voie toltèque</p>
-      <h1>Le chemin vers <span class="em">soi</span> commence ici.</h1>
+      <p class="kicker">La voie du cœur · Enseignement · Accompagnement · Thérapies</p>
+      <h1>Être guérisseurs et <span class="em">artistes de sa vie</span>, pour servir la création.</h1>
       <p class="hero-sub">
-        Magnétisme, soins énergétiques et enseignements toltèques pour devenir le
-        créateur de sa vie et en faire une œuvre d'art.
+        Enseignement, accompagnement et thérapie brève — orientés transformation,
+        solution et maîtrise. Avec Pierre-Alexandre Morales.
       </p>
-      <a href={ANCHORS.stages} class="btn btn-light">Découvrir les stages</a>
+      <div class="hero-cta">
+        <a href={ROUTES.contact} class="btn btn-light">Prendre rendez-vous</a>
+        <a href={ROUTES.enseignement} class="btn btn-outline">Voir les cours & stages</a>
+      </div>
     </div>
   </div>
   <div class="reassure">
@@ -93,6 +96,21 @@ const avatars = [
     margin-bottom: 36px;
     opacity: 0.94;
     line-height: 1.55;
+  }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--white);
+  }
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--white);
+    transform: translateY(-2px);
   }
   .reassure {
     position: absolute;
