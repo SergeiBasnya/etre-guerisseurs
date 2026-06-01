@@ -1,0 +1,25 @@
+{
+  "name": "etre-guerisseurs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Site web Être Guérisseurs — cabinet de soin & d'accompagnement (voie toltèque), Pierre-Alexandre Morales",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "fetch:events": "node scripts/fetch-facebook-events.mjs",
+    "prebuild": "node scripts/fetch-facebook-events.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp"]
+  }
+}

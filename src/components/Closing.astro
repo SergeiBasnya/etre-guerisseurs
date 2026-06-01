@@ -1,0 +1,33 @@
+---
+import { CONTACT } from '../consts';
+const lieux = CONTACT.consultations.join(' & ');
+---
+
+<section class="closing" id="contact">
+  <div class="container">
+    <h2>Prêt à entamer votre <span class="em">aventure intérieure</span> ?</h2>
+    <p class="lede" style="margin-inline:auto;margin-bottom:14px">
+      Consultations à {lieux}, stages partout en France et à l'étranger.
+    </p>
+    <a href={CONTACT.phoneHref} class="btn">Prendre contact</a>
+  </div>
+</section>
+
+<style>
+  .closing {
+    text-align: center;
+    background: var(--bg-warm);
+  }
+  .closing h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.1;
+    margin-bottom: 28px;
+    max-width: 760px;
+    margin-inline: auto;
+  }
+  .closing .btn {
+    margin-top: 10px;
+  }
+</style>

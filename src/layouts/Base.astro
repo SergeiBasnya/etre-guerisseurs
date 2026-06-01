@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+import { SITE } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${SITE.name} — Cabinet de soin & d'accompagnement`,
+  description = SITE.baseline,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Polices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Mulish:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // État scroll du header + masquage de la topbar
+      const hdr = document.getElementById('hdr');
+      const topbar = document.getElementById('topbar');
+      addEventListener('scroll', () => {
+        const s = scrollY > 60;
+        hdr?.classList.toggle('scrolled', s);
+        topbar?.classList.toggle('hidden', s);
+      });
+
+      // Apparition au scroll
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }),
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll<HTMLElement>('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i % 3) * 90 + 'ms';
+        io.observe(el);
+      });
+    </script>
+  </body>
+</html>

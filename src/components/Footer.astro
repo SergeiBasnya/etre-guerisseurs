@@ -1,0 +1,99 @@
+---
+import { SITE, FOOTER_LINKS } from '../consts';
+const year = 2026;
+---
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          {SITE.nameParts.lead} <span class="em">{SITE.nameParts.mark}</span>
+        </div>
+        <p>{SITE.baseline}</p>
+      </div>
+      {
+        FOOTER_LINKS.map((col) => (
+          <div class="foot-col">
+            <h4>{col.title}</h4>
+            <ul>
+              {col.links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <div class="foot-bottom">
+      <span>© {year} {SITE.name} — {SITE.intervenant}</span>
+      <span>Tous droits réservés</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--ink);
+    color: rgba(250, 246, 240, 0.7);
+    padding: 80px 0 40px;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 54px;
+  }
+  .foot-brand {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    color: var(--bg);
+    margin-bottom: 18px;
+  }
+  .foot-brand .em {
+    color: var(--gold);
+  }
+  .foot-grid p {
+    font-size: 0.92rem;
+    max-width: 320px;
+  }
+  .foot-col h4 {
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .foot-col ul {
+    list-style: none;
+  }
+  .foot-col li {
+    margin-bottom: 11px;
+  }
+  .foot-col a {
+    font-size: 0.92rem;
+    transition: color 0.3s;
+  }
+  .foot-col a:hover {
+    color: var(--bg);
+  }
+  .foot-bottom {
+    border-top: 1px solid rgba(250, 246, 240, 0.14);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.82rem;
+    opacity: 0.6;
+  }
+  @media (max-width: 900px) {
+    .foot-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

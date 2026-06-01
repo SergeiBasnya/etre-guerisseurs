@@ -1,0 +1,102 @@
+---
+const VALUES = [
+  {
+    num: '01',
+    title: 'Groupes intimistes',
+    text: "Des cercles à taille humaine pour des échanges profonds, personnalisés et un accompagnement sur mesure.",
+  },
+  {
+    num: '02',
+    title: 'Au contact des éléments',
+    text: 'Des stages en immersion dans la nature, où la pratique rencontre la force des lieux.',
+  },
+  {
+    num: '03',
+    title: 'Une transmission vivante',
+    text: "Un équilibre entre sagesse ancestrale toltèque et outils contemporains d'accompagnement.",
+  },
+];
+---
+
+<section class="values">
+  <div class="container">
+    <p class="eyebrow reveal" style="color:var(--gold)">Notre approche</p>
+    <h2 class="section-title reveal">
+      Vivre en accord avec sa <span class="em">nature</span>
+    </h2>
+    <p class="lede reveal">
+      Chaque rencontre est une invitation à ralentir, à revenir à l'essentiel et à
+      transmettre des enseignements qui nous permettent de devenir le créateur de
+      sa vie.
+    </p>
+    <div class="vals">
+      {
+        VALUES.map((v) => (
+          <div class="val reveal">
+            <div class="num">{v.num}</div>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .values {
+    background: var(--ink);
+    color: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .values::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(199, 154, 78, 0.18), transparent 70%);
+  }
+  .values :global(.section-title) {
+    color: var(--bg);
+  }
+  .values :global(.lede) {
+    color: rgba(250, 246, 240, 0.7);
+  }
+  .vals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 44px;
+    margin-top: 60px;
+  }
+  .val {
+    padding-top: 24px;
+    border-top: 1px solid rgba(250, 246, 240, 0.18);
+  }
+  .val .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .val h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  .val p {
+    color: rgba(250, 246, 240, 0.65);
+    font-size: 0.96rem;
+  }
+  @media (max-width: 900px) {
+    .vals {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

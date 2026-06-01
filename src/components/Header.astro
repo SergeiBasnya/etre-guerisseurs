@@ -1,0 +1,104 @@
+---
+import { SITE, NAV } from '../consts';
+---
+
+<header id="hdr">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      {SITE.nameParts.lead} <span class="mark">{SITE.nameParts.mark}</span>
+    </a>
+    <nav>
+      <ul>
+        {
+          NAV.map((item) => (
+            <li>
+              <a href={item.href} class={'cta' in item && item.cta ? 'nav-cta' : ''}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: fixed;
+    top: 42px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 14px 0;
+    transition: all 0.4s ease;
+    background: transparent;
+  }
+  header.scrolled {
+    top: 0;
+    background: rgba(250, 246, 240, 0.94);
+    backdrop-filter: blur(12px);
+    padding: 13px 0;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    transition: color 0.4s;
+  }
+  .logo .mark {
+    font-style: italic;
+    color: var(--gold);
+  }
+  header.scrolled .logo {
+    color: var(--ink);
+  }
+  nav ul {
+    display: flex;
+    gap: 34px;
+    list-style: none;
+    align-items: center;
+  }
+  nav a {
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+  header.scrolled nav a {
+    color: var(--ink-soft);
+  }
+  nav a:hover {
+    color: var(--gold);
+  }
+  .nav-cta {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 9px 20px;
+    border-radius: 30px;
+    transition: all 0.3s;
+  }
+  header.scrolled .nav-cta {
+    border-color: var(--terra);
+    color: var(--terra);
+  }
+  .nav-cta:hover {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: var(--white) !important;
+  }
+  @media (max-width: 900px) {
+    nav ul {
+      display: none;
+    }
+  }
+</style>

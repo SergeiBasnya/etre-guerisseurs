@@ -1,0 +1,36 @@
+{
+  "source": "fallback",
+  "updatedAt": null,
+  "events": [
+    {
+      "id": "local-1",
+      "day": "29",
+      "month": "Mai",
+      "title": "Stage AIMER — Stage d'été sur l'Amour",
+      "location": "Oasis Lou Garoun, Provence",
+      "price": "350€",
+      "free": false,
+      "url": "#contact"
+    },
+    {
+      "id": "local-2",
+      "day": "27",
+      "month": "Juin",
+      "title": "Apprendre & maîtriser les Accords Toltèques",
+      "location": "7 av. de Verdun, Nyons",
+      "price": "55€",
+      "free": false,
+      "url": "#contact"
+    },
+    {
+      "id": "local-3",
+      "day": "07",
+      "month": "Nov",
+      "title": "Retraite spirituelle au Costa Rica",
+      "location": "San José, Costa Rica",
+      "price": "Gratuit",
+      "free": true,
+      "url": "#contact"
+    }
+  ]
+}

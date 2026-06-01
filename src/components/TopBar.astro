@@ -1,0 +1,102 @@
+---
+import { SOCIALS, CONTACT } from '../consts';
+---
+
+<div class="topbar" id="topbar">
+  <div class="socials">
+    <a href={SOCIALS.instagram} aria-label="Instagram">
+      <svg viewBox="0 0 24 24"
+        ><path
+          d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.3.07 1.68.07 4.9s0 3.6-.07 4.9c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.3.06-1.68.07-4.9.07s-3.6 0-4.9-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.4 2.21 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.5 0-4.74.07-.9.04-1.38.19-1.7.31-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.12.32-.27.8-.31 1.7C3.43 8.5 3.42 8.85 3.42 12s0 3.5.07 4.74c.04.9.19 1.38.31 1.7.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.12.8.27 1.7.31 1.24.06 1.59.07 4.74.07s3.5 0 4.74-.07c.9-.04 1.38-.19 1.7-.31.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.12-.32.27-.8.31-1.7.06-1.24.07-1.59.07-4.74s0-3.5-.07-4.74c-.04-.9-.19-1.38-.31-1.7a2.85 2.85 0 0 0-.69-1.06 2.85 2.85 0 0 0-1.06-.69c-.32-.12-.8-.27-1.7-.31C15.5 4 15.15 4 12 4zm0 3.06A4.94 4.94 0 1 1 12 16.94 4.94 4.94 0 0 1 12 7.06zm0 8.14A3.2 3.2 0 1 0 12 8.8a3.2 3.2 0 0 0 0 6.4zm6.3-8.34a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0z"
+        ></path></svg
+      >
+    </a>
+    <a href={SOCIALS.facebook} aria-label="Facebook">
+      <svg viewBox="0 0 24 24"
+        ><path
+          d="M13.5 21v-8.2h2.76l.41-3.2H13.5V7.55c0-.93.26-1.56 1.59-1.56h1.7V3.13c-.3-.04-1.3-.13-2.48-.13-2.45 0-4.13 1.5-4.13 4.25v2.35H7.4v3.2h2.78V21h3.32z"
+        ></path></svg
+      >
+    </a>
+    <a href={`mailto:${CONTACT.email}`} aria-label="Email">
+      <svg viewBox="0 0 24 24"
+        ><path
+          d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.5L4.2 7h15.6L12 12.5zM4 8.3V17h16V8.3l-7.4 5.2a1 1 0 0 1-1.2 0L4 8.3z"
+        ></path></svg
+      >
+    </a>
+  </div>
+  <a href="#stages" class="center">Découvrez nos stages en petits groupes</a>
+  <a href={CONTACT.phoneHref} class="phone">
+    <svg viewBox="0 0 24 24"
+      ><path
+        d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.37 2.3.57 3.5.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.57 3.5a1 1 0 0 1-.24 1l-2.2 2.3z"
+      ></path></svg
+    >{CONTACT.phone}
+  </a>
+</div>
+
+<style>
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 32px;
+    font-size: 0.8rem;
+    color: var(--white);
+    background: var(--ink);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .topbar.hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+  .socials {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .socials a {
+    opacity: 0.85;
+    transition: opacity 0.3s;
+    display: flex;
+  }
+  .socials a:hover {
+    opacity: 1;
+  }
+  .socials svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+  }
+  .center {
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 500;
+    opacity: 0.95;
+  }
+  .phone {
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .phone svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+  @media (max-width: 900px) {
+    .center {
+      display: none;
+    }
+  }
+</style>
