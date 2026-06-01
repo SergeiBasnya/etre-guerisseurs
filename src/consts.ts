@@ -1,20 +1,29 @@
 /**
  * Configuration globale + architecture d'information.
  * Point unique de vérité : coordonnées, navigation, routes, footer, SEO.
- * Modifier ici se répercute partout (header, footer, fil d'Ariane).
  *
- * Arborescence validée (audit plume, refonte multi-pages) :
+ * Arborescence (contre-proposition pro, à partir du contenu client) :
  *   Accueil
- *   Soins & accompagnement ▾  → Soins énergétiques · Accompagnement & coaching
- *   Stages & formations ▾     → Stages & retraites · Formations à distance
- *   La voie toltèque ▾        → Accords toltèques · Cercles de pardon
- *   Agenda · Blog · Le praticien · Contact (CTA)
- *   Transverses : Nyons/Avignon/Nîmes, Tarifs, Témoignages, FAQ, Légal
+ *   Enseignement ▾        → Cours · Stages · Formations · Retraites (sections ancrées)
+ *   Accompagnement ▾      → Coaching d'Être · Écoute · Pardon · Marches
+ *   Soins & thérapies ▾   → Magnétisme · Soins énergétiques
+ *   Agenda · Le praticien · Blog · Contact (CTA)
+ *   Transverses : Témoignages, Mentions légales, Confidentialité
+ *
+ * Le SEO thématique toltèque (accords, cercles de pardon, médecine toltèque)
+ * vit dans le BLOG sous forme d'articles piliers. Le SEO local est porté par
+ * la page Contact + schema LocalBusiness (areaServed), pas par des pages-villes.
  */
 
 export const SITE = {
   name: 'Être Guérisseurs',
   nameParts: { lead: 'Être', mark: 'Guérisseurs' },
+  // Slogan / titre général voulu par le client
+  tagline:
+    'Être guérisseurs et artistes (créateurs) de sa vie, pour servir la création.',
+  subtitle: 'La voie du cœur',
+  // Triptyque de positionnement (tags accueil)
+  pillars: ['Enseignement', 'Accompagnement', 'Thérapies'],
   baseline:
     "Cabinet de soin et d'accompagnement, animation de stages et d'ateliers de formation dans la voie toltèque.",
   intervenant: 'Pierre-Alexandre Morales',
@@ -26,13 +35,17 @@ export const CONTACT = {
   phone: '06 60 808 474',
   phoneHref: 'tel:+33660808474',
   email: 'contact@etreguerisseurs.com',
+  // Nouvelle adresse (changement confirmé)
   address: {
-    street: '7 Avenue de Verdun',
-    zip: '26110',
-    city: 'Nyons',
+    street: "3 avenue de l'ancienne gare",
+    zip: '26170',
+    city: 'Mollans-sur-Ouvèze',
     country: 'France',
   },
-  consultations: ['Nîmes', 'Avignon'],
+  // Lieux de consultation / d'intervention (pour le texte + schema areaServed)
+  areaServed: ['Nyons', 'Avignon', 'Drôme', 'Vaucluse', 'Provence'],
+  // Consultations à distance
+  remote: 'France entière et pays francophones, en visio ou par téléphone',
 } as const;
 
 export const SOCIALS = {
@@ -47,34 +60,34 @@ export const SOCIALS = {
 export const ROUTES = {
   home: '/',
 
-  soins: '/soins-accompagnement/',
-  soinsEnergetiques: '/soins-accompagnement/soins-energetiques/',
-  magnetisme: '/soins-accompagnement/soins-energetiques/magnetisme/',
-  coaching: '/soins-accompagnement/accompagnement-coaching/',
-
-  stagesFormations: '/stages-formations/',
-  stagesRetraites: '/stages-formations/stages-retraites/',
-  formationsDistance: '/stages-formations/formations-a-distance/',
-
-  voie: '/voie-tolteque/',
-  accords: '/voie-tolteque/accords-tolteques/',
-  cercles: '/voie-tolteque/cercles-de-pardon/',
+  enseignement: '/enseignement/',
+  accompagnement: '/accompagnement/',
+  soins: '/soins-therapies/',
 
   praticien: '/praticien/',
-  blog: '/blog/',
   agenda: '/agenda/',
-  contact: '/contact/',
-
-  nyons: '/nyons/',
-  avignon: '/avignon/',
-  nimes: '/nimes/',
-
-  tarifs: '/tarifs/',
+  blog: '/blog/',
   temoignages: '/temoignages/',
-  faq: '/faq/',
+  contact: '/contact/',
 
   mentions: '/mentions-legales/',
   confidentialite: '/politique-confidentialite/',
+} as const;
+
+/* Ancres des sous-sections (deep-linking + menus déroulants). */
+export const ANCHORS = {
+  cours: `${ROUTES.enseignement}#cours`,
+  stages: `${ROUTES.enseignement}#stages`,
+  formations: `${ROUTES.enseignement}#formations`,
+  retraites: `${ROUTES.enseignement}#retraites`,
+
+  coaching: `${ROUTES.accompagnement}#coaching`,
+  ecoute: `${ROUTES.accompagnement}#ecoute`,
+  pardon: `${ROUTES.accompagnement}#pardon`,
+  marches: `${ROUTES.accompagnement}#marches`,
+
+  magnetisme: `${ROUTES.soins}#magnetisme`,
+  soinsEnergetiques: `${ROUTES.soins}#soins-energetiques`,
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -94,74 +107,77 @@ export interface NavItem {
 
 export const NAV: NavItem[] = [
   {
-    label: 'Soins & accompagnement',
+    label: 'Enseignement',
+    href: ROUTES.enseignement,
+    children: [
+      { label: 'Cours', href: ANCHORS.cours },
+      { label: 'Stages', href: ANCHORS.stages },
+      { label: 'Formations', href: ANCHORS.formations },
+      { label: 'Retraites spirituelles', href: ANCHORS.retraites },
+    ],
+  },
+  {
+    label: 'Accompagnement',
+    href: ROUTES.accompagnement,
+    children: [
+      { label: "Coaching d'Être", href: ANCHORS.coaching },
+      { label: "Entretien d'écoute", href: ANCHORS.ecoute },
+      { label: 'Protocole Pardon', href: ANCHORS.pardon },
+      { label: 'Marches accompagnées', href: ANCHORS.marches },
+    ],
+  },
+  {
+    label: 'Soins & thérapies',
     href: ROUTES.soins,
     children: [
-      { label: 'Soins énergétiques', href: ROUTES.soinsEnergetiques },
-      { label: 'Accompagnement & coaching', href: ROUTES.coaching },
-    ],
-  },
-  {
-    label: 'Stages & formations',
-    href: ROUTES.stagesFormations,
-    children: [
-      { label: 'Stages & retraites', href: ROUTES.stagesRetraites },
-      { label: 'Formations à distance', href: ROUTES.formationsDistance },
-    ],
-  },
-  {
-    label: 'La voie toltèque',
-    href: ROUTES.voie,
-    children: [
-      { label: 'Accords toltèques', href: ROUTES.accords },
-      { label: 'Cercles de pardon', href: ROUTES.cercles },
+      { label: 'Magnétisme', href: ANCHORS.magnetisme },
+      { label: 'Soins énergétiques', href: ANCHORS.soinsEnergetiques },
     ],
   },
   { label: 'Agenda', href: ROUTES.agenda },
-  { label: 'Blog', href: ROUTES.blog },
   { label: 'Le praticien', href: ROUTES.praticien },
+  { label: 'Blog', href: ROUTES.blog },
   { label: 'Contact', href: ROUTES.contact, cta: true },
 ];
 
 /* ------------------------------------------------------------------ */
-/* Footer — 4 colonnes (structure plume).                              */
+/* Footer — 4 colonnes.                                                */
 /* ------------------------------------------------------------------ */
 
 export const FOOTER_LINKS = [
   {
-    title: 'Soins & accompagnement',
+    title: 'Enseignement',
     links: [
-      { label: 'Soins énergétiques', href: ROUTES.soinsEnergetiques },
-      { label: 'Magnétisme', href: ROUTES.magnetisme },
-      { label: 'Accompagnement & coaching', href: ROUTES.coaching },
+      { label: 'Cours', href: ANCHORS.cours },
+      { label: 'Stages', href: ANCHORS.stages },
+      { label: 'Formations', href: ANCHORS.formations },
+      { label: 'Retraites spirituelles', href: ANCHORS.retraites },
     ],
   },
   {
-    title: 'Stages & formations',
+    title: 'Accompagnement',
     links: [
-      { label: 'Stages & retraites', href: ROUTES.stagesRetraites },
-      { label: 'Formations à distance', href: ROUTES.formationsDistance },
+      { label: "Coaching d'Être", href: ANCHORS.coaching },
+      { label: "Entretien d'écoute", href: ANCHORS.ecoute },
+      { label: 'Protocole Pardon', href: ANCHORS.pardon },
+      { label: 'Marches accompagnées', href: ANCHORS.marches },
+    ],
+  },
+  {
+    title: 'Soins & cabinet',
+    links: [
+      { label: 'Magnétisme', href: ANCHORS.magnetisme },
+      { label: 'Soins énergétiques', href: ANCHORS.soinsEnergetiques },
+      { label: 'Le praticien', href: ROUTES.praticien },
       { label: 'Agenda', href: ROUTES.agenda },
     ],
   },
   {
-    title: 'Le cabinet',
+    title: 'Infos',
     links: [
-      { label: 'Le praticien', href: ROUTES.praticien },
-      { label: 'Cabinet de Nyons', href: ROUTES.nyons },
-      { label: 'Consultations Avignon', href: ROUTES.avignon },
-      { label: 'Consultations Nîmes', href: ROUTES.nimes },
-      { label: 'Tarifs', href: ROUTES.tarifs },
-      { label: 'Contact', href: ROUTES.contact },
-    ],
-  },
-  {
-    title: 'Ressources & infos',
-    links: [
-      { label: 'La voie toltèque', href: ROUTES.voie },
-      { label: 'Blog', href: ROUTES.blog },
       { label: 'Témoignages', href: ROUTES.temoignages },
-      { label: 'FAQ', href: ROUTES.faq },
+      { label: 'Blog', href: ROUTES.blog },
+      { label: 'Contact', href: ROUTES.contact },
       { label: 'Mentions légales', href: ROUTES.mentions },
       { label: 'Politique de confidentialité', href: ROUTES.confidentialite },
     ],

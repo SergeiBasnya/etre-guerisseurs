@@ -30,7 +30,11 @@ import { ROUTES, CONTACT } from '../consts';
           </li>
           <li>
             <strong>Consultations également à</strong>
-            {CONTACT.consultations.join(' & ')}
+            {CONTACT.areaServed.join(' · ')}
+          </li>
+          <li>
+            <strong>À distance</strong>
+            {CONTACT.remote}
           </li>
         </ul>
       </div>

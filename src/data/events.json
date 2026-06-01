@@ -3,33 +3,53 @@
   "updatedAt": null,
   "events": [
     {
-      "id": "local-1",
-      "day": "29",
+      "id": "marche-ventoux-2026",
+      "day": "20",
       "month": "Mai",
-      "title": "Stage AIMER — Stage d'été sur l'Amour",
-      "location": "Oasis Lou Garoun, Provence",
-      "price": "350€",
-      "free": false,
-      "url": "#contact"
-    },
-    {
-      "id": "local-2",
-      "day": "27",
-      "month": "Juin",
-      "title": "Apprendre & maîtriser les Accords Toltèques",
-      "location": "7 av. de Verdun, Nyons",
+      "title": "Marche toltèque ascensionnelle — Mont Ventoux",
+      "location": "Mont Ventoux",
       "price": "55€",
       "free": false,
       "url": "#contact"
     },
     {
-      "id": "local-3",
+      "id": "stage-aimer-2026",
+      "day": "29",
+      "month": "Mai",
+      "title": "Stage AIMER — Choisir l'amour, libérer le cœur",
+      "location": "Reilhanette (26570) · 29–31 mai",
+      "price": "350€",
+      "free": false,
+      "url": "#contact"
+    },
+    {
+      "id": "stage-medecine-coeur-2026",
+      "day": "19",
+      "month": "Juin",
+      "title": "Stage Médecine Toltèque du Cœur",
+      "location": "Reilhanette (26570) · 19–21 juin",
+      "price": "350€",
+      "free": false,
+      "url": "#contact"
+    },
+    {
+      "id": "stage-maitrise-amour-2026",
+      "day": "21",
+      "month": "Août",
+      "title": "Stage La Maîtrise de l'Amour",
+      "location": "Reilhanette (26570) · 21–23 août",
+      "price": "350€",
+      "free": false,
+      "url": "#contact"
+    },
+    {
+      "id": "retraite-costa-rica-2026",
       "day": "07",
       "month": "Nov",
       "title": "Retraite spirituelle au Costa Rica",
-      "location": "San José, Costa Rica",
-      "price": "Gratuit",
-      "free": true,
+      "location": "Costa Rica · 7–18 nov · avec Shanti.Om",
+      "price": "Sur inscription",
+      "free": false,
       "url": "#contact"
     }
   ]

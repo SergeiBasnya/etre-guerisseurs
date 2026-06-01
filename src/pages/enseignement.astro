@@ -1,0 +1,227 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import SplitFeature from '../components/sections/SplitFeature.astro';
+import IconList from '../components/sections/IconList.astro';
+import InfoBox from '../components/sections/InfoBox.astro';
+import CtaBanner from '../components/sections/CtaBanner.astro';
+import { ROUTES } from '../consts';
+
+const stagesSaison = [
+  { icon: 'spark', title: 'RENAÎTRE — Printemps', text: "Sur l'impeccabilité. Être et bien-être impeccablement impeccable. Fin janvier à mi-avril." },
+  { icon: 'heart', title: 'AIMER — Été', text: "Choisir l'amour, libérer et adoucir le cœur. De fin mai à début septembre." },
+  { icon: 'heart', title: 'Médecine Toltèque du Cœur', text: 'Guérir le cœur, guérir par le cœur. De mai à août.' },
+  { icon: 'leaf', title: "La Maîtrise de l'Amour", text: 'Un art des relations aimables et aimantes. De juin à août.' },
+];
+---
+
+<InnerPage
+  eyebrow="Enseignement"
+  h1="Philosophie et art de vivre toltèque"
+  lede="Maîtrises, accords, symboles et clés d'enseignement toltèques — à apprendre un à un, au rythme des saisons : cours, stages, formations et retraites."
+  description="Apprendre et maîtriser les Accords Toltèques : cours annuels, stages saisonniers, formations (en ligne et en présence) et retraites spirituelles avec Pierre-Alexandre Morales."
+  crumbs={[{ label: 'Enseignement', href: ROUTES.enseignement }]}
+  bandImage="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=2000&auto=format&fit=crop"
+>
+  <SplitFeature
+    eyebrow="La voie du cœur"
+    title="La voie toltèque, une <span class='em'>philosophie pratique</span>"
+    paragraphs={[
+      "La voie toltèque est une philosophie pratique pour une introspection profonde, une rencontre avec soi et un art de vivre pour se transformer et faire de sa vie une œuvre d’art, de beauté et de joie. Elle provient du Mexique ancien, où les « Grands Artisans » toltèques — bâtisseurs, philosophes et artistes — ont légué un art de vivre inestimable.",
+      "Transmise par Don Miguel Ruiz, issu d’une lignée toltèque du Chevalier de l’Aigle, elle se décline en trois maîtrises et cinq accords de pouvoir à conclure avec soi. Ces accords sont des leviers puissants pour pulvériser les conditionnements passés et prendre un nouveau départ.",
+      "C’est sur ses pas, avec mon propre style, que je transmets à mon tour cette voie — partout et pour tous.",
+    ]}
+    image="https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1400&auto=format&fit=crop"
+    imageAlt="Enseignement toltèque"
+    bg="cream"
+  />
+
+  <!-- ============ COURS ============ -->
+  <div id="cours">
+    <SplitFeature
+      eyebrow="1 · Cours"
+      title="Apprendre et maîtriser les Accords Toltèques, <span class='em'>un à un</span>"
+      paragraphs={[
+        "Un cycle d’enseignement annuel, au rythme des saisons. Printemps-Été : maîtrise de l’Attention et de la Transformation (premier et deuxième accords — impeccabilité et impersonnalité). Automne-Hiver : suite de la maîtrise de la Transformation (troisième et quatrième accords — vérité et action).",
+        "Enseignements théoriques et pratiques, exercices et tâches pédagogiques, respirations et gestuelles conscientes (yoga toltèque), petits rituels avec l’esprit de la nature, créativité et accompagnement individuel. Accessible à tous, dynamique, vivant et orienté solution.",
+        "À l’issue du cycle, vous aurez la maîtrise des Accords dans votre quotidien : meilleure qualité de vie, efficacité relationnelle, écologie au quotidien, santé globale… une vraie joie toltèque.",
+      ]}
+      image="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Cours d'enseignement toltèque"
+      reverse
+      bg="warm"
+    />
+    <section class="band">
+      <div class="container">
+        <p class="band-note">Venez essayer un premier cours sans engagement lors de la première matinée !</p>
+        <InfoBox
+          rows={[
+            { label: 'Lieux', value: 'Nyons (26) & Avignon (84)' },
+            { label: 'Rythme', value: 'Cycle annuel · mensuel · 4h' },
+            { label: 'Tarif', value: 'Individuel 85 € · collectif 70 €' },
+          ]}
+          ctaLabel="S’inscrire à un cours"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ STAGES ============ -->
+  <div id="stages">
+    <IconList
+      eyebrow="2 · Stages"
+      title="Stages pratiques de formation, <span class='em'>thématiques et saisonniers</span>"
+      lede="Dans la nature, en résidentiel. Maîtrises, accords et clés d’enseignement toltèques, abordés saison après saison."
+      items={stagesSaison}
+      columns={2}
+      bg="cream"
+    />
+    <section class="band">
+      <div class="container">
+        <p class="band-note">
+          Sessions de trois jours en résidentiel en pleine nature (Drôme et Vaucluse).
+          Possibilité de programmer un stage ailleurs en France et à l’étranger
+          francophone, à partir de huit personnes.
+        </p>
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Reilhanette (26570) & Drôme provençale' },
+            { label: 'Durée', value: '3 jours en résidentiel' },
+            { label: 'Tarif', value: '350 €' },
+          ]}
+          ctaLabel="Voir les prochaines dates (agenda)"
+          ctaHref={ROUTES.agenda}
+        />
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ FORMATIONS ============ -->
+  <div id="formations">
+    <SplitFeature
+      eyebrow="3 · Formations"
+      title="La Voie de la Liberté Personnelle, <span class='em'>en ligne</span>"
+      paragraphs={[
+        "Une formation en ligne de plus de trois heures sur les Accords Toltèques, co-créée avec l’artiste musicien Sébastien Prats. Une cinquantaine de leçons théoriques et de tâches pédagogiques, à suivre depuis chez vous, à votre rythme, sans limite dans le temps, avec un suivi assuré par le formateur.",
+        "À l’issue, vous serez capable d’adopter les Accords Toltèques dans votre vie quotidienne, accompagné de nombreux bénéfices de mieux-être. Une idée de cadeau originale à s’offrir et à offrir.",
+      ]}
+      image="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Formation en ligne aux Accords Toltèques"
+      bg="warm"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Format', value: 'En ligne · +50 leçons · +3h' },
+            { label: 'Accès', value: 'À votre rythme, sans limite de temps' },
+          ]}
+          ctaLabel="Découvrir la formation en ligne"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+
+    <SplitFeature
+      eyebrow="Formations en présence"
+      title="Deux cycles pour <span class='em'>maîtriser les accords</span>"
+      paragraphs={[
+        "<strong>La Voie de la Liberté Personnelle en dix leçons</strong> — maîtriser les Quatre Accords Toltèques. Une année (janvier→décembre ou mars→février), soit 60 heures sur dix journées de 6h. Pour particuliers et professionnels du bien-être, de la santé et de l’accompagnement. <em>Tarif : 950 €.</em>",
+        "<strong>La Voie de la Maîtrise de Soi en cinq leçons</strong> — maîtriser le Cinquième Accord Toltèque, le plus abouti des enseignements toltèques. Cinq mois, soit 40 heures sur dix journées de 6h. <em>Tarif : 500 €.</em>",
+        "Lieux : Drôme (26), Vaucluse (84), Provence. Programmes détaillés à disposition. Venez essayer une première journée sans engagement lors de la première matinée.",
+      ]}
+      image="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Formation en présence"
+      reverse
+      bg="cream"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Liberté Personnelle', value: '10 leçons · 60h · 950 €' },
+            { label: 'Maîtrise de Soi', value: '5 leçons · 40h · 500 €' },
+            { label: 'Lieux', value: 'Drôme · Vaucluse · Provence' },
+          ]}
+          ctaLabel="Télécharger le programme"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ RETRAITES ============ -->
+  <div id="retraites">
+    <SplitFeature
+      eyebrow="4 · Retraites spirituelles"
+      title="Cinq à sept jours pour <span class='em'>se recréer</span>"
+      paragraphs={[
+        "Des sessions intensives en immersion dans la nature pour aborder l’esprit et la pratique du chamanisme toltèque et des philosophies du monde. Concilier le feu et l’eau, l’action et le repos, la méditation et la création.",
+        "Enseignements toltèques traditionnels, techniques énergétiques amérindiennes, méditation, mouvement dansé, médecine du cœur et du pardon, rituels de purification, cercles de parole, soin et magnétisme, voyage chamanique au son du tambour…",
+      ]}
+      image="https://images.unsplash.com/photo-1465311440653-ba9b1d9b0f5b?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Retraite spirituelle dans la nature"
+      bg="warm"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Carrefour Dauphiné–Alpes–Provence' },
+            { label: 'Durée', value: '5 à 7 jours en résidentiel' },
+            { label: 'Tarif', value: '550 €' },
+          ]}
+        />
+      </div>
+    </section>
+
+    <SplitFeature
+      eyebrow="Retraites à l’étranger"
+      title="Pratiquer la voie toltèque <span class='em'>entre mer et jungle</span>"
+      paragraphs={[
+        "Des retraites spirituelles à l’étranger (Maroc, Costa Rica, Canada, Suisse…) pour transmettre les enseignements des Quatre Accords en résonance avec l’esprit des lieux. Une traversée intérieure pour se délester des anciens schémas et retrouver une parole juste, libre et consciente.",
+        "<strong>Prochaine retraite :</strong> Costa Rica, du 7 au 18 novembre 2026, entre mer, jungle et océan. En partenariat avec Shanti.Om Voyages.",
+      ]}
+      image="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Retraite spirituelle au Costa Rica"
+      reverse
+      bg="cream"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Costa Rica · 7–18 novembre 2026' },
+            { label: 'Durée', value: '12 jours · partenaire Shanti.Om' },
+            { label: 'Tarif', value: 'Variable · sur inscription' },
+          ]}
+          ctaLabel="Voir l’agenda"
+          ctaHref={ROUTES.agenda}
+        />
+      </div>
+    </section>
+  </div>
+
+  <CtaBanner
+    eyebrow="Se former à la voie toltèque"
+    title="Trouvez la <span class='em'>formule</span> qui vous convient"
+    text="Cours, stage, formation ou retraite : échangeons pour vous orienter vers la proposition la plus juste."
+    ctaLabel="Prendre contact"
+    ctaHref={ROUTES.contact}
+    altLabel="Voir l’agenda"
+    altHref={ROUTES.agenda}
+    variant="ink"
+  />
+</InnerPage>
+
+<style>
+  .band {
+    padding: 0 0 90px;
+  }
+  .band-note {
+    max-width: 760px;
+    margin-bottom: 4px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+/**
+ * Bandeau « infos pratiques » d'une prestation : lieu, durée, tarif + CTA.
+ * Réutilisé sur les pages Accompagnement et Enseignement.
+ */
+export interface InfoRow {
+  label: string;
+  value: string;
+}
+interface Props {
+  rows: InfoRow[];
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+const { rows, ctaLabel, ctaHref } = Astro.props;
+---
+
+<div class="infobox reveal">
+  <dl>
+    {
+      rows.map((r) => (
+        <div>
+          <dt>{r.label}</dt>
+          <dd>{r.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  {ctaLabel && ctaHref && (
+    <a href={ctaHref} class="btn">{ctaLabel}</a>
+  )}
+</div>
+
+<style>
+  .infobox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px 30px;
+    margin-top: 32px;
+  }
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 44px;
+  }
+  dt {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  dd {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .btn {
+    white-space: nowrap;
+  }
+  @media (max-width: 640px) {
+    .infobox {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .btn {
+      text-align: center;
+    }
+  }
+</style>

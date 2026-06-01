@@ -28,6 +28,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Ancres de sous-sections : dégager le header fixe au scroll */
+[id] {
+  scroll-margin-top: 110px;
+}
+
 body {
   font-family: var(--sans);
   color: var(--ink);

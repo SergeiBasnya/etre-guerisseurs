@@ -3,7 +3,7 @@
  * Éditable à la main. Les images peuvent être des URLs ou, à terme,
  * des fichiers dans src/assets/ pour l'optimisation Astro.
  */
-import { ROUTES } from '../consts';
+import { ANCHORS } from '../consts';
 
 export interface Stage {
   tag: string; // badge (ex : "Stage d'été")
@@ -24,7 +24,7 @@ export const STAGES: Stage[] = [
     image:
       'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop',
     imageAlt: 'Stage Aimer en Provence',
-    href: ROUTES.stagesRetraites,
+    href: ANCHORS.stages,
   },
   {
     tag: 'Cycle saisons',
@@ -34,7 +34,7 @@ export const STAGES: Stage[] = [
     image:
       'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200&auto=format&fit=crop',
     imageAlt: 'Atelier accords toltèques',
-    href: ROUTES.stagesRetraites,
+    href: ANCHORS.stages,
   },
   {
     tag: 'Retraite',
@@ -44,6 +44,6 @@ export const STAGES: Stage[] = [
     image:
       'https://images.unsplash.com/photo-1510797215324-95aa89f43c33?q=80&w=1200&auto=format&fit=crop',
     imageAlt: 'Retraite spirituelle au Costa Rica',
-    href: ROUTES.stagesRetraites,
+    href: ANCHORS.stages,
   },
 ];

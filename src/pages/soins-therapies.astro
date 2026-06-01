@@ -1,0 +1,205 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import SplitFeature from '../components/sections/SplitFeature.astro';
+import IconList from '../components/sections/IconList.astro';
+import Pricing from '../components/sections/Pricing.astro';
+import FaqAccordion from '../components/sections/FaqAccordion.astro';
+import CtaBanner from '../components/sections/CtaBanner.astro';
+import { ROUTES } from '../consts';
+
+// Bienfaits déclarés par le magnétisme (texte client).
+// TODO-LEGAL : formulations « soigner les pathologies… » conservées telles
+// quelles à la demande du client. Risque d'allégation de santé (DGCCRF /
+// exercice illégal de la médecine). À faire valider juridiquement avant mise
+// en ligne. Cf. disclaimer dans la FAQ ci-dessous.
+const bienfaits = [
+  'Débloquer et rééquilibrer le bassin, soulager l’arthrose de la hanche.',
+  'Pathologies du pied (entorses, maladie de Morton, épines, orteils en marteau).',
+  'Dos : lombalgies, sciatiques, lumbago, douleurs dorso-lombaires, névrites…',
+  'Bras, épaule, coude, poignet, colonne vertébrale.',
+  'Tête : céphalées de tension, migraines, névralgie d’Arnold…',
+  'Problèmes de peau dont les verrues.',
+  'Arthrose, tendinites, claquages, élongations, foulures, rhumatismes…',
+  'Contre-coups, cicatrices.',
+];
+
+const bioelectrique = [
+  { icon: 'spark', title: 'Les neurones', text: 'communiquent via des impulsions électriques.' },
+  { icon: 'spark', title: 'Les muscles', text: 'se contractent par activation électrique.' },
+  { icon: 'circle', title: 'Les cellules', text: 'échangent des signaux électrochimiques.' },
+  { icon: 'circle', title: 'Les glandes', text: 'déclenchent leurs sécrétions via des micro-signaux électriques.' },
+];
+
+const tarifs = [
+  {
+    name: 'Magnétisme',
+    price: '55 €',
+    unit: 'la séance',
+    text: 'Anamnèse et soin sur table.',
+    features: [
+      'Durée : 35 à 45 min',
+      'En présence (Drôme & Avignon)',
+      'À distance (France entière & pays francophones)',
+    ],
+    ctaLabel: 'Prendre rendez-vous',
+    ctaHref: ROUTES.contact,
+  },
+  {
+    name: 'Soins énergétiques',
+    price: '85 €',
+    unit: 'la séance',
+    featured: true,
+    text: 'Rééquilibrage général.',
+    features: [
+      'Durée : 1h à 1h15',
+      'En présence (Drôme & Avignon)',
+      'À distance (France entière & pays francophones)',
+    ],
+    ctaLabel: 'Prendre rendez-vous',
+    ctaHref: ROUTES.contact,
+  },
+];
+---
+
+<InnerPage
+  eyebrow="Soins & thérapies"
+  h1="Soins & thérapies par imposition des mains"
+  lede="Magnétisme et soins énergétiques pour soulager le corps, apaiser le système nerveux et relancer la circulation de l'énergie — en cabinet ou à distance."
+  description="Magnétisme humain et soins énergétiques par imposition des mains avec Pierre-Alexandre Morales. En présence en Drôme et à Avignon, ou à distance."
+  crumbs={[{ label: 'Soins & thérapies', href: ROUTES.soins }]}
+  bandImage="https://images.unsplash.com/photo-1591343395082-e120087004b4?q=80&w=2000&auto=format&fit=crop"
+>
+  <!-- ============ MAGNÉTISME ============ -->
+  <div id="magnetisme">
+    <SplitFeature
+      eyebrow="Magnétisme humain"
+      title="Le magnétisme, un art de soin <span class='em'>par les mains</span>"
+      paragraphs={[
+        '<em>« Les magnétiseurs et les radiesthésistes existent parce qu’ils obtiennent des résultats incontestables. Ils existeront aussi longtemps qu’ils continueront à obtenir ces résultats. »</em> — Professeur Yves Rocard.',
+        "Le magnétisme humain est une technique, une aptitude et un art de soins locaux et généraux par imposition des mains qui, par un phénomène naturel de bio-électricité présent dans le corps humain, soulage le corps physique. Chaque être humain est porteur de magnétisme&nbsp;: ce n’est pas seulement un don, plutôt une compétence que chacun utilise ou non et peut développer.",
+        "Il est vrai toutefois que certaines personnes sont dotées d’un magnétisme plus important que d’autres…",
+      ]}
+      image="https://images.unsplash.com/photo-1599045118108-bf9954418b76?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Soin par imposition des mains"
+      bg="cream"
+    />
+
+    <IconList
+      eyebrow="Le corps, un système bioélectrique"
+      title="L’activité des mains peut-elle interagir avec <span class='em'>le corps</span> ?"
+      lede="Le corps humain fonctionne avant tout grâce à des phénomènes électriques. Sans bioélectricité, aucune fonction biologique n’est possible."
+      items={bioelectrique}
+      columns={2}
+      bg="warm"
+    />
+
+    <SplitFeature
+      eyebrow="Comment ça agit"
+      title="Nettoyer, équilibrer, <span class='em'>recharger</span>"
+      paragraphs={[
+        "Selon Jean-Marie Bataille, le premier magnétiseur à m’avoir formé, nous sommes constitués de milliards d’électrons. Pour que l’organisme fonctionne, tous ses constituants doivent être alimentés en permanence par des énergies électromagnétiques.",
+        "Une fois utilisées, ces énergies sont « usées » et évacuées par les extrémités. Si elles ne le sont pas, elles stagnent, forment des engorgements et perturbent la circulation — d’où fatigues, douleurs et déséquilibres.",
+        "Selon le Professeur Min Zhao, les champs électriques jouent un rôle majeur dans la cicatrisation et la régulation cellulaire. Selon George Bergoz, fondateur de l’École des Guérisseurs, le magnétisme agit avec l’énergie tellurique sur le corps physique (système locomoteur, peau et organes). C’est auprès de lui que j’ai appris d’autres techniques et secrets de magnétiseur transmis de génération en génération.",
+      ]}
+      image="https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Mains du magnétiseur"
+      reverse
+      bg="cream"
+    />
+
+    <!-- TODO-LEGAL : section « ce qu'il permet » — allégations de santé à valider -->
+    <section class="benefits bg-warm">
+      <div class="container">
+        <p class="eyebrow">Dans la tradition des guérisseurs</p>
+        <h2 class="section-title">Ce que le magnétisme <span class="em">permet</span></h2>
+        <p class="lede">
+          Connu depuis la nuit des temps et s’inscrivant dans une tradition de
+          magnétiseurs, rebouteux et guérisseurs de nos villes et campagnes, il
+          aide notamment à&nbsp;:
+        </p>
+        <ul class="benefits-list">
+          {bienfaits.map((b) => <li>{b}</li>)}
+        </ul>
+        <p class="benefits-foot">
+          Le magnétisme décongestionne les blessures, facilite la cicatrisation,
+          fluidifie la circulation de l’énergie et apaise le système nerveux. Les
+          soins se font le plus souvent par imposition des mains&nbsp;: il n’est
+          pas toujours nécessaire de toucher.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ SOINS ÉNERGÉTIQUES ============ -->
+  <div id="soins-energetiques">
+    <SplitFeature
+      eyebrow="Soins énergétiques"
+      title="Réaligner ses centres de force, <span class='em'>apaiser le mental</span>"
+      paragraphs={[
+        "Les mains, par le prolongement des bras, transmettent une énergie venant du cœur. Au-delà du magnétisme, les soins énergétiques par imposition des mains (toucher, passes magnétiques, chélation, techniques amérindiennes…) opèrent un rééquilibrage général du système nerveux.",
+        "Ils réalignent vos centres de force, apaisent le mental agité et le cœur blessé, et favorisent des prises de conscience qui débloquent des situations de gêne ou d’engorgement émotionnel. Ils agissent surtout sur la sphère psycho-somatique, là où le corps manifeste un symptôme dont la cause n’est pas mécanique.",
+        "La prise de conscience de la cause d’un trouble, pendant ou après le soin, est souvent un pas décisif. Ces soins participent enfin d’une meilleure gestion globale du stress, des émotions et de l’énergie.",
+      ]}
+      image="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Soin énergétique"
+      bg="cream"
+    />
+  </div>
+
+  <Pricing
+    eyebrow="Tarifs"
+    title="Les <span class='em'>séances</span>"
+    tiers={tarifs}
+    note="En présence en Drôme et à Avignon (84). À distance dans toute la France et les pays francophones, selon un protocole officiel transmis par George Bergoz, fondateur de l’École des Guérisseurs, depuis 2003."
+    bg="warm"
+  />
+
+  <FaqAccordion bg="cream" />
+
+  <CtaBanner
+    eyebrow="Prendre soin de soi"
+    title="Réserver une <span class='em'>séance</span>"
+    text="Un échange préalable permet de cerner votre besoin et de choisir entre présence et distance."
+    ctaLabel="Prendre rendez-vous"
+    ctaHref={ROUTES.contact}
+    variant="ink"
+  />
+</InnerPage>
+
+<style>
+  .benefits {
+    padding: 110px 0;
+  }
+  .benefits.bg-warm {
+    background: var(--bg-warm);
+  }
+  .benefits-list {
+    list-style: none;
+    margin: 40px 0 28px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 40px;
+    max-width: 920px;
+  }
+  .benefits-list li {
+    position: relative;
+    padding-left: 28px;
+    color: var(--ink-soft);
+  }
+  .benefits-list li::before {
+    content: '◈';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+  .benefits-foot {
+    max-width: 760px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  @media (max-width: 760px) {
+    .benefits-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

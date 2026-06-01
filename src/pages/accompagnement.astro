@@ -1,0 +1,229 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import SplitFeature from '../components/sections/SplitFeature.astro';
+import Steps from '../components/sections/Steps.astro';
+import IconList from '../components/sections/IconList.astro';
+import InfoBox from '../components/sections/InfoBox.astro';
+import CtaBanner from '../components/sections/CtaBanner.astro';
+import { ROUTES } from '../consts';
+
+const voyage = [
+  { meta: 'Séance 0', title: 'Prise de contact', text: 'Rencontre, présentation, formulation des besoins. Gratuite, sans engagement de part et d’autre.' },
+  { meta: 'Séance 1', title: 'Cadrer le voyage' },
+  { meta: 'Séance 2', title: 'Visualiser le futur' },
+  { meta: 'Séance 3', title: 'Quelle est votre valeur ?' },
+  { meta: 'Séance 4', title: 'Voir, être un voyant' },
+  { meta: 'Séance 5', title: 'Vérité ou fiction ?' },
+  { meta: 'Séance 6', title: 'Adopter une posture nouvelle' },
+  { meta: 'Séance 7', title: 'Changer maintenant' },
+  { meta: 'Séance 8', title: 'Jouer collectif' },
+  { meta: 'Séance 9', title: 'Tout est possible à présent' },
+  { meta: 'Séance 10', title: 'Atteindre le sommet de la montagne' },
+];
+
+const pourQui = [
+  { icon: 'spark', title: 'Changer de cap', text: 'Préparer un examen, une reconversion, un nouveau départ professionnel.' },
+  { icon: 'heart', title: 'Pacifier ses relations', text: 'Parents, couples, familles qui souhaitent harmoniser leurs liens.' },
+  { icon: 'leaf', title: 'Donner du sens', text: 'Remettre de la cohérence entre projet de vie et projet professionnel.' },
+  { icon: 'hand', title: 'Se lancer', text: 'Entrepreneurs, artistes, jeunes diplômés qui veulent s’entourer et avancer.' },
+  { icon: 'moon', title: 'Mettre de l’ordre en soi', text: 'Apprendre à mieux gérer son quotidien, retrouver un élan.' },
+  { icon: 'circle', title: 'Approfondir la voie toltèque', text: 'Pratiquer avec assiduité — un coaching de compétences autant que de sens.' },
+];
+---
+
+<InnerPage
+  eyebrow="Accompagnement & consultations"
+  h1="Accompagnement & consultations"
+  lede="Cheminer pas à pas vers le changement : coaching d'Être, entretiens d'écoute, protocole de pardon et marches toltèques, en présence ou à distance."
+  description="Accompagnement au changement (Coaching d'Être), entretiens d'écoute, protocole Pardon et marches accompagnées avec Pierre-Alexandre Morales."
+  crumbs={[{ label: 'Accompagnement & consultations', href: ROUTES.accompagnement }]}
+  bandImage="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=2000&auto=format&fit=crop"
+>
+  <!-- ============ COACHING D'ÊTRE ============ -->
+  <div id="coaching">
+    <SplitFeature
+      eyebrow="Accompagnement au changement"
+      title="Le Coaching d’Être, une <span class='em'>philosophie de vie</span>"
+      paragraphs={[
+        "« Connais-toi toi-même et tu connaîtras l’univers et les Dieux. » — inscription au seuil du Temple de Delphes, dont le message fut approfondi par Socrate.",
+        "Le coaching moderne puise sa véritable origine dans la philosophie grecque antique, jusqu’à la maïeutique de Socrate — cet art de bien interroger pour faire « accoucher » les esprits de leurs connaissances. On ne peut départir le coaching d’une philosophie pratique, appliquée au réel et en lien direct avec la nature.",
+        "Les séances de Coaching d’Être forment un accompagnement structuré d’une dizaine de rendez-vous. Nous cheminons à deux, d’objectifs précis, mesurables et écologiques, au rythme des saisons. L’Esprit de la nature est au cœur du processus — les Accords Toltèques en balisent le chemin.",
+      ]}
+      image="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Marche d'accompagnement dans la nature"
+      bg="cream"
+    />
+
+    <Steps
+      eyebrow="Le coaching comme un voyage"
+      title="Un voyage de mille lieues <span class='em'>commence par un pas</span>"
+      lede="Les séances se déroulent côte à côte, en intérieur ou en extérieur (nature, parc, terrasse paisible), ou à distance en visio ou par téléphone."
+      steps={voyage}
+      bg="warm"
+    />
+
+    <IconList
+      eyebrow="À qui s’adresse le Coaching d’Être ?"
+      title="Pour toute personne désireuse d’un <span class='em'>changement opérant</span>"
+      lede="Dans sa vie privée ou professionnelle, par des moyens écologiques adaptés à son besoin du moment. Un coaching qui a trait au sens, au savoir-être, à la réalisation du projet de l’âme."
+      items={pourQui}
+      columns={3}
+      bg="cream"
+    />
+
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Drôme & Vaucluse · à distance (France & francophonie)' },
+            { label: 'Durée', value: '4 à 5 mois · séance de 1h à 2h' },
+            { label: 'Tarif', value: '115 € / séance' },
+          ]}
+          ctaLabel="Demander une séance 0 (offerte)"
+          ctaHref={ROUTES.contact}
+        />
+        <p class="refs">
+          <strong>Références :</strong> plus de 800 heures d’accompagnement réussi au
+          changement depuis 2011, avec une clientèle diversifiée dans toute la France.
+          Fondateur et animateur du Café-Coaching CAFE-CO à Avignon (2012–2015).
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ ENTRETIEN D'ÉCOUTE ============ -->
+  <div id="ecoute">
+    <SplitFeature
+      eyebrow="Entretien d’écoute"
+      title="Être écouté <span class='em'>vraiment</span>"
+      paragraphs={[
+        "« Est-ce que tu acceptes de m’écouter ? Je suis disposé à t’écouter. » Du point de vue toltèque, écouter vraiment permet de comprendre le sens véritable qui sous-tend les mots — l’intention.",
+        "Les entretiens toltèques d’écoute vous permettent d’être écouté professionnellement, finement, sur une problématique restée sans solution qui vous empêche d’avancer. Ils débloquent une situation, génèrent détente et confort, vous font sentir accueilli et respecté, et vous aident à récupérer du pouvoir personnel et à mieux vous accepter.",
+      ]}
+      image="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Entretien d'écoute"
+      reverse
+      bg="warm"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Drôme en présence · à distance (visio / téléphone)' },
+            { label: 'Durée', value: '1h15' },
+            { label: 'Tarif', value: '55 €' },
+          ]}
+          ctaLabel="Prendre rendez-vous"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PROTOCOLE PARDON ============ -->
+  <div id="pardon">
+    <SplitFeature
+      eyebrow="Protocole Pardon"
+      title="Apprendre à <span class='em'>se pardonner</span>"
+      paragraphs={[
+        "Un protocole spécifique de Pardon selon les enseignements toltèques transmis par Don Miguel Ruiz, établi sur le fondement d’un rituel de pardon vécu individuellement et collectivement avec Don Miguel et Don José Ruiz.",
+        "Pardon et voie toltèque, finalités du pardon, que signifie pardonner, demander pardon : un exercice pratique énergétique, avec guidance spirituelle, pour apprendre à se pardonner.",
+      ]}
+      image="https://images.unsplash.com/photo-1602192509154-0b900ee1f851?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Cercle de pardon"
+      bg="cream"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Drôme en présence · à distance (visio / téléphone)' },
+            { label: 'Durée', value: '1h15' },
+            { label: 'Tarif', value: '55 €' },
+          ]}
+          ctaLabel="Prendre rendez-vous"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ MARCHES ACCOMPAGNÉES ============ -->
+  <div id="marches">
+    <SplitFeature
+      eyebrow="Marches accompagnées"
+      title="Si les Accords Toltèques <span class='em'>m’étaient enseignés…</span>"
+      paragraphs={[
+        "Marcher les Accords Toltèques et « marcher sa parole » pour intégrer chaque accord par la respiration, le mouvement et l’intention. Une intégration au rythme des saisons qui combine temps d’enseignement, marche, haltes d’exercices, pauses méditatives et gestuelles conscientes.",
+        "Au fil de paysages divers, chaque participant est invité à vivre les accords dans son quotidien — campagne et ville avec de la nature.",
+      ]}
+      image="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Marche toltèque dans la nature"
+      reverse
+      bg="warm"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Campagne & ville avec de la nature' },
+            { label: 'Durée', value: '3h' },
+            { label: 'Tarif', value: '35 €' },
+          ]}
+          ctaLabel="S’inscrire à une marche"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+
+    <SplitFeature
+      eyebrow="Marche toltèque ascensionnelle"
+      title="S’élever en montagne, <span class='em'>changer de regard</span>"
+      paragraphs={[
+        "La marche en montagne élève, verticalise, ouvre l’esprit et le cœur. Elle permet d’adopter un nouveau rêve, de prendre un nouvel envol, d’élargir l’horizon.",
+        "Une journée d’intégration : marche en montagne, respiration toltèque et méditation, enseignements inspirants, marche en silence, haltes et pauses récréatives, ouverture des directions et médecines chamaniques de la montagne, yoga toltèque, contemplation, casse-croûte… et surprises.",
+      ]}
+      image="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Marche ascensionnelle en montagne"
+      bg="cream"
+    />
+    <section class="band">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Lieu', value: 'Montagne, à 2000 m d’altitude' },
+            { label: 'Durée', value: 'Journée 9h–18h · marche A/R 3h à 4h' },
+            { label: 'Tarif', value: '55 €' },
+          ]}
+          ctaLabel="S’inscrire à la marche"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+  </div>
+
+  <CtaBanner
+    eyebrow="Faire le premier pas"
+    title="« Être au bon endroit, au bon moment, <span class='em'>avec le bon humain.</span> »"
+    text="P.-A. Morales — La première rencontre est sans engagement."
+    ctaLabel="Prendre contact"
+    ctaHref={ROUTES.contact}
+    variant="ink"
+  />
+</InnerPage>
+
+<style>
+  .band {
+    padding: 0 0 90px;
+  }
+  .band:first-child {
+    padding-top: 0;
+  }
+  .refs {
+    margin-top: 22px;
+    max-width: 760px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+</style>

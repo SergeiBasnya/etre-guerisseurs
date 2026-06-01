@@ -1,6 +1,6 @@
 ---
 import { CONTACT, ROUTES } from '../consts';
-const lieux = CONTACT.consultations.join(' & ');
+const lieux = CONTACT.areaServed.slice(0, 2).join(' & ');
 ---
 
 <section class="closing" id="contact">
