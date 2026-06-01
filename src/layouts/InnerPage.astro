@@ -23,6 +23,12 @@ interface Props {
   crumbs: Crumb[];
   /** Masquer le bloc CTA de fin. */
   hideClosing?: boolean;
+  /**
+   * Image de fond du bandeau (variante illustrée).
+   * Si fournie, le bandeau passe en sombre avec voile dégradé sur l'image,
+   * sur le modèle du hero d'accueil. Sinon, bandeau crème sobre par défaut.
+   */
+  bandImage?: string;
 }
 
 const {
@@ -32,15 +38,24 @@ const {
   crumbs,
   description,
   hideClosing = false,
+  bandImage,
   title = `${h1} — ${SITE.name}`,
 } = Astro.props;
+const hasImage = Boolean(bandImage);
 ---
 
 <Base title={title} description={description ?? lede}>
   <TopBar />
   <Header />
 
-  <div class="page-band">
+  <div class={`page-band ${hasImage ? 'has-image' : ''}`}>
+    {
+      hasImage && (
+        <div class="page-band-bg" aria-hidden="true">
+          <img src={bandImage} alt="" />
+        </div>
+      )
+    }
     <div class="container">
       <Breadcrumb crumbs={crumbs} />
       <p class="eyebrow">{eyebrow}</p>
@@ -63,6 +78,11 @@ const {
     padding: 150px 0 56px;
     background: var(--bg-warm);
     border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .page-band .container {
+    position: relative;
+    z-index: 1;
   }
   .page-band .eyebrow {
     margin-top: 22px;
@@ -78,12 +98,61 @@ const {
   .page-band .lede {
     margin-top: 4px;
   }
+
+  /* ===== Variante illustrée (image de fond + voile) ===== */
+  .page-band.has-image {
+    padding-top: 200px;
+    padding-bottom: 80px;
+    border-bottom: none;
+    color: var(--bg);
+  }
+  .page-band-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .page-band-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .page-band-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(30, 25, 21, 0.82) 0%,
+      rgba(30, 25, 21, 0.62) 45%,
+      rgba(30, 25, 21, 0.35) 100%
+    );
+  }
+  .page-band.has-image h1 {
+    color: var(--bg);
+  }
+  .page-band.has-image .lede {
+    color: rgba(250, 246, 240, 0.82);
+  }
+  /* fil d'Ariane + surtitre lisibles sur fond sombre */
+  .page-band.has-image .eyebrow {
+    color: var(--gold);
+  }
+  .page-band.has-image :global(.breadcrumb),
+  .page-band.has-image :global(.breadcrumb a),
+  .page-band.has-image :global(.breadcrumb [aria-current='page']) {
+    color: rgba(250, 246, 240, 0.85);
+  }
+
   main {
     padding: 0;
   }
   @media (max-width: 900px) {
     .page-band {
       padding: 120px 0 44px;
+    }
+    .page-band.has-image {
+      padding-top: 150px;
+      padding-bottom: 60px;
     }
   }
 </style>

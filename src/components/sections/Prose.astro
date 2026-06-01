@@ -1,0 +1,236 @@
+---
+/**
+ * Corps d'article pilier / page éditoriale.
+ * Mesure de ligne maîtrisée (~68ch), rythme vertical hérité de la maquette,
+ * intertitres serif, citations en exergue, listes, et un sommaire d'ancres
+ * optionnel rendu en colonne sticky sur grand écran.
+ *
+ * Le contenu rédactionnel est passé via <slot/> (HTML balisé h2/h3/p/blockquote
+ * /ul…). La classe .prose applique le style typographique global au markup.
+ */
+export interface TocItem {
+  label: string;
+  /** id de l'ancre cible dans le contenu. */
+  anchor: string;
+}
+interface Props {
+  /** Sommaire d'ancres optionnel (colonne latérale sticky). */
+  toc?: TocItem[];
+  bg?: 'cream' | 'white';
+}
+const { toc, bg = 'cream' } = Astro.props;
+const hasToc = Array.isArray(toc) && toc.length > 0;
+---
+
+<section class={`pz bg-${bg}`}>
+  <div class={`container pz-wrap ${hasToc ? 'with-toc' : ''}`}>
+    {
+      hasToc && (
+        <aside class="pz-toc reveal" aria-label="Sommaire">
+          <p class="pz-toc-title">Sur cette page</p>
+          <nav>
+            <ol>
+              {toc!.map((t) => (
+                <li>
+                  <a href={`#${t.anchor}`}>{t.label}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+      )
+    }
+    <article class="prose reveal">
+      <slot>
+        <p class="pz-standfirst">
+          Les quatre accords toltèques offrent une grammaire simple pour alléger
+          le poids du mental et retrouver une parole plus juste. Voici comment
+          les comprendre et les vivre au quotidien.
+        </p>
+        <h2 id="origine">Une sagesse transmise oralement</h2>
+        <p>
+          Hérités de la tradition toltèque et popularisés par Don Miguel Ruiz,
+          ces accords ne sont pas des règles morales&nbsp;: ce sont des
+          engagements que l’on prend avec soi-même pour cesser de se faire
+          souffrir inutilement.
+        </p>
+        <blockquote>
+          Soyez impeccable avec votre parole. C’est le plus difficile à honorer,
+          et le plus puissant des quatre.
+        </blockquote>
+        <h2 id="pratique">Les mettre en pratique</h2>
+        <p>
+          On ne « réussit » pas les accords toltèques&nbsp;: on les pratique.
+          Chaque jour offre mille occasions de revenir à eux, sans culpabilité.
+        </p>
+        <ul>
+          <li>Observer sans juger ce que l’on se dit à soi-même.</li>
+          <li>Remplacer la supposition par une question.</li>
+          <li>Distinguer ce qui nous appartient de ce qui appartient à l’autre.</li>
+        </ul>
+      </slot>
+    </article>
+  </div>
+</section>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+  .pz-wrap.with-toc {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  /* sommaire sticky */
+  .pz-toc {
+    position: sticky;
+    top: 120px;
+  }
+  .pz-toc-title {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .pz-toc ol {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+  .pz-toc a {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--line);
+    padding-left: 14px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .pz-toc a:hover {
+    color: var(--terra);
+    border-color: var(--terra);
+  }
+
+  /* corps d'article */
+  .prose {
+    max-width: 68ch;
+  }
+  .pz-wrap:not(.with-toc) .prose {
+    margin-inline: auto;
+  }
+  .prose :global(.pz-standfirst) {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 36px;
+  }
+  .prose :global(p) {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .prose :global(h2) {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 48px 0 18px;
+    scroll-margin-top: 120px;
+  }
+  .prose :global(h3) {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin: 36px 0 14px;
+    scroll-margin-top: 120px;
+  }
+  .prose :global(blockquote) {
+    margin: 36px 0;
+    padding: 6px 0 6px 28px;
+    border-left: 3px solid var(--terra);
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.35rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 24px;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+  .prose :global(li) {
+    position: relative;
+    padding-left: 26px;
+    font-size: 1.06rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .prose :global(ul li)::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 11px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+  .prose :global(ol) {
+    counter-reset: pz;
+  }
+  .prose :global(ol li)::before {
+    counter-increment: pz;
+    content: counter(pz);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gold);
+  }
+  .prose :global(a) {
+    color: var(--terra);
+    border-bottom: 1px solid var(--line);
+    transition: border-color 0.3s;
+  }
+  .prose :global(a:hover) {
+    border-color: var(--terra);
+  }
+  .prose :global(strong) {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .prose :global(img) {
+    border-radius: 6px;
+    margin: 36px 0;
+  }
+  .prose :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 48px 0;
+  }
+  @media (max-width: 900px) {
+    .pz-wrap.with-toc {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .pz-toc {
+      position: static;
+    }
+  }
+</style>

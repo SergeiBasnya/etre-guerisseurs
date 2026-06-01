@@ -1,0 +1,158 @@
+---
+/**
+ * Déroulé numéroté d'une séance / d'un parcours.
+ * Numéros serif italique en gold (repris de Values.astro), reliés par un
+ * filet vertical continu pour donner le sentiment de progression.
+ */
+export interface Step {
+  title: string;
+  text?: string;
+  /** Durée / précision facultative affichée en surtitre. */
+  meta?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  steps?: Step[];
+  bg?: 'cream' | 'warm' | 'white';
+}
+
+const {
+  eyebrow = 'Le déroulé',
+  title = 'Comment se passe <span class="em">une séance</span>',
+  lede,
+  bg = 'warm',
+  steps = [
+    {
+      meta: '10 min',
+      title: 'Accueil & échange',
+      text: 'On prend le temps de poser ce qui vous amène, sans jugement, pour ajuster la séance à votre besoin du jour.',
+    },
+    {
+      meta: '40 min',
+      title: 'Le soin',
+      text: 'Allongé et habillé, vous vous laissez porter pendant que le travail énergétique s’installe, par apposition des mains ou à distance.',
+    },
+    {
+      meta: '10 min',
+      title: 'Retour au calme',
+      text: 'Un temps de reprise en douceur pour revenir à soi et accueillir les ressentis sans précipitation.',
+    },
+    {
+      meta: 'Après',
+      title: 'Intégration',
+      text: 'Quelques conseils simples pour prolonger les bienfaits dans les jours qui suivent la séance.',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class={`st bg-${bg}`}>
+  <div class="container">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    {title && <h2 class="section-title reveal" set:html={title} />}
+    {lede && <p class="lede reveal">{lede}</p>}
+    <ol class="st-list">
+      {
+        steps.map((s, i) => (
+          <li class="st-item reveal">
+            <span class="st-num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div class="st-body">
+              {s.meta && <p class="st-meta">{s.meta}</p>}
+              <h3>{s.title}</h3>
+              {s.text && <p class="st-text">{s.text}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-warm {
+    background: var(--bg-warm);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+  .st-list {
+    list-style: none;
+    margin-top: 54px;
+    max-width: 760px;
+  }
+  .st-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 26px;
+    position: relative;
+    padding-bottom: 40px;
+  }
+  /* filet de liaison entre les numéros */
+  .st-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 44px;
+    bottom: -4px;
+    width: 1px;
+    background: var(--line);
+  }
+  .st-num {
+    grid-row: 1;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--gold);
+    background: var(--white);
+    border: 1px solid var(--line);
+    position: relative;
+    z-index: 1;
+  }
+  .st-body {
+    padding-top: 6px;
+  }
+  .st-meta {
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .st-body h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.34rem;
+    margin-bottom: 10px;
+  }
+  .st-text {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+  @media (max-width: 900px) {
+    .st-item {
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+    }
+    .st-num {
+      width: 48px;
+      height: 48px;
+      font-size: 1.1rem;
+    }
+    .st-item:not(:last-child)::before {
+      left: 23px;
+    }
+  }
+</style>

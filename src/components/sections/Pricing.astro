@@ -1,0 +1,215 @@
+---
+/**
+ * Grille de tarifs élégante (cartes blanches façon LinkGrid).
+ * Une carte peut être « mise en avant » (featured) : liseré terracotta +
+ * léger relief, sans rompre la sobriété de la palette.
+ */
+export interface PriceTier {
+  name: string;
+  price: string;
+  /** Unité / précision : « la séance », « le forfait 3 », « / personne ». */
+  unit?: string;
+  text?: string;
+  features?: string[];
+  ctaLabel?: string;
+  ctaHref?: string;
+  featured?: boolean;
+  /** Mention discrète au-dessus du nom. */
+  badge?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  tiers?: PriceTier[];
+  /** Note sous la grille (conditions, mutuelle, déplacement…). */
+  note?: string;
+  bg?: 'cream' | 'warm' | 'white';
+}
+
+const {
+  eyebrow = 'Tarifs',
+  title = 'Des formules <span class="em">claires</span>',
+  lede,
+  note = 'Règlement par carte, espèces ou virement. Séance non remboursée par l’Assurance Maladie. Déplacement possible sur devis.',
+  bg = 'cream',
+  tiers = [
+    {
+      name: 'Séance découverte',
+      price: '60 €',
+      unit: 'la séance',
+      text: 'Une première rencontre pour faire connaissance et poser un premier soin.',
+      features: ['Échange préalable', 'Soin de 50 min', 'Conseils personnalisés'],
+      ctaLabel: 'Réserver',
+      ctaHref: '/contact/',
+    },
+    {
+      name: 'Suivi en 3 séances',
+      price: '165 €',
+      unit: 'le forfait',
+      badge: 'Le plus choisi',
+      featured: true,
+      text: 'Le format le plus juste pour installer un vrai travail de fond, à votre rythme.',
+      features: ['3 séances de 50 min', 'Soit 55 € la séance', 'Suivi entre les rendez-vous'],
+      ctaLabel: 'Réserver',
+      ctaHref: '/contact/',
+    },
+    {
+      name: 'Soin à distance',
+      price: '50 €',
+      unit: 'la séance',
+      text: 'Recevoir un soin énergétique où que vous soyez, sur rendez-vous téléphonique.',
+      features: ['Préparation par téléphone', 'Soin de 40 min', 'Retour écrit'],
+      ctaLabel: 'Réserver',
+      ctaHref: '/contact/',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class={`pr bg-${bg}`}>
+  <div class="container">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    {title && <h2 class="section-title reveal" set:html={title} />}
+    {lede && <p class="lede reveal">{lede}</p>}
+    <div class="pr-grid">
+      {
+        tiers.map((t) => (
+          <article class={`pr-card reveal ${t.featured ? 'is-featured' : ''}`}>
+            {t.badge && <span class="pr-badge">{t.badge}</span>}
+            <h3 class="pr-name">{t.name}</h3>
+            <p class="pr-price">
+              <span class="pr-amount">{t.price}</span>
+              {t.unit && <span class="pr-unit">{t.unit}</span>}
+            </p>
+            {t.text && <p class="pr-text">{t.text}</p>}
+            {t.features && (
+              <ul class="pr-feat">
+                {t.features.map((f) => (
+                  <li>{f}</li>
+                ))}
+              </ul>
+            )}
+            {t.ctaLabel && t.ctaHref && (
+              <a
+                href={t.ctaHref}
+                class={`btn ${t.featured ? '' : 'btn-ghost'}`}
+              >
+                {t.ctaLabel}
+              </a>
+            )}
+          </article>
+        ))
+      }
+    </div>
+    {note && <p class="pr-note reveal">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-warm {
+    background: var(--bg-warm);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+  .pr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    margin-top: 54px;
+    align-items: stretch;
+  }
+  .pr-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 34px 30px;
+    transition: all 0.35s ease;
+  }
+  .pr-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(46, 38, 32, 0.12);
+  }
+  .pr-card.is-featured {
+    border-color: var(--terra);
+    box-shadow: 0 14px 36px rgba(168, 100, 60, 0.14);
+  }
+  .pr-badge {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--terra-deep);
+    background: var(--bg-warm);
+    border-radius: 20px;
+    padding: 4px 12px;
+    margin-bottom: 16px;
+  }
+  .pr-name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.32rem;
+    margin-bottom: 14px;
+  }
+  .pr-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .pr-amount {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .pr-unit {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+  }
+  .pr-text {
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    margin-bottom: 20px;
+  }
+  .pr-feat {
+    list-style: none;
+    margin: 0 0 26px;
+    display: grid;
+    gap: 10px;
+  }
+  .pr-feat li {
+    position: relative;
+    padding-left: 24px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .pr-feat li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+  .pr-card .btn {
+    margin-top: auto;
+    text-align: center;
+  }
+  .pr-note {
+    max-width: 680px;
+    margin-top: 34px;
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+</style>

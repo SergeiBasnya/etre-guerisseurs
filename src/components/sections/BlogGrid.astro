@@ -1,0 +1,90 @@
+---
+/**
+ * Grille de cartes d'articles (page Blog).
+ * 3 colonnes desktop, 1 colonne mobile. S'appuie sur ArticleCard.
+ */
+import ArticleCard from './ArticleCard.astro';
+import type { Article } from './ArticleCard.astro';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  articles?: Article[];
+  bg?: 'cream' | 'warm' | 'white';
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  bg = 'cream',
+  articles = [
+    {
+      title: 'Comprendre les quatre accords toltèques au quotidien',
+      href: '/blog/quatre-accords-tolteques/',
+      image:
+        'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop',
+      category: 'Voie toltèque',
+      meta: '12 mars · 6 min',
+      excerpt:
+        'Une grammaire simple pour alléger le mental et retrouver une parole plus juste.',
+    },
+    {
+      title: 'Magnétisme : ce qu’un soin peut (et ne peut pas) faire',
+      href: '/blog/magnetisme-soin/',
+      image:
+        'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1200&auto=format&fit=crop',
+      category: 'Soins énergétiques',
+      meta: '28 février · 5 min',
+      excerpt:
+        'Démêler le vrai du fantasme autour du magnétisme et du soin par les mains.',
+    },
+    {
+      title: 'Les cercles de pardon, un espace pour déposer',
+      href: '/blog/cercles-de-pardon/',
+      image:
+        'https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1200&auto=format&fit=crop',
+      category: 'Voie toltèque',
+      meta: '5 février · 7 min',
+      excerpt:
+        'Comment se déroule un cercle, et pourquoi le pardon n’est pas l’oubli.',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class={`bg bg-${bg}`}>
+  <div class="container">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    {title && <h2 class="section-title reveal" set:html={title} />}
+    {lede && <p class="lede reveal">{lede}</p>}
+    <div class="bg-grid">
+      {articles.map((a) => <ArticleCard article={a} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-warm {
+    background: var(--bg-warm);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+  .bg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 54px;
+  }
+  @media (max-width: 900px) {
+    .bg-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

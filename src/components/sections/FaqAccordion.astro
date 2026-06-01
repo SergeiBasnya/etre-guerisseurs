@@ -1,0 +1,179 @@
+---
+/**
+ * FAQ en accordéon accessible, basé sur <details>/<summary> natifs.
+ * Clavier et lecteurs d'écran fonctionnent sans JS ; un petit script
+ * ferme les autres panneaux (comportement « un seul ouvert ») tout en
+ * respectant prefers-reduced-motion pour l'animation du chevron.
+ */
+export interface FaqItem {
+  q: string;
+  /** Réponse en HTML inline (liens, emphase autorisés). */
+  a: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  items?: FaqItem[];
+  /** Autoriser plusieurs panneaux ouverts simultanément. */
+  multiple?: boolean;
+  bg?: 'cream' | 'warm' | 'white';
+}
+
+const {
+  eyebrow = 'Questions fréquentes',
+  title = 'Avant de <span class="em">commencer</span>',
+  lede,
+  multiple = false,
+  bg = 'cream',
+  items = [
+    {
+      q: 'Faut-il croire en l’énergie pour qu’un soin fonctionne ?',
+      a: 'Non. Le soin ne demande aucune croyance particulière&nbsp;: il vous suffit de vous installer et de vous laisser le temps de relâcher. Beaucoup de personnes sceptiques en ressentent les effets.',
+    },
+    {
+      q: 'Un soin énergétique remplace-t-il un suivi médical ?',
+      a: 'Jamais. Il s’agit d’un accompagnement complémentaire, qui ne se substitue en aucun cas à un avis ou à un traitement médical. En cas de doute, consultez votre médecin.',
+    },
+    {
+      q: 'Combien de séances sont nécessaires ?',
+      a: 'Cela dépend de votre situation. Une séance unique peut suffire pour un coup de fatigue&nbsp;; un travail de fond se fait plutôt sur trois à cinq rendez-vous espacés.',
+    },
+    {
+      q: 'Comment se déroule un soin à distance ?',
+      a: 'Nous convenons d’un créneau. Vous vous installez tranquillement chez vous pendant que le soin est posé, puis vous recevez un retour. L’efficacité est la même qu’en présentiel.',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class={`faq bg-${bg}`}>
+  <div class="container">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    {title && <h2 class="section-title reveal" set:html={title} />}
+    {lede && <p class="lede reveal">{lede}</p>}
+    <div class="faq-list reveal" data-faq data-multiple={multiple ? 'true' : 'false'}>
+      {
+        items.map((it) => (
+          <details class="faq-item">
+            <summary>
+              <span class="faq-q">{it.q}</span>
+              <span class="faq-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <div class="faq-a">
+              <p set:html={it.a} />
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Comportement « un seul panneau ouvert » quand data-multiple="false".
+  document.querySelectorAll<HTMLElement>('[data-faq]').forEach((group) => {
+    if (group.dataset.multiple === 'true') return;
+    const items = group.querySelectorAll('details');
+    items.forEach((d) => {
+      d.addEventListener('toggle', () => {
+        if (!d.open) return;
+        items.forEach((other) => {
+          if (other !== d) other.open = false;
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-warm {
+    background: var(--bg-warm);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+  .faq-list {
+    margin-top: 50px;
+    max-width: 820px;
+    border-top: 1px solid var(--line);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 26px 4px;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.3s;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary:hover {
+    color: var(--terra);
+  }
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--terra);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .faq-q {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.18rem;
+    line-height: 1.35;
+  }
+  .faq-ic {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--terra);
+    border: 1px solid var(--line);
+    transition: transform 0.35s ease, background 0.3s;
+  }
+  .faq-ic svg {
+    width: 18px;
+    height: 18px;
+  }
+  .faq-item[open] .faq-ic {
+    transform: rotate(180deg);
+    background: var(--bg-warm);
+  }
+  .bg-warm .faq-item[open] .faq-ic {
+    background: var(--white);
+  }
+  .faq-a {
+    padding: 0 4px 28px;
+    max-width: 65ch;
+  }
+  .faq-a p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-ic {
+      transition: none;
+    }
+  }
+</style>

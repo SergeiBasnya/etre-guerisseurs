@@ -1,0 +1,154 @@
+---
+/**
+ * Parcours / formation du praticien sous forme de frise verticale.
+ * Repères datés serif, filet de liaison gold discret, point d'ancrage par
+ * étape. Pensé pour la page « Le praticien » (preuves d'autorité incluses).
+ */
+export interface TimelineEntry {
+  /** Année ou période : « 2015 », « 2018 – 2020 ». */
+  date: string;
+  title: string;
+  text?: string;
+  /** Marquer un jalon d'autorité (mise en relief). */
+  highlight?: boolean;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  entries?: TimelineEntry[];
+  bg?: 'cream' | 'warm' | 'white';
+}
+
+const {
+  eyebrow = 'Le parcours',
+  title = 'Un chemin <span class="em">de transmission</span>',
+  lede,
+  bg = 'cream',
+  entries = [
+    {
+      date: '2008',
+      title: 'Premiers pas dans l’enseignement',
+      text: 'Plusieurs années dans la formation professionnelle, où naît le goût de la transmission.',
+    },
+    {
+      date: '2014',
+      title: 'Formation auprès de Don Miguel Ruiz',
+      text: 'Apprentissage direct de la voie toltèque auprès de l’auteur des Quatre Accords.',
+      highlight: true,
+    },
+    {
+      date: '2017',
+      title: 'Magnétisme & soins énergétiques',
+      text: 'Approfondissement des techniques de soin par apposition des mains et travail à distance.',
+    },
+    {
+      date: '2020',
+      title: 'Ouverture du cabinet de Nyons',
+      text: 'Un lieu dédié aux soins, complété par des consultations à Avignon et Nîmes.',
+    },
+    {
+      date: 'Aujourd’hui',
+      title: 'Stages & retraites en immersion',
+      text: 'Animation de cercles à taille humaine, au contact des éléments et au rythme des saisons.',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class={`tl bg-${bg}`}>
+  <div class="container">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    {title && <h2 class="section-title reveal" set:html={title} />}
+    {lede && <p class="lede reveal">{lede}</p>}
+    <ol class="tl-list">
+      {
+        entries.map((e) => (
+          <li class={`tl-item reveal ${e.highlight ? 'is-hl' : ''}`}>
+            <span class="tl-dot" aria-hidden="true" />
+            <p class="tl-date">{e.date}</p>
+            <h3>{e.title}</h3>
+            {e.text && <p class="tl-text">{e.text}</p>}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-warm {
+    background: var(--bg-warm);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+  .tl-list {
+    list-style: none;
+    margin-top: 54px;
+    max-width: 760px;
+    position: relative;
+    padding-left: 34px;
+  }
+  /* filet vertical continu */
+  .tl-list::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: var(--line);
+  }
+  .tl-item {
+    position: relative;
+    padding-bottom: 40px;
+  }
+  .tl-item:last-child {
+    padding-bottom: 0;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -34px;
+    top: 6px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+  }
+  .bg-warm .tl-dot {
+    background: var(--bg-warm);
+  }
+  .bg-white .tl-dot {
+    background: var(--white);
+  }
+  .tl-item.is-hl .tl-dot {
+    background: var(--terra);
+    border-color: var(--terra);
+  }
+  .tl-date {
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .tl-item h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .tl-text {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+  .tl-item.is-hl h3 {
+    color: var(--terra-deep);
+  }
+</style>
