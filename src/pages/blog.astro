@@ -16,7 +16,7 @@ const posts = (await getCollection('blog')).sort(
 
 const articles = posts.map((p) => ({
   title: p.data.title,
-  href: `/blog/${p.id}/`,
+  href: `${ROUTES.blog}${p.id}/`,
   image:
     p.data.cover ??
     'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop',

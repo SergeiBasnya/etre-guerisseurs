@@ -3,8 +3,9 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // URL de production — à ajuster lors du déploiement
-  site: 'https://etreguerisseurs.com',
+  // Preview GitHub Pages (sous-chemin). En prod réelle : site domaine + base '/'.
+  site: 'https://sergeibasnya.github.io',
+  base: '/etre-guerisseurs',
 
   // v1 : 100 % statique (rapide, SEO, hébergement gratuit).
   // Phase 2 (ventes Stripe / consultations) : passer en 'static' + endpoints

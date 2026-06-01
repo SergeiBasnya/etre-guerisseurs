@@ -31,7 +31,7 @@ const dateStr = fmt.format(post.data.date);
   description={post.data.description}
   crumbs={[
     { label: 'Blog', href: ROUTES.blog },
-    { label: post.data.title, href: `/blog/${post.id}/` },
+    { label: post.data.title, href: `${ROUTES.blog}${post.id}/` },
   ]}
   bandImage={post.data.cover}
 >

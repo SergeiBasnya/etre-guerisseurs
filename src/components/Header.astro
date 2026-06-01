@@ -4,7 +4,7 @@ import { SITE, NAV, ROUTES } from '../consts';
 const pathname = Astro.url.pathname;
 // Une entrée est active si on est sur sa page ou une de ses pages enfants.
 function isActive(href: string): boolean {
-  if (href === ROUTES.home) return pathname === '/';
+  if (href === ROUTES.home) return pathname === ROUTES.home;
   return pathname === href || pathname.startsWith(href);
 }
 ---

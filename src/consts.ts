@@ -57,21 +57,27 @@ export const SOCIALS = {
 /* Routes — toutes les URLs du site en un seul endroit.                */
 /* ------------------------------------------------------------------ */
 
+// Base du site (« / » en local/prod racine, « /etre-guerisseurs » sur GitHub Pages).
+const B = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** Lien vers un fichier de public/ en tenant compte de la base. */
+export const asset = (p: string): string => `${B}/${p.replace(/^\/+/, '')}`;
+
 export const ROUTES = {
-  home: '/',
+  home: `${B}/`,
 
-  enseignement: '/enseignement/',
-  accompagnement: '/accompagnement/',
-  soins: '/soins-therapies/',
+  enseignement: `${B}/enseignement/`,
+  accompagnement: `${B}/accompagnement/`,
+  soins: `${B}/soins-therapies/`,
 
-  praticien: '/praticien/',
-  agenda: '/agenda/',
-  blog: '/blog/',
-  temoignages: '/temoignages/',
-  contact: '/contact/',
+  praticien: `${B}/praticien/`,
+  agenda: `${B}/agenda/`,
+  blog: `${B}/blog/`,
+  temoignages: `${B}/temoignages/`,
+  contact: `${B}/contact/`,
 
-  mentions: '/mentions-legales/',
-  confidentialite: '/politique-confidentialite/',
+  mentions: `${B}/mentions-legales/`,
+  confidentialite: `${B}/politique-confidentialite/`,
 } as const;
 
 /* Ancres des sous-sections (deep-linking + menus déroulants). */

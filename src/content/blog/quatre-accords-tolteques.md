@@ -38,4 +38,4 @@ Le Cinquième Accord — **soyez sceptique, mais apprenez à écouter** — est 
 
 Adopter les Accords Toltèques comme code de conduite, c'est gagner en clarté, en paix et en fluidité : une efficacité relationnelle améliorée à la maison comme au travail, une écologie au quotidien en vivant selon ses valeurs, une meilleure santé globale, et un enthousiasme bien réel.
 
-Ces accords s'apprennent un à un, au rythme des saisons — en [cours](/enseignement/#cours), en [stage](/enseignement/#stages) ou en [formation](/enseignement/#formations).
+Ces accords s'apprennent un à un, au rythme des saisons — en cours, en stage ou en formation, dans la rubrique Enseignement.

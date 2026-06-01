@@ -4,7 +4,7 @@ import SplitFeature from '../components/sections/SplitFeature.astro';
 import Timeline from '../components/sections/Timeline.astro';
 import IconList from '../components/sections/IconList.astro';
 import CtaBanner from '../components/sections/CtaBanner.astro';
-import { ROUTES, SITE } from '../consts';
+import { ROUTES, SITE, asset } from '../consts';
 
 const parcours = [
   {
@@ -71,7 +71,7 @@ const formations = [
       "Les Accords Toltèques, outil de connaissance de soi, de communication et d'exploration de la conscience, sont le support numéro un que j'utilise en coaching comme en formation : d'abord en autodidacte auprès du public durant cinq ans, puis formé par Olivier Clerc, Don Miguel et Don José Ruiz.",
       "Mon intention : aider chacun, au travers de ma démarche d'éclaireur dans la voie toltèque, à réaliser son rêve de liberté et de bonheur personnel — partout et pour tous.",
     ]}
-    image="/pierre-alexandre.jpg"
+    image={asset('pierre-alexandre.jpg')}
     imageAlt="Pierre-Alexandre Morales, praticien"
     bg="cream"
   />
