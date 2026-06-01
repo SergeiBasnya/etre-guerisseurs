@@ -11,6 +11,7 @@
     "prebuild": "node scripts/fetch-facebook-events.mjs",
     "build": "astro build",
     "preview": "astro preview",
+    "deploy:preview": "bash scripts/deploy-preview.sh",
     "astro": "astro"
   },
   "dependencies": {
