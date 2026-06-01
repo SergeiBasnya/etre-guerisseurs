@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import InnerPage from '../../layouts/InnerPage.astro';
+import Prose from '../../components/sections/Prose.astro';
+import CtaBanner from '../../components/sections/CtaBanner.astro';
+import { ROUTES } from '../../consts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+const dateStr = fmt.format(post.data.date);
+---
+
+<InnerPage
+  eyebrow={`${post.data.category} · ${dateStr}`}
+  h1={post.data.title}
+  lede={post.data.description}
+  description={post.data.description}
+  crumbs={[
+    { label: 'Blog', href: ROUTES.blog },
+    { label: post.data.title, href: `/blog/${post.id}/` },
+  ]}
+  bandImage={post.data.cover}
+>
+  <Prose bg="cream">
+    <Content />
+  </Prose>
+
+  <CtaBanner
+    eyebrow={`Par ${post.data.author}`}
+    title="Envie d'aller <span class='em'>plus loin</span> ?"
+    text="Cours, stages, accompagnement ou soin : échangeons pour trouver ce qui vous convient."
+    ctaLabel="Prendre contact"
+    ctaHref={ROUTES.contact}
+    altLabel="Voir l'agenda"
+    altHref={ROUTES.agenda}
+    variant="ink"
+  />
+</InnerPage>

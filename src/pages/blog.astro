@@ -1,14 +1,38 @@
 ---
 import InnerPage from '../layouts/InnerPage.astro';
-import Placeholder from '../components/Placeholder.astro';
+import BlogGrid from '../components/sections/BlogGrid.astro';
+import { getCollection } from 'astro:content';
 import { ROUTES } from '../consts';
+
+const fmt = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const articles = posts.map((p) => ({
+  title: p.data.title,
+  href: `/blog/${p.id}/`,
+  image:
+    p.data.cover ??
+    'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1200&auto=format&fit=crop',
+  imageAlt: p.data.coverAlt ?? '',
+  category: p.data.category,
+  meta: `${fmt.format(p.data.date)}${p.data.readingTime ? ' · ' + p.data.readingTime : ''}`,
+  excerpt: p.data.description,
+}));
 ---
 
 <InnerPage
   eyebrow="Journal"
   h1="Le blog"
-  lede="Réflexions, enseignements et conseils autour de la voie toltèque, du magnétisme et du chemin vers soi."
+  lede="Réflexions et enseignements autour de la voie toltèque, du magnétisme et du chemin vers soi."
+  description="Articles et réflexions sur la voie toltèque, les accords toltèques et le magnétisme, par Pierre-Alexandre Morales."
   crumbs={[{ label: 'Blog', href: ROUTES.blog }]}
 >
-  <Placeholder note="Liste des articles (collection de contenu Astro à mettre en place : src/content/blog/). Chaque article : /blog/{slug}/, signé par le praticien. Alimente les piliers « voie toltèque »." />
+  <BlogGrid articles={articles} bg="cream" />
 </InnerPage>
