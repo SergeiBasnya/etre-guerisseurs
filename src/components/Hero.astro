@@ -1,4 +1,6 @@
 ---
+import { ROUTES } from '../consts';
+
 const HERO_IMG =
   'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=2400&auto=format&fit=crop';
 
@@ -18,7 +20,7 @@ const avatars = [
         Magnétisme, soins énergétiques et enseignements toltèques pour devenir le
         créateur de sa vie et en faire une œuvre d'art.
       </p>
-      <a href="#stages" class="btn btn-light">Découvrir les stages</a>
+      <a href={ROUTES.stagesRetraites} class="btn btn-light">Découvrir les stages</a>
     </div>
   </div>
   <div class="reassure">

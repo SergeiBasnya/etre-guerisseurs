@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Cabinet de Nyons"
+  h1="Magnétiseur & soins énergétiques à Nyons"
+  lede="Le cabinet, au 7 avenue de Verdun à Nyons (26110) : magnétisme, soins énergétiques et accompagnement toltèque."
+  crumbs={[{ label: 'Cabinet de Nyons', href: ROUTES.nyons }]}
+>
+  <Placeholder note="Page locale Nyons : adresse, accès, horaires, prestations sur place, plan/carte, avis. Cible « magnétiseur Nyons ». Schema LocalBusiness + carte." />
+</InnerPage>

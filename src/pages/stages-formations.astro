@@ -1,0 +1,27 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import LinkGrid from '../components/LinkGrid.astro';
+import { ROUTES } from '../consts';
+
+const cards = [
+  {
+    label: 'Stages & retraites',
+    href: ROUTES.stagesRetraites,
+    text: 'Des temps en présentiel et en immersion dans la nature, au rythme des saisons et des quatre éléments.',
+  },
+  {
+    label: 'Formations à distance',
+    href: ROUTES.formationsDistance,
+    text: "Apprendre la voie toltèque depuis chez soi, à son rythme, avec un parcours structuré.",
+  },
+];
+---
+
+<InnerPage
+  eyebrow="Stages & formations"
+  h1="Apprendre & pratiquer la voie toltèque"
+  lede="Monter en autonomie sur le chemin toltèque : en présentiel lors de stages et retraites, ou à distance à travers des formations en ligne."
+  crumbs={[{ label: 'Stages & formations', href: ROUTES.stagesFormations }]}
+>
+  <LinkGrid cards={cards} />
+</InnerPage>

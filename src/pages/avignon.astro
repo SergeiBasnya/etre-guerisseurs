@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Consultations à Avignon"
+  h1="Magnétiseur & soins énergétiques à Avignon"
+  lede="Consultations de magnétisme, soins énergétiques et accompagnement toltèque à Avignon."
+  crumbs={[{ label: 'Consultations Avignon', href: ROUTES.avignon }]}
+>
+  <Placeholder note="Page locale Avignon : lieu et modalités des consultations, prestations, prise de rendez-vous. Cible « magnétiseur / soin énergétique Avignon »." />
+</InnerPage>

@@ -1,0 +1,15 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Informations légales"
+  h1="Mentions légales"
+  lede="Éditeur du site, hébergeur et informations légales."
+  crumbs={[{ label: 'Mentions légales', href: ROUTES.mentions }]}
+  hideClosing
+>
+  <Placeholder note="Mentions légales : éditeur (raison sociale, SIRET, statut), directeur de publication, hébergeur, contact. À compléter avec les infos du client." />
+</InnerPage>

@@ -1,0 +1,15 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Informations légales"
+  h1="Politique de confidentialité"
+  lede="Traitement des données personnelles et utilisation des cookies (RGPD)."
+  crumbs={[{ label: 'Politique de confidentialité', href: ROUTES.confidentialite }]}
+  hideClosing
+>
+  <Placeholder note="Politique RGPD : données collectées (formulaire de contact, agenda), finalités, durée, droits, cookies. Indispensable avant la vente en ligne Stripe (phase 2)." />
+</InnerPage>

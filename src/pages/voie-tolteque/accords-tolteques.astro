@@ -1,0 +1,17 @@
+---
+import InnerPage from '../../layouts/InnerPage.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { ROUTES } from '../../consts';
+---
+
+<InnerPage
+  eyebrow="La voie toltèque"
+  h1="Les quatre accords toltèques"
+  lede="Que ta parole soit impeccable, n'en fais pas une affaire personnelle, ne fais pas de suppositions, fais toujours de ton mieux : quatre accords pour transformer sa vie."
+  crumbs={[
+    { label: 'La voie toltèque', href: ROUTES.voie },
+    { label: 'Accords toltèques', href: ROUTES.accords },
+  ]}
+>
+  <Placeholder note="Article pilier détaillé sur les 4 (5) accords toltèques. Fort potentiel SEO et citations IA. Pousse vers le stage/cycle « Accords toltèques » et l'accompagnement individuel." />
+</InnerPage>

@@ -1,0 +1,17 @@
+---
+import InnerPage from '../../layouts/InnerPage.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { ROUTES } from '../../consts';
+---
+
+<InnerPage
+  eyebrow="Formations à distance"
+  h1="Formations à distance"
+  lede="Se former à la voie toltèque depuis chez soi, à son rythme : un parcours structuré pour intégrer les accords et les maîtrises au quotidien."
+  crumbs={[
+    { label: 'Stages & formations', href: ROUTES.stagesFormations },
+    { label: 'Formations à distance', href: ROUTES.formationsDistance },
+  ]}
+>
+  <Placeholder note="Présentation des formations en ligne (modules, contenu, accès). Phase 2 : espace membre + paiement Stripe. En v1, page descriptive + liste d'attente / contact." />
+</InnerPage>

@@ -1,5 +1,5 @@
 ---
-import { CONTACT } from '../consts';
+import { CONTACT, ROUTES } from '../consts';
 const lieux = CONTACT.consultations.join(' & ');
 ---
 
@@ -9,7 +9,7 @@ const lieux = CONTACT.consultations.join(' & ');
     <p class="lede" style="margin-inline:auto;margin-bottom:14px">
       Consultations à {lieux}, stages partout en France et à l'étranger.
     </p>
-    <a href={CONTACT.phoneHref} class="btn">Prendre contact</a>
+    <a href={ROUTES.contact} class="btn">Prendre contact</a>
   </div>
 </section>
 

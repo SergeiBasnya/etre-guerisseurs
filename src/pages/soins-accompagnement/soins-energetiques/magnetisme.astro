@@ -1,0 +1,18 @@
+---
+import InnerPage from '../../../layouts/InnerPage.astro';
+import Placeholder from '../../../components/Placeholder.astro';
+import { ROUTES } from '../../../consts';
+---
+
+<InnerPage
+  eyebrow="Magnétisme"
+  h1="Le magnétisme"
+  lede="Une approche énergétique par l'imposition des mains pour soulager douleurs, stress et déséquilibres. Séances à Nyons, Avignon et Nîmes."
+  crumbs={[
+    { label: 'Soins & accompagnement', href: ROUTES.soins },
+    { label: 'Soins énergétiques', href: ROUTES.soinsEnergetiques },
+    { label: 'Magnétisme', href: ROUTES.magnetisme },
+  ]}
+>
+  <Placeholder note="Page dédiée magnétisme : qu'est-ce que le magnétisme, pour qui, indications, déroulé, tarifs. Cible SEO « magnétiseur Nyons / Avignon / Nîmes »." />
+</InnerPage>

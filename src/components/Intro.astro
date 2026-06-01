@@ -1,4 +1,6 @@
 ---
+import { ROUTES } from '../consts';
+
 const INTRO_IMG =
   'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1400&auto=format&fit=crop';
 ---
@@ -25,7 +27,7 @@ const INTRO_IMG =
         d'amour — en cabinet comme dans la nature, lors de stages d'intégration en
         immersion.
       </p>
-      <a href="#contact" class="card-link" style="margin-top:24px">En savoir plus</a>
+      <a href={ROUTES.praticien} class="card-link" style="margin-top:24px">En savoir plus</a>
     </div>
     <div class="intro-img reveal">
       <img src={INTRO_IMG} alt="Soin énergétique" loading="lazy" />

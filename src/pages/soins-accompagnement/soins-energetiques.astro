@@ -1,0 +1,17 @@
+---
+import InnerPage from '../../layouts/InnerPage.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { ROUTES } from '../../consts';
+---
+
+<InnerPage
+  eyebrow="Soins énergétiques"
+  h1="Soins énergétiques & mains lumière"
+  lede="Le magnétisme et les soins énergétiques pour libérer les tensions, relancer la circulation de l'énergie et retrouver l'apaisement — en cabinet à Nyons ou à distance."
+  crumbs={[
+    { label: 'Soins & accompagnement', href: ROUTES.soins },
+    { label: 'Soins énergétiques', href: ROUTES.soinsEnergetiques },
+  ]}
+>
+  <Placeholder note="Présentation des soins énergétiques (mains lumière, magnétisme, déroulé d'une séance, bienfaits). Lien vers la page Magnétisme et vers la prise de rendez-vous." />
+</InnerPage>

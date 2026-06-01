@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Ils témoignent"
+  h1="Témoignages"
+  lede="Les retours de celles et ceux qui ont cheminé en cabinet, en stage ou en accompagnement."
+  crumbs={[{ label: 'Témoignages', href: ROUTES.temoignages }]}
+>
+  <Placeholder note="Témoignages clients + note Google. Preuve sociale forte. Schema Review / AggregateRating pour les rich results." />
+</InnerPage>

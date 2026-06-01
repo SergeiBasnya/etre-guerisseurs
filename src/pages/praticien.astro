@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES, SITE } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Le praticien"
+  h1={SITE.intervenant}
+  lede="Éclaireur, instructeur et accompagnateur dans la voie toltèque, formé par Don Miguel Ruiz. Un parcours au service de la transmission, du soin et de la liberté intérieure."
+  crumbs={[{ label: 'Le praticien', href: ROUTES.praticien }]}
+>
+  <Placeholder note="Biographie complète : parcours, formation (Don Miguel Ruiz), approche, valeurs, photo. Page clé de confiance (E-E-A-T) et signature des articles du blog. Schema Person." />
+</InnerPage>

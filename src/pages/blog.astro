@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Journal"
+  h1="Le blog"
+  lede="Réflexions, enseignements et conseils autour de la voie toltèque, du magnétisme et du chemin vers soi."
+  crumbs={[{ label: 'Blog', href: ROUTES.blog }]}
+>
+  <Placeholder note="Liste des articles (collection de contenu Astro à mettre en place : src/content/blog/). Chaque article : /blog/{slug}/, signé par le praticien. Alimente les piliers « voie toltèque »." />
+</InnerPage>

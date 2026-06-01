@@ -1,0 +1,121 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import { ROUTES, CONTACT } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Contact"
+  h1="Prendre contact"
+  lede="Une question, une envie d'accompagnement ou de stage ? Écrivez-moi ou appelez le cabinet."
+  crumbs={[{ label: 'Contact', href: ROUTES.contact }]}
+  hideClosing
+>
+  <section>
+    <div class="container contact-grid">
+      <div class="coords">
+        <h2 class="section-title">Le cabinet</h2>
+        <ul>
+          <li>
+            <strong>Adresse</strong>
+            {CONTACT.address.street}<br />
+            {CONTACT.address.zip} {CONTACT.address.city}
+          </li>
+          <li>
+            <strong>Téléphone</strong>
+            <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+          </li>
+          <li>
+            <strong>Email</strong>
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          </li>
+          <li>
+            <strong>Consultations également à</strong>
+            {CONTACT.consultations.join(' & ')}
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact-form" method="post" action="#">
+        <!-- TODO : connecter à un service d'envoi (Formspree / Resend / endpoint serverless). -->
+        <label>Nom <input type="text" name="name" required /></label>
+        <label>Email <input type="email" name="email" required /></label>
+        <label>Téléphone <input type="tel" name="phone" /></label>
+        <label>Message <textarea name="message" rows="5" required></textarea></label>
+        <button type="submit" class="btn">Envoyer</button>
+        <p class="form-note">Formulaire à connecter (envoi d'email) — voir README.</p>
+      </form>
+    </div>
+  </section>
+</InnerPage>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 60px;
+  }
+  .coords ul {
+    list-style: none;
+    margin-top: 24px;
+  }
+  .coords li {
+    margin-bottom: 22px;
+    color: var(--ink-soft);
+  }
+  .coords strong {
+    display: block;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .coords a {
+    color: var(--terra);
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--ink);
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: 2px solid var(--terra);
+    outline-offset: 1px;
+  }
+  .contact-form .btn {
+    align-self: flex-start;
+    border: 0;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .form-note {
+    font-size: 0.8rem;
+    color: var(--sage);
+  }
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

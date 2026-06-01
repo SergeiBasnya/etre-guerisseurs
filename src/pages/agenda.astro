@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Agenda from '../components/Agenda.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Agenda"
+  h1="Les prochaines rencontres"
+  lede="Stages, ateliers, cercles et retraites à venir. Réservez votre place pour les prochaines dates."
+  crumbs={[{ label: 'Agenda', href: ROUTES.agenda }]}
+>
+  <Agenda />
+</InnerPage>

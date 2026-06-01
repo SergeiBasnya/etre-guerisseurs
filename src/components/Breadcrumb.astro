@@ -1,0 +1,73 @@
+---
+import { SITE, ROUTES } from '../consts';
+
+export interface Crumb {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  /** Fil sans l'accueil (ajouté automatiquement en tête). */
+  crumbs: Crumb[];
+}
+
+const { crumbs } = Astro.props;
+const full: Crumb[] = [{ label: 'Accueil', href: ROUTES.home }, ...crumbs];
+const base = Astro.site ?? new URL(SITE.url);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: full.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    item: new URL(c.href, base).href,
+  })),
+};
+---
+
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+  <ol>
+    {
+      full.map((c, i) => (
+        <li>
+          {i < full.length - 1 ? (
+            <a href={c.href}>{c.label}</a>
+          ) : (
+            <span aria-current="page">{c.label}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+
+<style>
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .breadcrumb li:not(:first-child)::before {
+    content: '›';
+    margin-right: 8px;
+    color: var(--gold);
+  }
+  .breadcrumb a {
+    color: var(--ink-soft);
+    transition: color 0.3s;
+  }
+  .breadcrumb a:hover {
+    color: var(--terra);
+  }
+  .breadcrumb [aria-current='page'] {
+    color: var(--ink);
+    font-weight: 500;
+  }
+</style>

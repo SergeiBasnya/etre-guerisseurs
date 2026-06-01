@@ -1,0 +1,14 @@
+---
+import InnerPage from '../layouts/InnerPage.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { ROUTES } from '../consts';
+---
+
+<InnerPage
+  eyebrow="Questions fréquentes"
+  h1="FAQ"
+  lede="Les réponses aux questions les plus courantes sur les soins, l'accompagnement et les stages."
+  crumbs={[{ label: 'FAQ', href: ROUTES.faq }]}
+>
+  <Placeholder note="Questions/réponses (déroulé d'une séance, « est-ce médical ? », déontologie, modalités, annulation…). Réponses directes → AI Overviews/GEO. Schema FAQPage." />
+</InnerPage>

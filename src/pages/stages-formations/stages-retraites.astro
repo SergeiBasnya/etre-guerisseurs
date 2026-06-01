@@ -1,0 +1,19 @@
+---
+import InnerPage from '../../layouts/InnerPage.astro';
+import Stages from '../../components/Stages.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { ROUTES } from '../../consts';
+---
+
+<InnerPage
+  eyebrow="Stages & retraites"
+  h1="Stages & retraites"
+  lede="Des espaces de transformation en petits groupes, au contact des quatre éléments : stages d'intégration, cycles saisonniers et retraites en immersion."
+  crumbs={[
+    { label: 'Stages & formations', href: ROUTES.stagesFormations },
+    { label: 'Stages & retraites', href: ROUTES.stagesRetraites },
+  ]}
+>
+  <Stages />
+  <Placeholder note="Liste complète des stages/retraites à venir (fiches détaillées avec dates, lieu, prix, inscription). Réutilise les données de src/data/stages.ts. Lien vers l'Agenda." />
+</InnerPage>

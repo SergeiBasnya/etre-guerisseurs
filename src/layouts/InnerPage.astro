@@ -1,0 +1,89 @@
+---
+import Base from './Base.astro';
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import type { Crumb } from '../components/Breadcrumb.astro';
+import Closing from '../components/Closing.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../consts';
+
+interface Props {
+  /** Titre <title> SEO. Par défaut : "{h1} — {SITE.name}". */
+  title?: string;
+  /** Meta description SEO. */
+  description?: string;
+  /** Surtitre du bandeau. */
+  eyebrow: string;
+  /** Titre principal H1. */
+  h1: string;
+  /** Chapô sous le titre. */
+  lede?: string;
+  /** Fil d'Ariane (sans l'accueil). */
+  crumbs: Crumb[];
+  /** Masquer le bloc CTA de fin. */
+  hideClosing?: boolean;
+}
+
+const {
+  h1,
+  eyebrow,
+  lede,
+  crumbs,
+  description,
+  hideClosing = false,
+  title = `${h1} — ${SITE.name}`,
+} = Astro.props;
+---
+
+<Base title={title} description={description ?? lede}>
+  <TopBar />
+  <Header />
+
+  <div class="page-band">
+    <div class="container">
+      <Breadcrumb crumbs={crumbs} />
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{h1}</h1>
+      {lede && <p class="lede">{lede}</p>}
+    </div>
+  </div>
+
+  <main>
+    <slot />
+  </main>
+
+  {!hideClosing && <Closing />}
+  <Footer />
+</Base>
+
+<style>
+  .page-band {
+    /* dégage la topbar (42px) + header fixe */
+    padding: 150px 0 56px;
+    background: var(--bg-warm);
+    border-bottom: 1px solid var(--line);
+  }
+  .page-band .eyebrow {
+    margin-top: 22px;
+  }
+  .page-band h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin-bottom: 18px;
+  }
+  .page-band .lede {
+    margin-top: 4px;
+  }
+  main {
+    padding: 0;
+  }
+  @media (max-width: 900px) {
+    .page-band {
+      padding: 120px 0 44px;
+    }
+  }
+</style>
