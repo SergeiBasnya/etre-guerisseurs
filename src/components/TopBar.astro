@@ -3,6 +3,7 @@ import { SOCIALS, CONTACT } from '../consts';
 ---
 
 <div class="topbar" id="topbar">
+  <div class="container">
   <div class="socials">
     <a href={SOCIALS.instagram} aria-label="Instagram">
       <svg viewBox="0 0 24 24"
@@ -34,6 +35,7 @@ import { SOCIALS, CONTACT } from '../consts';
       ></path></svg
     >{CONTACT.phone}
   </a>
+  </div>
 </div>
 
 <style>
@@ -43,14 +45,16 @@ import { SOCIALS, CONTACT } from '../consts';
     left: 0;
     right: 0;
     z-index: 101;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 32px;
+    padding: 10px 0;
     font-size: 0.8rem;
     color: var(--white);
     background: var(--terra-deep);
     transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .topbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .topbar.hidden {
     opacity: 0;
