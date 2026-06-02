@@ -33,6 +33,7 @@ const dateStr = fmt.format(post.data.date);
     { label: 'Blog', href: ROUTES.blog },
     { label: post.data.title, href: `${ROUTES.blog}${post.id}/` },
   ]}
+  hideClosing
   bandImage={post.data.cover}
 >
   <Prose bg="cream">
@@ -47,6 +48,6 @@ const dateStr = fmt.format(post.data.date);
     ctaHref={ROUTES.contact}
     altLabel="Voir l'agenda"
     altHref={ROUTES.agenda}
-    variant="ink"
+    variant="warm"
   />
 </InnerPage>
