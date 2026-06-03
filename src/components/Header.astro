@@ -327,14 +327,6 @@ function isActive(href: string): boolean {
     margin-bottom: 8px;
     border-bottom: 1px solid rgba(199, 154, 78, 0.18);
   }
-  .submenu-kicker {
-    display: block;
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 4px;
-  }
   .submenu .submenu-title {
     display: flex;
     align-items: baseline;
@@ -347,26 +339,11 @@ function isActive(href: string): boolean {
     color: #fff !important;
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
   }
-  .submenu-all {
-    font-family: var(--sans, inherit);
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: rgba(250, 246, 240, 0.7);
-    white-space: nowrap;
-    transition: color 0.22s ease;
-  }
   .submenu .submenu-title:hover {
     color: var(--gold) !important;
   }
-  .submenu .submenu-title:hover .submenu-all {
-    color: var(--gold);
-  }
 
-  /* En-tête — cas court : titre garanti sur une ligne (un peu plus petit),
-     « Tout voir » empilé sous le titre et aligné à gauche. Fini le
-     space-between qui collait le lien en haut à droite d'un titre sur 2 lignes. */
+  /* En-tête — cas court : titre garanti sur une ligne (un peu plus petit). */
   .submenu[data-count='2'] .submenu-head,
   .submenu[data-count='1'] .submenu-head {
     padding: 2px 8px 10px;
@@ -379,10 +356,6 @@ function isActive(href: string): boolean {
     gap: 5px;
     font-size: 1.08rem;
     white-space: nowrap;
-  }
-  .submenu[data-count='2'] .submenu-all,
-  .submenu[data-count='1'] .submenu-all {
-    font-size: 0.62rem;
   }
 
   /* grille d'items — 2 colonnes par défaut (panneau large),
