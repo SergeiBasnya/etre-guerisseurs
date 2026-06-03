@@ -1,17 +1,10 @@
 ---
 import InnerPage from '../layouts/InnerPage.astro';
 import SplitFeature from '../components/sections/SplitFeature.astro';
-import IconList from '../components/sections/IconList.astro';
+import SeasonStages from '../components/sections/SeasonStages.astro';
 import InfoBox from '../components/sections/InfoBox.astro';
 import CtaBanner from '../components/sections/CtaBanner.astro';
 import { ROUTES } from '../consts';
-
-const stagesSaison = [
-  { icon: 'spark', title: 'RENAÎTRE — Printemps', text: "Sur l'impeccabilité. Être et bien-être impeccablement impeccable. Fin janvier à mi-avril." },
-  { icon: 'heart', title: 'AIMER — Été', text: "Choisir l'amour, libérer et adoucir le cœur. De fin mai à début septembre." },
-  { icon: 'heart', title: 'Médecine Toltèque du Cœur', text: 'Guérir le cœur, guérir par le cœur. De mai à août.' },
-  { icon: 'leaf', title: "La Maîtrise de l'Amour", text: 'Un art des relations aimables et aimantes. De juin à août.' },
-];
 ---
 
 <InnerPage
@@ -51,9 +44,8 @@ const stagesSaison = [
       reverse
       bg="warm"
     />
-    <section class="band">
+    <section class="band bg-warm">
       <div class="container">
-        <p class="band-note">Venez essayer un premier cours sans engagement lors de la première matinée !</p>
         <InfoBox
           rows={[
             { label: 'Lieux', value: 'Nyons (26) & Avignon (84)' },
@@ -69,62 +61,18 @@ const stagesSaison = [
 
   <!-- ============ STAGES ============ -->
   <div id="stages">
-    <IconList
+    <SeasonStages
       eyebrow="2 · Stages"
       title="Stages pratiques de formation, <span class='em'>thématiques et saisonniers</span>"
-      lede="Dans la nature, en résidentiel. Maîtrises, accords et clés d’enseignement toltèques, abordés saison après saison."
-      items={stagesSaison}
-      columns={2}
+      lede="Dans la nature, en résidentiel. Maîtrises, accords et clés d’enseignement toltèques, abordés saison après saison — au fil du cycle annuel."
       bg="cream"
     />
-    <section class="band">
-      <div class="container">
-        <p class="band-note">
-          Sessions de trois jours en résidentiel en pleine nature (Drôme et Vaucluse).
-          Possibilité de programmer un stage ailleurs en France et à l’étranger
-          francophone, à partir de huit personnes.
-        </p>
-        <InfoBox
-          rows={[
-            { label: 'Lieu', value: 'Reilhanette (26570) & Drôme provençale' },
-            { label: 'Durée', value: '3 jours en résidentiel' },
-            { label: 'Tarif', value: '350 €' },
-          ]}
-          ctaLabel="Voir les prochaines dates (agenda)"
-          ctaHref={ROUTES.agenda}
-        />
-      </div>
-    </section>
   </div>
 
   <!-- ============ FORMATIONS ============ -->
   <div id="formations">
     <SplitFeature
       eyebrow="3 · Formations"
-      title="La Voie de la Liberté Personnelle, <span class='em'>en ligne</span>"
-      paragraphs={[
-        "Une formation en ligne de plus de trois heures sur les Accords Toltèques, co-créée avec l’artiste musicien Sébastien Prats. Une cinquantaine de leçons théoriques et de tâches pédagogiques, à suivre depuis chez vous, à votre rythme, sans limite dans le temps, avec un suivi assuré par le formateur.",
-        "À l’issue, vous serez capable d’adopter les Accords Toltèques dans votre vie quotidienne, accompagné de nombreux bénéfices de mieux-être. Une idée de cadeau originale à s’offrir et à offrir.",
-      ]}
-      image="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?q=80&w=1400&auto=format&fit=crop"
-      imageAlt="Formation en ligne aux Accords Toltèques"
-      bg="warm"
-    />
-    <section class="band">
-      <div class="container">
-        <InfoBox
-          rows={[
-            { label: 'Format', value: 'En ligne · +50 leçons · +3h' },
-            { label: 'Accès', value: 'À votre rythme, sans limite de temps' },
-          ]}
-          ctaLabel="Découvrir la formation en ligne"
-          ctaHref={ROUTES.contact}
-        />
-      </div>
-    </section>
-
-    <SplitFeature
-      eyebrow="Formations en présence"
       title="Deux cycles pour <span class='em'>maîtriser les accords</span>"
       paragraphs={[
         "<strong>La Voie de la Liberté Personnelle en dix leçons</strong> — maîtriser les Quatre Accords Toltèques. Une année (janvier→décembre ou mars→février), soit 60 heures sur dix journées de 6h. Pour particuliers et professionnels du bien-être, de la santé et de l’accompagnement. <em>Tarif : 950 €.</em>",
@@ -133,10 +81,9 @@ const stagesSaison = [
       ]}
       image="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1400&auto=format&fit=crop"
       imageAlt="Formation en présence"
-      reverse
-      bg="cream"
+      bg="warm"
     />
-    <section class="band">
+    <section class="band bg-warm">
       <div class="container">
         <InfoBox
           rows={[
@@ -145,6 +92,31 @@ const stagesSaison = [
             { label: 'Lieux', value: 'Drôme · Vaucluse · Provence' },
           ]}
           ctaLabel="Télécharger le programme"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+
+    <SplitFeature
+      eyebrow="Formations en ligne"
+      title="La Voie de la Liberté Personnelle, <span class='em'>en ligne</span>"
+      paragraphs={[
+        "Une formation en ligne de plus de trois heures sur les Accords Toltèques, co-créée avec l’artiste musicien Sébastien Prats. Une cinquantaine de leçons théoriques et de tâches pédagogiques, à suivre depuis chez vous, à votre rythme, sans limite dans le temps, avec un suivi assuré par le formateur.",
+        "À l’issue, vous serez capable d’adopter les Accords Toltèques dans votre vie quotidienne, accompagné de nombreux bénéfices de mieux-être. Une idée de cadeau originale à s’offrir et à offrir.",
+      ]}
+      image="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?q=80&w=1400&auto=format&fit=crop"
+      imageAlt="Formation en ligne aux Accords Toltèques"
+      reverse
+      bg="cream"
+    />
+    <section class="band bg-cream">
+      <div class="container">
+        <InfoBox
+          rows={[
+            { label: 'Format', value: 'En ligne · +50 leçons · +3h' },
+            { label: 'Accès', value: 'À votre rythme, sans limite de temps' },
+          ]}
+          ctaLabel="Découvrir la formation en ligne"
           ctaHref={ROUTES.contact}
         />
       </div>
@@ -164,7 +136,7 @@ const stagesSaison = [
       imageAlt="Retraite spirituelle dans la nature"
       bg="warm"
     />
-    <section class="band">
+    <section class="band bg-warm">
       <div class="container">
         <InfoBox
           rows={[
@@ -188,7 +160,7 @@ const stagesSaison = [
       reverse
       bg="cream"
     />
-    <section class="band">
+    <section class="band bg-cream">
       <div class="container">
         <InfoBox
           rows={[
@@ -218,11 +190,5 @@ const stagesSaison = [
 <style>
   .band {
     padding: 0 0 90px;
-  }
-  .band-note {
-    max-width: 760px;
-    margin-bottom: 4px;
-    color: var(--ink-soft);
-    font-style: italic;
   }
 </style>

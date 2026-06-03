@@ -1,0 +1,407 @@
+---
+/**
+ * Catalogue des stages saisonniers, en accordéon par saison.
+ * Chaque saison (thème) regroupe ses stages ; chaque stage est un <details>
+ * replié (titre, sous-titre, dates/lieu/tarif) qui se déploie au clic pour
+ * révéler la description longue, le programme et les infos pratiques.
+ *
+ * Données : src/data/stages-saison.ts. Aucun JS requis (élément natif).
+ */
+import { SAISONS, STAGE_NOTE, STAGE_CTA } from '../../data/stages-saison';
+import { ROUTES } from '../../consts';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  bg?: 'cream' | 'warm' | 'white';
+}
+
+const {
+  eyebrow = '2 · Stages',
+  title = 'Stages pratiques de formation, <span class="em">thématiques et saisonniers</span>',
+  lede = "Dans la nature, en résidentiel. Maîtrises, accords et clés d'enseignement toltèques, abordés saison après saison.",
+  bg = 'cream',
+} = Astro.props;
+
+// Glyphes de saison (traits fins, façon IconList).
+const icons: Record<string, string> = {
+  sprout:
+    'M12 21v-7m0 0c0-2.8-1.8-5-5-5 0 2.8 1.8 5 5 5zm0 0c0-3.3 2.2-6 5-6 0 3.3-2.2 6-5 6z',
+  sun: 'M12 4V2m0 20v-2m8-8h2M2 12h2m13.7-5.7 1.4-1.4M4.9 19.1l1.4-1.4m0-12.8L4.9 4.9m14.2 14.2-1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z',
+  leaf: 'M5 21c0-7 4-13 14-16-1 9-6 15-14 16zm0 0c2-4 5-6 9-7',
+  snow: 'M12 2v20M3.5 7l17 10M20.5 7l-17 10M12 5l-3 2 3 2 3-2-3-2zm0 14-3-2 3-2 3 2-3 2z',
+};
+---
+
+<section class={`stages bg-${bg}`} id="stages-catalogue">
+  <div class="container">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    {title && <h2 class="section-title reveal" set:html={title} />}
+    {lede && <p class="lede reveal">{lede}</p>}
+
+    <div class="seasons">
+      {
+        SAISONS.map((saison) => (
+          <div class="season reveal">
+            <div class="season-head">
+              <span class="season-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d={icons[saison.icon]}
+                    stroke="currentColor"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <h3 class="season-name">{saison.name}</h3>
+              <span class="season-theme">Thème&nbsp;: {saison.theme}</span>
+            </div>
+
+            <div class="stage-list">
+              {saison.stages.map((stage) => (
+                <details class="stage" id={stage.id}>
+                  <summary>
+                    <div class="stage-summary">
+                      <div class="stage-id">
+                        <h4 class="stage-title">
+                          {stage.title}
+                          {stage.isNew && <span class="badge">Nouveau</span>}
+                        </h4>
+                        <p class="stage-sub">{stage.subtitle}</p>
+                      </div>
+                      <div class="stage-quick">
+                        {stage.nextDate && (
+                          <span class="q-date">{stage.nextDate}</span>
+                        )}
+                        {stage.lieu && <span class="q-lieu">{stage.lieu}</span>}
+                        <span class="q-price">{stage.tarif}</span>
+                      </div>
+                      <span class="chev" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M6 9l6 6 6-6"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </summary>
+
+                  <div class="stage-body">
+                    {stage.paragraphs.map((p) => (
+                      <p set:html={p} />
+                    ))}
+
+                    {stage.programme && (
+                      <div class="prog">
+                        <p class="prog-label">Au programme</p>
+                        <ul>
+                          {stage.programme.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    <dl class="stage-meta">
+                      <div>
+                        <dt>Durée</dt>
+                        <dd>{stage.duree}</dd>
+                      </div>
+                      <div>
+                        <dt>Fréquence</dt>
+                        <dd>{stage.frequence}</dd>
+                      </div>
+                      <div>
+                        <dt>Tarif</dt>
+                        <dd>{stage.tarif}</dd>
+                      </div>
+                      {stage.nextDate && (
+                        <div>
+                          <dt>Prochaines dates</dt>
+                          <dd>{stage.nextDate}</dd>
+                        </div>
+                      )}
+                      {stage.lieu && (
+                        <div>
+                          <dt>Lieu</dt>
+                          <dd>{stage.lieu}</dd>
+                        </div>
+                      )}
+                    </dl>
+
+                    <a class="btn" href={stage.ctaHref ?? STAGE_CTA}>
+                      Nous contacter
+                    </a>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="stage-note reveal">{STAGE_NOTE}</p>
+    <a class="card-link reveal" href={ROUTES.agenda} style="margin-top:8px">
+      Voir les prochaines dates (agenda) →
+    </a>
+  </div>
+</section>
+
+<style>
+  .bg-cream {
+    background: var(--bg);
+  }
+  .bg-warm {
+    background: var(--bg-warm);
+  }
+  .bg-white {
+    background: var(--white);
+  }
+
+  .seasons {
+    margin-top: 54px;
+    display: grid;
+    gap: 56px;
+  }
+
+  /* En-tête de saison */
+  .season-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .season-ic {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--bg-warm);
+    color: var(--terra);
+    border: 1px solid var(--line);
+  }
+  .bg-warm .season-ic {
+    background: var(--white);
+  }
+  .season-ic svg {
+    width: 22px;
+    height: 22px;
+  }
+  .season-name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+  .season-theme {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+  }
+
+  /* Liste des stages d'une saison */
+  .stage-list {
+    margin-top: 6px;
+  }
+  .stage {
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* En-tête cliquable */
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 0;
+    transition: padding-left 0.3s ease;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary:hover {
+    padding-left: 10px;
+  }
+  .stage-summary {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 18px 28px;
+  }
+  .stage-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.28rem;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .stage-sub {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--terra);
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .stage-quick {
+    text-align: right;
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .q-date {
+    display: block;
+    color: var(--terra);
+    font-weight: 600;
+  }
+  .q-lieu {
+    display: block;
+  }
+  .q-lieu::before {
+    content: '◈  ';
+    color: var(--gold);
+  }
+  .q-price {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+  .chev {
+    color: var(--terra);
+    display: grid;
+    place-items: center;
+    transition: transform 0.3s ease;
+  }
+  .chev svg {
+    width: 22px;
+    height: 22px;
+  }
+  .stage[open] .chev {
+    transform: rotate(180deg);
+  }
+
+  /* Corps déployé */
+  .stage-body {
+    padding: 4px 0 30px;
+    max-width: 820px;
+  }
+  .stage-body > p {
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .prog {
+    margin: 22px 0 6px;
+  }
+  .prog-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .prog ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 28px;
+  }
+  .prog li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--ink-soft);
+    font-size: 0.94rem;
+    line-height: 1.4;
+  }
+  .prog li::before {
+    content: '◈';
+    position: absolute;
+    left: 0;
+    top: 1px;
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  /* Infos pratiques */
+  .stage-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    margin: 26px 0 24px;
+    padding: 22px 26px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .bg-white .stage-meta {
+    background: var(--bg);
+  }
+  .stage-meta dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .stage-meta dd {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    color: var(--ink);
+    max-width: 360px;
+  }
+
+  /* Note commune + lien agenda */
+  .stage-note {
+    margin-top: 44px;
+    max-width: 760px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  @media (max-width: 760px) {
+    .stage-summary {
+      grid-template-columns: 1fr auto;
+    }
+    .stage-quick {
+      grid-column: 1;
+      grid-row: 2;
+      text-align: left;
+    }
+    .q-lieu::before {
+      content: '';
+    }
+    .chev {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .prog ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

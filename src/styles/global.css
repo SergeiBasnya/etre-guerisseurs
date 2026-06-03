@@ -129,6 +129,21 @@ section {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
 }
 
+/* Fond des bandes « infos pratiques » : doit matcher la section au-dessus,
+   sinon l'InfoBox (lieu/durée/tarif) semble détachée de sa section.
+   flow-root contient la margin-top de l'InfoBox dans la zone colorée
+   (évite une fine bande crème par margin-collapse). */
+.band.bg-warm,
+.band.bg-cream {
+  display: flow-root;
+}
+.band.bg-warm {
+  background: var(--bg-warm);
+}
+.band.bg-cream {
+  background: var(--bg);
+}
+
 /* lien souligné récurrent */
 .card-link {
   display: inline-block;
