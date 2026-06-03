@@ -29,6 +29,8 @@ interface Props {
    * sur le modèle du hero d'accueil. Sinon, bandeau crème sobre par défaut.
    */
   bandImage?: string;
+  /** Image de partage social (OG/Twitter). Par défaut : le bandImage s'il existe. */
+  image?: string;
 }
 
 const {
@@ -39,12 +41,13 @@ const {
   description,
   hideClosing = false,
   bandImage,
+  image,
   title = `${h1} — ${SITE.name}`,
 } = Astro.props;
 const hasImage = Boolean(bandImage);
 ---
 
-<Base title={title} description={description ?? lede}>
+<Base title={title} description={description ?? lede} image={image ?? bandImage}>
   <TopBar />
   <Header solid={!hasImage} />
 
