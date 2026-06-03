@@ -2,6 +2,11 @@
 [build]
   command = "pnpm build"
   publish = "dist"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
+
+# La scheduled function refresh-agenda déclenche un rebuild quotidien (cron
+# déclaré dans netlify/functions/refresh-agenda.mjs). Variables d'env à régler
+# dans l'UI Netlify : FB_ICAL_URL (fetch au build) et NETLIFY_BUILD_HOOK.
