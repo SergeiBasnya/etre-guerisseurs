@@ -1,7 +1,7 @@
 ---
 import InnerPage from '../../layouts/InnerPage.astro';
 import eventsData from '../../data/events.json';
-import { ROUTES } from '../../consts';
+import { ROUTES, SITE } from '../../consts';
 
 interface AgendaEvent {
   id: string;
@@ -45,6 +45,46 @@ const paragraphs = ev.paragraphs ?? (ev.description ? [ev.description] : []);
 const isFb = Boolean(ev.fbUrl) || (ev.url ?? '').includes('facebook');
 const ctaHref = ev.fbUrl ?? (ev.url && ev.url !== '#contact' ? ev.url : ROUTES.contact);
 const ctaLabel = isFb ? "S'inscrire sur Facebook" : 'Nous contacter';
+
+// Schema.org Event (éligibilité aux résultats enrichis « événements »).
+const MOIS: Record<string, number> = {
+  jan: 1, fév: 2, fev: 2, mar: 3, avr: 4, mai: 5, juin: 6,
+  juil: 7, août: 8, aout: 8, sep: 9, sept: 9, oct: 10, nov: 11, déc: 12, dec: 12,
+};
+const moisNum = MOIS[(ev.month ?? '').toLowerCase()];
+const startDate =
+  ev.year && moisNum && ev.day
+    ? `${ev.year}-${String(moisNum).padStart(2, '0')}-${String(ev.day).padStart(2, '0')}`
+    : null;
+const priceNum = (ev.price ?? '').match(/(\d+)/)?.[1];
+const eventImage = ev.image ? new URL(ev.image, Astro.site ?? SITE.url).href : undefined;
+const eventSchema = startDate
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: ev.title,
+      startDate,
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      ...(eventImage ? { image: [eventImage] } : {}),
+      ...(ev.description ? { description: ev.description } : {}),
+      location: {
+        '@type': 'Place',
+        name: place || 'Lieu à préciser',
+        address: ev.address ?? place,
+      },
+      organizer: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+      performer: { '@type': 'Person', name: SITE.intervenant },
+      offers: {
+        '@type': 'Offer',
+        url: ctaHref.startsWith('http')
+          ? ctaHref
+          : new URL(ctaHref, Astro.site ?? SITE.url).href,
+        availability: 'https://schema.org/InStock',
+        ...(priceNum ? { price: priceNum, priceCurrency: 'EUR' } : {}),
+      },
+    }
+  : null;
 ---
 
 <InnerPage
@@ -122,6 +162,8 @@ const ctaLabel = isFb ? "S'inscrire sur Facebook" : 'Nous contacter';
       </div>
     </div>
   </section>
+
+  {eventSchema && <script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />}
 </InnerPage>
 
 <style>

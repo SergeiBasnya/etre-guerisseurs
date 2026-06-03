@@ -3,7 +3,7 @@ import { getCollection, render } from 'astro:content';
 import InnerPage from '../../layouts/InnerPage.astro';
 import Prose from '../../components/sections/Prose.astro';
 import CtaBanner from '../../components/sections/CtaBanner.astro';
-import { ROUTES } from '../../consts';
+import { ROUTES, SITE } from '../../consts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -22,6 +22,19 @@ const fmt = new Intl.DateTimeFormat('fr-FR', {
   year: 'numeric',
 });
 const dateStr = fmt.format(post.data.date);
+
+// Schema.org BlogPosting (article).
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  image: new URL(post.data.cover, Astro.site ?? SITE.url).href,
+  datePublished: post.data.date.toISOString(),
+  author: { '@type': 'Person', name: post.data.author },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site ?? SITE.url).href,
+};
 ---
 
 <InnerPage
@@ -50,4 +63,6 @@ const dateStr = fmt.format(post.data.date);
     altHref={ROUTES.agenda}
     variant="warm"
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 </InnerPage>
