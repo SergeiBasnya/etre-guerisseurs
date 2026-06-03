@@ -73,6 +73,8 @@ export const ROUTES = {
   accompagnement: `${B}/accompagnement/`,
   soins: `${B}/soins-therapies/`,
 
+  cerclePardon: `${B}/accompagnement/cercle-de-pardon/`,
+
   praticien: `${B}/praticien/`,
   agenda: `${B}/agenda/`,
   blog: `${B}/blog/`,
@@ -132,6 +134,7 @@ export const NAV: NavItem[] = [
       { label: "Coaching d'Être", href: ANCHORS.coaching },
       { label: "Entretien d'écoute", href: ANCHORS.ecoute },
       { label: 'Protocole Pardon', href: ANCHORS.pardon },
+      { label: 'Cercle de Pardon', href: ROUTES.cerclePardon },
       { label: 'Marches accompagnées', href: ANCHORS.marches },
     ],
   },
@@ -169,6 +172,7 @@ export const FOOTER_LINKS = [
       { label: "Coaching d'Être", href: ANCHORS.coaching },
       { label: "Entretien d'écoute", href: ANCHORS.ecoute },
       { label: 'Protocole Pardon', href: ANCHORS.pardon },
+      { label: 'Cercle de Pardon', href: ROUTES.cerclePardon },
       { label: 'Marches accompagnées', href: ANCHORS.marches },
     ],
   },
