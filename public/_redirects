@@ -1,0 +1,30 @@
+# Redirections 301 — ancien site WordPress → nouveau site Astro.
+# Lu par Netlify (copié à la racine de dist/ au build).
+# But : préserver le référencement (pas de 404 sur les anciennes URLs indexées).
+# ⚠️ Mappings à valider par le client avant mise en ligne.
+
+# --- Pages ---
+/les-mains-lumiere-magnetisme-soins/                            /soins-therapies/                  301
+/medecine-tolteque-coeur/                                       /enseignement/#stages              301
+/le-pardon/                                                     /accompagnement/cercle-de-pardon/  301
+/cercle-de-pardon-pour-guerir-ensemble-les-blessures-du-coeur/  /accompagnement/cercle-de-pardon/  301
+/accompagner-le-changement/                                     /accompagnement/                   301
+/qui-suis-je/                                                   /praticien/                        301
+/ateliers-stages/                                               /enseignement/#stages              301
+/stages-ateliers/                                               /enseignement/#stages              301
+/formation/                                                     /enseignement/#formations          301
+/formations_cycles/                                             /enseignement/#formations          301
+/formation-a-distance/                                          /enseignement/#formations          301
+/mentions-legales-confidentialite/                              /mentions-legales/                 301
+/esprit-nature-photos-poemes/                                   /praticien/                        301
+
+# --- Articles de blog ---
+/fevrier-accords-tolteques/             /blog/quatre-accords-tolteques/  301
+/printemps-accords-tolteques/           /blog/quatre-accords-tolteques/  301
+/un-nouvel-ete-pour-apprendre/          /enseignement/#stages            301
+/les-bienfaits-de-la-marche-en-montagne/ /accompagnement/#marches        301
+/nouvelles-tolteques-de-mai/            /blog/                           301
+
+# --- Anciens événements (plugin The Events Calendar) ---
+/events/*   /agenda/   301
+/event/*    /agenda/   301
