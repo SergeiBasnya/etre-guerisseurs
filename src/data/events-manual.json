@@ -1,6 +1,5 @@
 {
-  "source": "manual",
-  "updatedAt": null,
+  "_comment": "Événements curés à la main (source de vérité éditable). Fusionnés avec le flux Facebook par scripts/fetch-facebook-events.mjs pour produire events.json. En cas d'échec/absence du flux FB, ces événements servent de fallback.",
   "events": [
     {
       "id": "marche-ventoux-2026",

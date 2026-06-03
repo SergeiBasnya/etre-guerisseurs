@@ -1,30 +1,33 @@
 #!/usr/bin/env node
 /**
- * Récupère les événements de la Page Facebook au moment du build et écrit
- * src/data/events.json. Lancé automatiquement par `prebuild` (avant astro build),
- * et manuellement via `pnpm fetch:events`.
+ * Construit src/data/events.json pour l'agenda du site.
+ *
+ * Source des dates :
+ *  1. events-manual.json — événements curés à la main (toujours présents).
+ *  2. Flux iCal Facebook (variable d'env FB_ICAL_URL) — l'URL secrète
+ *     « /events/ical/upcoming/?uid=…&key=… » du compte, récupérée une fois
+ *     par le client depuis Facebook (Événements → Ajouter au calendrier).
+ *     On peut aussi pointer un iCal Google Agenda : le format est le même.
  *
  * Stratégie « sans casse » :
- *  - Si FB_PAGE_ID / FB_PAGE_ACCESS_TOKEN sont absents → on ne touche à rien,
- *    le site se construit avec l'agenda de secours (events.json existant).
- *  - Si l'appel API échoue → on log un avertissement et on conserve le fallback.
- *    Le build ne plante JAMAIS à cause de Facebook.
+ *  - FB_ICAL_URL absente → events.json = uniquement les événements manuels.
+ *  - Flux injoignable / illisible → on log un avertissement et on garde le
+ *    manuel. Le build ne plante JAMAIS à cause de la source externe.
  *
- * ⚠️ L'edge /{page-id}/events de l'API Graph est restreint par Facebook depuis 2018.
- *    Il faut un Page Access Token avec les permissions validées. Le plugin
- *    WordPress actuel possède déjà ce token : le récupérer dans ses réglages.
+ * Lancé par `prebuild` (avant astro build) et manuellement via `pnpm fetch:events`.
  */
 
 import { writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { parseICS, parseIcalDate } from './lib/ical.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = join(__dirname, '..', 'src', 'data', 'events.json');
+const DATA = join(__dirname, '..', 'src', 'data');
+const MANUAL = join(DATA, 'events-manual.json');
+const OUT = join(DATA, 'events.json');
 
-const PAGE_ID = process.env.FB_PAGE_ID;
-const TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
-const API_VERSION = 'v21.0';
+const ICAL_URL = process.env.FB_ICAL_URL;
 
 const MONTHS_FR = [
   'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin',
@@ -38,68 +41,176 @@ function info(msg) {
   console.log(`\x1b[36m[agenda]\x1b[0m ${msg}`);
 }
 
-/** Transforme un event Graph API vers notre format interne. */
-function mapEvent(ev) {
-  const start = ev.start_time ? new Date(ev.start_time) : null;
-  const place = ev.place?.name
-    ? [ev.place.name, ev.place.location?.city].filter(Boolean).join(', ')
-    : 'Lieu à préciser';
+/** Date du jour (AAAAMMJJ) en heure locale du build, pour filtrer le passé. */
+function todayKey() {
+  const n = new Date();
+  return n.getFullYear() * 10000 + (n.getMonth() + 1) * 100 + n.getDate();
+}
+
+/** Clé de déduplication : mois (index canonique) + jour + titre normalisé. */
+function dedupKey(ev) {
+  const title = (ev.title || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+  const mi = monthIndex(ev.month);
+  const month = mi === undefined ? (ev.month || '') : mi;
+  const day = Number(ev.day) || ev.day || '';
+  return `${month}-${day}-${title}`;
+}
+
+/** Transforme un VEVENT iCal vers notre format interne d'agenda. */
+function mapVevent(ve) {
+  const date = ve.dtstart ? parseIcalDate(ve.dtstart) : null;
+  const fbId = ve.uid ? ve.uid.split('@')[0] : null;
+  const url =
+    ve.url ||
+    (fbId && /^\d+$/.test(fbId)
+      ? `https://www.facebook.com/events/${fbId}`
+      : '#contact');
 
   return {
-    id: ev.id,
-    day: start ? String(start.getUTCDate()).padStart(2, '0') : '—',
-    month: start ? MONTHS_FR[start.getUTCMonth()] : '',
-    title: ev.name ?? 'Événement',
-    location: place,
+    _date: date, // interne, retiré avant écriture
+    id: fbId ? `fb-${fbId}` : `fb-${dedupKey({ month: '', day: '', title: ve.summary })}`,
+    day: date ? String(date.d).padStart(2, '0') : '—',
+    month: date ? MONTHS_FR[date.m - 1] : '',
+    title: ve.summary || 'Événement',
+    location: ve.location || 'Lieu à préciser',
     price: 'Sur inscription',
     free: false,
-    url: `https://www.facebook.com/events/${ev.id}`,
+    url,
   };
 }
 
-async function main() {
-  if (!PAGE_ID || !TOKEN) {
-    info('FB_PAGE_ID / FB_PAGE_ACCESS_TOKEN absents — agenda de secours conservé.');
-    return;
+async function loadManual() {
+  try {
+    const json = JSON.parse(await readFile(MANUAL, 'utf8'));
+    return Array.isArray(json.events) ? json.events : [];
+  } catch (err) {
+    warn(`events-manual.json illisible (${err.message}). Liste manuelle vide.`);
+    return [];
   }
+}
 
-  const fields = 'id,name,start_time,end_time,place,is_canceled';
-  const url =
-    `https://graph.facebook.com/${API_VERSION}/${PAGE_ID}/events` +
-    `?fields=${fields}&time_filter=upcoming&access_token=${TOKEN}`;
+async function fetchFacebookEvents() {
+  if (!ICAL_URL) {
+    info('FB_ICAL_URL absente — agenda construit depuis les événements manuels uniquement.');
+    return [];
+  }
 
   try {
-    const res = await fetch(url);
-    const json = await res.json();
-
-    if (!res.ok || json.error) {
-      warn(`API Facebook : ${json.error?.message ?? res.status}. Fallback conservé.`);
-      return;
+    let ics;
+    if (/^https?:\/\//i.test(ICAL_URL)) {
+      const res = await fetch(ICAL_URL, {
+        headers: { 'User-Agent': 'EtreGuerisseurs-Agenda/1.0' },
+        redirect: 'follow',
+      });
+      if (!res.ok) {
+        warn(`Flux iCal : HTTP ${res.status}. Fallback manuel conservé.`);
+        return [];
+      }
+      ics = await res.text();
+    } else {
+      // Chemin local (test, ou .ics exporté à la main et déposé dans le repo).
+      const path = ICAL_URL.startsWith('/') ? ICAL_URL : join(__dirname, '..', ICAL_URL);
+      ics = await readFile(path, 'utf8');
+    }
+    if (!ics.includes('BEGIN:VEVENT')) {
+      warn('Flux iCal sans VEVENT (URL invalide ou aucun événement). Fallback manuel conservé.');
+      return [];
     }
 
-    const events = (json.data ?? [])
-      .filter((ev) => !ev.is_canceled)
-      .map(mapEvent);
+    const today = todayKey();
+    const events = parseICS(ics)
+      .filter((ve) => ve.status !== 'CANCELLED')
+      .map(mapVevent)
+      // ne garder que les événements à venir (ou sans date lisible)
+      .filter((ev) => !ev._date || ev._date.key >= today);
 
-    if (events.length === 0) {
-      warn('Aucun événement à venir renvoyé par Facebook. Fallback conservé.');
-      return;
-    }
-
-    // Date du build injectée par l'environnement (évite Date.now non déterministe en CI si besoin)
-    const updatedAt = new Date().toISOString();
-    const payload = { source: 'facebook', updatedAt, events };
-    await writeFile(OUT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
-    info(`${events.length} événement(s) récupéré(s) depuis Facebook.`);
+    info(`${events.length} événement(s) à venir récupéré(s) depuis le flux iCal.`);
+    return events;
   } catch (err) {
-    warn(`Échec de la récupération : ${err.message}. Fallback conservé.`);
-    // On s'assure que le fichier existe quand même
-    try {
-      await readFile(OUT);
-    } catch {
-      warn('events.json introuvable — vérifier src/data/events.json.');
-    }
+    warn(`Échec de récupération du flux iCal : ${err.message}. Fallback manuel conservé.`);
+    return [];
   }
+}
+
+/** Ordre des mois pour le tri chronologique (tolérant aux variantes FR). */
+const MONTH_ALIASES = [
+  ['jan', 'janv', 'janvier'],
+  ['fev', 'fév', 'fevr', 'févr', 'fevrier', 'février'],
+  ['mar', 'mars'],
+  ['avr', 'avril'],
+  ['mai'],
+  ['juin'],
+  ['juil', 'juill', 'juillet'],
+  ['aou', 'aoû', 'aout', 'août'],
+  ['sep', 'sept', 'septembre'],
+  ['oct', 'octobre'],
+  ['nov', 'novembre'],
+  ['dec', 'déc', 'decembre', 'décembre'],
+];
+const MONTH_INDEX = {};
+MONTH_ALIASES.forEach((names, i) => names.forEach((n) => (MONTH_INDEX[n] = i)));
+
+function monthIndex(label) {
+  if (!label) return undefined;
+  return MONTH_INDEX[label.toLowerCase().replace(/\.$/, '').trim()];
+}
+
+function sortKey(ev) {
+  if (ev._date) return ev._date.key;
+  const mi = monthIndex(ev.month);
+  if (mi === undefined) return Number.MAX_SAFE_INTEGER; // sans date → en fin
+  // année inconnue pour les manuels : on suppose l'année courante du build
+  return new Date().getFullYear() * 10000 + (mi + 1) * 100 + Number(ev.day || 99);
+}
+
+async function main() {
+  const manual = await loadManual();
+  const facebook = await fetchFacebookEvents();
+
+  // Fusion par champ : le manuel porte l'affichage curé (titre, prix, lieu),
+  // mais on injecte l'URL Facebook d'inscription quand l'événement y existe.
+  // Les événements présents seulement sur Facebook sont ajoutés tels quels.
+  const byKey = new Map();
+  const merged = [];
+  for (const ev of manual) {
+    const key = dedupKey(ev);
+    if (byKey.has(key)) continue;
+    byKey.set(key, ev);
+    merged.push(ev);
+  }
+  for (const ev of facebook) {
+    const key = dedupKey(ev);
+    const existing = byKey.get(key);
+    if (existing) {
+      // Même événement : on récupère le lien d'inscription Facebook si le
+      // manuel n'en a pas de vrai (placeholder #contact).
+      if (ev.url && ev.url.includes('facebook.com') && (!existing.url || existing.url === '#contact')) {
+        existing.url = ev.url;
+      }
+      continue;
+    }
+    byKey.set(key, ev);
+    merged.push(ev);
+  }
+
+  merged.sort((a, b) => sortKey(a) - sortKey(b));
+
+  // Nettoyage des champs internes avant écriture.
+  const events = merged.map(({ _date, ...rest }) => rest);
+
+  const source =
+    facebook.length > 0 ? (manual.length > 0 ? 'merged' : 'facebook') : 'manual';
+  // Horodatage seulement quand une vraie synchro externe a eu lieu : évite le
+  // bruit git d'un timestamp qui change à chaque build manuel/local.
+  const updatedAt = facebook.length > 0 ? new Date().toISOString() : null;
+
+  await writeFile(OUT, JSON.stringify({ source, updatedAt, events }, null, 2) + '\n', 'utf8');
+  info(`events.json écrit — source: ${source}, ${events.length} événement(s).`);
 }
 
 main();

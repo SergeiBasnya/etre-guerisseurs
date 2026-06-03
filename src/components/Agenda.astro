@@ -13,7 +13,8 @@ interface AgendaEvent {
 }
 
 const events = eventsData.events as AgendaEvent[];
-const fromFacebook = eventsData.source === 'facebook';
+const fromFacebook =
+  eventsData.source === 'facebook' || eventsData.source === 'merged';
 ---
 
 <section id="agenda">
