@@ -9,7 +9,7 @@ const INTRO_IMG = asset('pierre-alexandre.jpg');
     <div class="intro-text reveal">
       <p class="eyebrow">L'intervenant</p>
       <h2 class="section-title">
-        Transmettre le <span class="em">savoir-être</span> par l'exemple
+        Transmettre le <span class="em">savoir‑être</span> par l'exemple
       </h2>
       <p>
         Éclaireur et accompagnateur dans la voie toltèque, formé auprès des plus
@@ -43,6 +43,10 @@ const INTRO_IMG = asset('pierre-alexandre.jpg');
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: center;
+  }
+  /* Équilibre les lignes du titre ; « savoir‑être » reste insécable (U+2011). */
+  .intro-text .section-title {
+    text-wrap: balance;
   }
   .intro-text p {
     margin-bottom: 18px;
