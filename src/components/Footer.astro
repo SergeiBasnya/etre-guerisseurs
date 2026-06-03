@@ -10,6 +10,8 @@ const year = 2026;
         <div class="foot-brand">
           {SITE.nameParts.lead} <span class="em">{SITE.nameParts.mark}</span>
         </div>
+        <p class="foot-signature">{SITE.signature}</p>
+        <p class="foot-slogan">« {SITE.slogan} »</p>
         <p>{SITE.baseline}</p>
       </div>
       {
@@ -50,10 +52,23 @@ const year = 2026;
     font-family: var(--serif);
     font-size: 1.6rem;
     color: var(--bg);
-    margin-bottom: 18px;
+    margin-bottom: 6px;
   }
   .foot-brand .em {
     color: var(--gold);
+  }
+  .foot-signature {
+    color: var(--gold);
+    font-size: 0.86rem;
+    letter-spacing: 0.01em;
+    margin-bottom: 14px;
+  }
+  .foot-slogan {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--bg);
+    margin-bottom: 16px;
   }
   .foot-grid p {
     font-size: 0.92rem;

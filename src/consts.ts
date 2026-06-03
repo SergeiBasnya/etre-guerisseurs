@@ -27,6 +27,9 @@ export const SITE = {
   baseline:
     "Cabinet de soin et d'accompagnement, animation de stages et d'ateliers de formation dans la voie toltèque.",
   intervenant: 'Pierre-Alexandre Morales',
+  // Signature de marque (positionnement) + slogan — affichés header/pied de page.
+  signature: "& artistes de l'esprit, au service de la création",
+  slogan: "Faire de sa vie une œuvre d'art.",
   url: 'https://etreguerisseurs.com',
   lang: 'fr',
 } as const;
