@@ -35,16 +35,59 @@
       ]
     },
     {
+      "id": "cours-accords-saisons-2026",
+      "day": "27",
+      "month": "Juin",
+      "year": "2026",
+      "title": "Apprendre et maîtriser les Accords Toltèques, un à un",
+      "description": "Programme annuel au rythme des saisons, en présence, au contact des quatre éléments — un samedi matin par mois, à Nyons.",
+      "image": "/agenda/apprendre-maitriser-accords.jpg",
+      "imageAlt": "Affiche — Apprendre et maîtriser les Accords Toltèques en 2026, à Nyons",
+      "location": "7 Avenue de Verdun, 26110 Nyons · sam. 27 juin (9h–13h)",
+      "address": "7 Avenue de Verdun, 26110 Nyons",
+      "dateRange": "Samedi 27 juin 2026, de 9h à 13h",
+      "price": "Dès 70 €",
+      "free": false,
+      "url": "#contact",
+      "paragraphs": [
+        "Un cycle d'enseignement annuel, au rythme des saisons, pour apprendre et maîtriser les Accords Toltèques un à un. En présence, au contact des quatre éléments, dans un bel endroit de campagne au calme et au vert — un samedi matin par mois.",
+        "Enseignements théoriques et pratiques, exercices et tâches pédagogiques, respirations et gestuelles conscientes (yoga toltèque), petits rituels avec l'esprit de la nature et accompagnement individuel. Accessible à tous, dynamique, vivant et orienté solution.",
+        "À l'issue du cycle, vous aurez la maîtrise des Accords dans votre quotidien : meilleure qualité de vie, efficacité relationnelle et santé globale."
+      ]
+    },
+    {
+      "id": "marche-si-accords-2026",
+      "day": "4",
+      "month": "Juil",
+      "year": "2026",
+      "title": "Si les Accords Toltèques m'étaient enseignés…",
+      "description": "Marche accompagnée : intégrer chaque accord toltèque par la respiration, le mouvement et l'intention, au fil d'un beau parcours.",
+      "image": "/agenda/si-accords-enseignes.jpg",
+      "imageAlt": "Affiche — marche toltèque « Si les Accords m'étaient enseignés »",
+      "location": "Villeneuve-lès-Avignon · sam. 4 juillet (17h30–21h)",
+      "address": "Villeneuve-lès-Avignon",
+      "dateRange": "Samedi 4 juillet 2026, de 17h30 à 21h",
+      "price": "35 €",
+      "free": false,
+      "url": "#contact",
+      "paragraphs": [
+        "« Marcher les Accords Toltèques » et marcher sa parole : intégrer chaque accord par la respiration, le mouvement et l'intention. Une marche accompagnée qui combine temps d'enseignement, marche, haltes d'exercices, pauses méditatives et gestuelles conscientes.",
+        "Au fil du parcours, chacun est invité à vivre les accords dans son quotidien — au contact de la nature, en fin de journée d'été."
+      ]
+    },
+    {
       "id": "stage-maitrise-amour-2026",
       "day": "21",
       "month": "Août",
       "year": "2026",
       "title": "Stage La Maîtrise de l'Amour",
-      "description": "Pratiquer un art de vivre de la relation aimable et aimante, où chaque accord toltèque devient une ressource.",
-      "image": "https://images.unsplash.com/photo-1465311440653-ba9b1d9b0f5b?q=80&w=900&auto=format&fit=crop",
-      "imageAlt": "Stage La Maîtrise de l'Amour",
-      "location": "Reilhanette (26570), Haute Drôme · 21–23 août",
-      "price": "350€",
+      "description": "Un art de vivre de la relation aimable et aimante. Session de 3 jours dans les Hautes Baronnies provençales.",
+      "image": "/agenda/maitrise-amour-ete.jpg",
+      "imageAlt": "Affiche — La Maîtrise de l'Amour, 21-23 août 2026",
+      "location": "Oasis Lou Garoun, Provence · 21–23 août",
+      "address": "Oasis Lou Garoun, Provence",
+      "dateRange": "Du 21 (9h) au 23 août (16h15) 2026",
+      "price": "350 €",
       "free": false,
       "url": "#contact"
     },
@@ -61,6 +104,26 @@
       "price": "350€",
       "free": false,
       "url": "#contact"
+    },
+    {
+      "id": "toltecayotl-leg-2026",
+      "day": "8",
+      "month": "Oct",
+      "year": "2026",
+      "title": "TOLTECAYOTL, le leg des Toltèques à l'humanité !",
+      "description": "Une soirée pour découvrir le Toltecayotl — l'héritage et la sagesse des Toltèques transmis à l'humanité.",
+      "image": "/agenda/toltecayotl.jpg",
+      "imageAlt": "Affiche — TOLTECAYOTL, le leg des Toltèques à l'humanité",
+      "location": "La Lusignane · jeu. 8 octobre (19h–21h)",
+      "address": "La Lusignane",
+      "dateRange": "Jeudi 8 octobre 2026, de 19h à 21h",
+      "price": "Sur inscription",
+      "free": false,
+      "url": "#contact",
+      "paragraphs": [
+        "Une soirée autour du Toltecayotl : l'esprit, l'art de vivre et la sagesse légués par les Toltèques — les « Grands Artisans » du Mexique ancien — et leur résonance pour l'humanité d'aujourd'hui.",
+        "Un temps de transmission et d'échange, accessible à tous, pour découvrir la voie toltèque et ses clés concrètes de transformation."
+      ]
     },
     {
       "id": "stage-maitrise-amour-automne-2026",
