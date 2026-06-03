@@ -1,11 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   // Prod : domaine final (l'URL *.netlify.app est temporaire). Servi à la racine.
   site: 'https://etreguerisseurs.com',
   base: '/',
+
+  integrations: [sitemap()],
 
   // v1 : 100 % statique (rapide, SEO, hébergement gratuit).
   // Phase 2 (ventes Stripe / consultations) : passer en 'static' + endpoints

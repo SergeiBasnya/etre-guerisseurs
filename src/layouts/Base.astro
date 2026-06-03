@@ -1,18 +1,59 @@
 ---
 import '../styles/global.css';
-import { SITE, asset } from '../consts';
+import { SITE, CONTACT, asset } from '../consts';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Image de partage social (chemin public/ ou URL absolue). */
+  image?: string;
 }
 
 const {
   title = `${SITE.name} — Cabinet de soin & d'accompagnement`,
   description = SITE.baseline,
+  image = 'hero-accueil.jpg',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+/** Résout un chemin (public/ ou URL) en URL absolue pour les balises sociales. */
+const toAbs = (p: string): string =>
+  new URL(p.startsWith('http') ? p : asset(p), Astro.site ?? SITE.url).href;
+const ogImage = toAbs(image);
+
+// Schema.org — entreprise locale + praticien (émis sur tout le site).
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE.url}/#business`,
+  name: SITE.name,
+  description: SITE.baseline,
+  url: SITE.url,
+  telephone: CONTACT.phoneHref.replace('tel:', ''),
+  email: CONTACT.email,
+  image: toAbs('hero-accueil.jpg'),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: CONTACT.address.street,
+    postalCode: CONTACT.address.zip,
+    addressLocality: CONTACT.address.city,
+    addressCountry: 'FR',
+  },
+  areaServed: CONTACT.areaServed,
+  founder: {
+    '@type': 'Person',
+    name: SITE.intervenant,
+    jobTitle: 'Enseignant toltèque, accompagnant et magnétiseur',
+  },
+  knowsAbout: [
+    'Accords toltèques',
+    'magnétisme',
+    'soins énergétiques',
+    'accompagnement au changement',
+    'cercles de pardon',
+  ],
+  priceRange: '€€',
+};
 ---
 
 <!doctype html>
@@ -31,6 +72,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Données structurées : entreprise locale + praticien -->
+    <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+
 
     <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
