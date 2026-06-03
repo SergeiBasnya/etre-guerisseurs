@@ -1,6 +1,13 @@
 ---
 import { SITE, NAV, ROUTES } from '../consts';
 
+interface Props {
+  /** Header « solide » dès le haut (texte foncé sur fond crème) : à activer
+   *  sur les pages à bandeau clair, où le menu blanc serait illisible. */
+  solid?: boolean;
+}
+const { solid = false } = Astro.props;
+
 const pathname = Astro.url.pathname;
 // Une entrée est active si on est sur sa page ou une de ses pages enfants.
 function isActive(href: string): boolean {
@@ -9,7 +16,7 @@ function isActive(href: string): boolean {
 }
 ---
 
-<header id="hdr">
+<header id="hdr" class={solid ? 'solid' : ''}>
   <div class="container nav-inner">
     <a href={ROUTES.home} class="logo">
       {SITE.nameParts.lead} <span class="mark">{SITE.nameParts.mark}</span>
@@ -130,9 +137,13 @@ function isActive(href: string): boolean {
   }
   header.scrolled {
     top: 0;
+    padding: 13px 0;
+  }
+  /* Fond clair : au scroll (toutes pages) OU d'emblée sur page à bandeau clair. */
+  header.scrolled,
+  header.solid {
     background: rgba(250, 246, 240, 0.94);
     backdrop-filter: blur(12px);
-    padding: 13px 0;
     box-shadow: 0 1px 0 var(--line);
   }
   .nav-inner {
@@ -152,7 +163,8 @@ function isActive(href: string): boolean {
     font-style: italic;
     color: var(--gold);
   }
-  header.scrolled .logo {
+  header.scrolled .logo,
+  header.solid .logo {
     color: var(--ink);
   }
 
@@ -177,7 +189,8 @@ function isActive(href: string): boolean {
     align-items: center;
     gap: 5px;
   }
-  header.scrolled .menu a {
+  header.scrolled .menu a,
+  header.solid .menu a {
     color: var(--ink-soft);
   }
   .menu a:hover,
@@ -194,7 +207,8 @@ function isActive(href: string): boolean {
     border-radius: 30px;
     transition: all 0.3s;
   }
-  header.scrolled .nav-cta {
+  header.scrolled .nav-cta,
+  header.solid .nav-cta {
     border-color: var(--terra);
     color: var(--terra) !important;
   }
@@ -457,7 +471,8 @@ function isActive(href: string): boolean {
     background: var(--white);
     transition: all 0.3s;
   }
-  header.scrolled .burger span {
+  header.scrolled .burger span,
+  header.solid .burger span {
     background: var(--ink);
   }
   .burger.is-open span {

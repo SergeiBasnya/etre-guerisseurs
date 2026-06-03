@@ -46,7 +46,7 @@ const hasImage = Boolean(bandImage);
 
 <Base title={title} description={description ?? lede}>
   <TopBar />
-  <Header />
+  <Header solid={!hasImage} />
 
   <div class={`page-band ${hasImage ? 'has-image' : ''}`}>
     {
