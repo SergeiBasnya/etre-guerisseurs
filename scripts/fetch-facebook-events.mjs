@@ -71,13 +71,21 @@ function mapVevent(ve) {
       ? `https://www.facebook.com/events/${fbId}`
       : '#contact');
 
+  // Description : on garde un extrait court (les descriptions FB sont longues).
+  const desc = ve.description
+    ? ve.description.replace(/\s+/g, ' ').trim().slice(0, 180).replace(/\s\S*$/, '') +
+      (ve.description.length > 180 ? '…' : '')
+    : undefined;
+
   return {
     _date: date, // interne, retiré avant écriture
     id: fbId ? `fb-${fbId}` : `fb-${dedupKey({ month: '', day: '', title: ve.summary })}`,
     day: date ? String(date.d).padStart(2, '0') : '—',
     month: date ? MONTHS_FR[date.m - 1] : '',
+    year: date ? String(date.y) : undefined,
     title: ve.summary || 'Événement',
-    location: ve.location || 'Lieu à préciser',
+    description: desc,
+    location: ve.location || undefined,
     price: 'Sur inscription',
     free: false,
     url,
@@ -122,14 +130,12 @@ async function fetchFacebookEvents() {
       return [];
     }
 
-    const today = todayKey();
+    // Le filtrage des événements passés est centralisé dans main() (manuel + FB).
     const events = parseICS(ics)
       .filter((ve) => ve.status !== 'CANCELLED')
-      .map(mapVevent)
-      // ne garder que les événements à venir (ou sans date lisible)
-      .filter((ev) => !ev._date || ev._date.key >= today);
+      .map(mapVevent);
 
-    info(`${events.length} événement(s) à venir récupéré(s) depuis le flux iCal.`);
+    info(`${events.length} événement(s) récupéré(s) depuis le flux iCal.`);
     return events;
   } catch (err) {
     warn(`Échec de récupération du flux iCal : ${err.message}. Fallback manuel conservé.`);
@@ -160,12 +166,16 @@ function monthIndex(label) {
   return MONTH_INDEX[label.toLowerCase().replace(/\.$/, '').trim()];
 }
 
-function sortKey(ev) {
+/**
+ * Clé de date AAAAMMJJ d'un événement (FB via _date, manuel via year/month/day).
+ * Renvoie null si la date n'est pas déterminable.
+ */
+function eventDateKey(ev) {
   if (ev._date) return ev._date.key;
   const mi = monthIndex(ev.month);
-  if (mi === undefined) return Number.MAX_SAFE_INTEGER; // sans date → en fin
-  // année inconnue pour les manuels : on suppose l'année courante du build
-  return new Date().getFullYear() * 10000 + (mi + 1) * 100 + Number(ev.day || 99);
+  if (mi === undefined) return null;
+  const year = Number(ev.year) || new Date().getFullYear();
+  return year * 10000 + (mi + 1) * 100 + (Number(ev.day) || 1);
 }
 
 async function main() {
@@ -198,10 +208,25 @@ async function main() {
     merged.push(ev);
   }
 
-  merged.sort((a, b) => sortKey(a) - sortKey(b));
+  // Filtre des événements passés (manuel + FB) : on ne garde que ceux dont la
+  // date est aujourd'hui ou à venir. Les événements sans date déterminable sont
+  // conservés (à corriger à la main). Tri chronologique ensuite.
+  const today = todayKey();
+  const upcoming = merged.filter((ev) => {
+    const key = eventDateKey(ev);
+    return key === null || key >= today;
+  });
+  const dropped = merged.length - upcoming.length;
+  if (dropped > 0) info(`${dropped} événement(s) passé(s) retiré(s).`);
+
+  upcoming.sort((a, b) => {
+    const ka = eventDateKey(a) ?? Number.MAX_SAFE_INTEGER;
+    const kb = eventDateKey(b) ?? Number.MAX_SAFE_INTEGER;
+    return ka - kb;
+  });
 
   // Nettoyage des champs internes avant écriture.
-  const events = merged.map(({ _date, ...rest }) => rest);
+  const events = upcoming.map(({ _date, ...rest }) => rest);
 
   const source =
     facebook.length > 0 ? (manual.length > 0 ? 'merged' : 'facebook') : 'manual';
