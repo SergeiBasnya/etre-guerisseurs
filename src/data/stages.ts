@@ -41,9 +41,8 @@ export const STAGES: Stage[] = [
     meta: 'Costa Rica · mer & jungle',
     title: 'Retraite spirituelle entre mer et océan',
     price: 'Sur inscription',
-    image:
-      'https://images.unsplash.com/photo-1510797215324-95aa89f43c33?q=80&w=1200&auto=format&fit=crop',
-    imageAlt: 'Retraite spirituelle au Costa Rica',
+    image: '/agenda/costa-rica.jpg',
+    imageAlt: 'Parc national Manuel Antonio, Costa Rica',
     href: ANCHORS.stages,
   },
 ];

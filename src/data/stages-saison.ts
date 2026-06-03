@@ -91,7 +91,7 @@ export const SAISONS: Saison[] = [
         subtitle: 'Guérir le cœur, guérir par le cœur',
         paragraphs: [
           "Dans les montagnes de la Drôme provençale, avec l'esprit de la nature. Cette session de trois jours sur la Médecine Toltèque du Cœur permet de parcourir la voie toltèque des trois maîtrises, pour vivre une vie meilleure avec soi et avec les autres, au plus près de votre rêve de paradis personnel.",
-          "En ces temps incertains de changement et de chaos organisé, il importe plus que jamais de répondre aux aspirations de son âme, en alignement avec son être véritable, pour concrétiser son rêve de paradis personnel et collectif : en guérissant son cœur, en guérissant par le cœur. L'amour est la médecine qui accélère la guérison selon Don Miguel Ruiz — et la médecine du cœur la plus puissante de toutes.",
+          "En ces temps incertains de changement et de chaos organisé, il importe plus que jamais de répondre aux aspirations de son âme, en alignement avec son être véritable, pour concrétiser son rêve de paradis personnel et collectif : en guérissant son cœur, en guérissant par le cœur. L'amour est la médecine qui accélère la guérison selon Don Miguel Ruiz — et la médecine du cœur la plus puissante de toutes. Voir aussi, en accompagnement, le <a href='/accompagnement/cercle-de-pardon/'>Cercle de Pardon</a>.",
         ],
         programme: [
           "Maîtrise de l'attention et de la transformation",
