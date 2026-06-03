@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, CONTACT, asset } from '../consts';
+import { SITE, CONTACT, SOCIALS, asset } from '../consts';
 
 interface Props {
   title?: string;
@@ -53,6 +53,9 @@ const businessSchema = {
     'cercles de pardon',
   ],
   priceRange: '€€',
+  ...(Object.values(SOCIALS).filter((u) => u !== '#').length
+    ? { sameAs: Object.values(SOCIALS).filter((u) => u !== '#') }
+    : {}),
 };
 ---
 

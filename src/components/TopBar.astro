@@ -5,6 +5,7 @@ import { SOCIALS, CONTACT } from '../consts';
 <div class="topbar" id="topbar">
   <div class="container">
   <div class="socials">
+    {SOCIALS.instagram !== '#' && (
     <a href={SOCIALS.instagram} aria-label="Instagram">
       <svg viewBox="0 0 24 24"
         ><path
@@ -12,6 +13,8 @@ import { SOCIALS, CONTACT } from '../consts';
         ></path></svg
       >
     </a>
+    )}
+    {SOCIALS.facebook !== '#' && (
     <a href={SOCIALS.facebook} aria-label="Facebook">
       <svg viewBox="0 0 24 24"
         ><path
@@ -19,6 +22,7 @@ import { SOCIALS, CONTACT } from '../consts';
         ></path></svg
       >
     </a>
+    )}
     <a href={`mailto:${CONTACT.email}`} aria-label="Email">
       <svg viewBox="0 0 24 24"
         ><path

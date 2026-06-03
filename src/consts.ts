@@ -52,8 +52,9 @@ export const CONTACT = {
 } as const;
 
 export const SOCIALS = {
+  // Mettre l'URL réelle pour activer le lien ; '#' = masqué (voir TopBar).
   instagram: '#',
-  facebook: '#',
+  facebook: 'https://www.facebook.com/PIERREALEXANDRE.MORALES',
 } as const;
 
 /* ------------------------------------------------------------------ */
