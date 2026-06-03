@@ -64,12 +64,10 @@ function dedupKey(ev) {
 /** Transforme un VEVENT iCal vers notre format interne d'agenda. */
 function mapVevent(ve) {
   const date = ve.dtstart ? parseIcalDate(ve.dtstart) : null;
-  const fbId = ve.uid ? ve.uid.split('@')[0] : null;
+  const endDate = ve.dtend ? parseIcalDate(ve.dtend) : null;
+  const fbId = ve.uid && /^\d+$/.test(ve.uid.split('@')[0]) ? ve.uid.split('@')[0] : null;
   const url =
-    ve.url ||
-    (fbId && /^\d+$/.test(fbId)
-      ? `https://www.facebook.com/events/${fbId}`
-      : '#contact');
+    ve.url || (fbId ? `https://www.facebook.com/events/${fbId}` : '#contact');
 
   // Description : on garde un extrait court (les descriptions FB sont longues).
   const desc = ve.description
@@ -79,6 +77,8 @@ function mapVevent(ve) {
 
   return {
     _date: date, // interne, retiré avant écriture
+    _endDate: endDate, // interne, pour le filtrage « passé »
+    _fbId: fbId, // interne, pour l'appariement avec le manuel
     id: fbId ? `fb-${fbId}` : `fb-${dedupKey({ month: '', day: '', title: ve.summary })}`,
     day: date ? String(date.d).padStart(2, '0') : '—',
     month: date ? MONTHS_FR[date.m - 1] : '',
@@ -90,6 +90,12 @@ function mapVevent(ve) {
     free: false,
     url,
   };
+}
+
+/** Extrait l'identifiant numérique d'un événement depuis une URL Facebook. */
+function fbIdFromUrl(url) {
+  const m = /facebook\.com\/events\/(\d+)/.exec(url || '');
+  return m ? m[1] : null;
 }
 
 async function loadManual() {
@@ -178,6 +184,22 @@ function eventDateKey(ev) {
   return year * 10000 + (mi + 1) * 100 + (Number(ev.day) || 1);
 }
 
+/**
+ * Clé de date de FIN (pour ne retirer un événement qu'une fois RÉELLEMENT passé).
+ * FB : DTEND. Manuel : champs optionnels endDay/endMonth. Sinon → date de début.
+ */
+function eventEndKey(ev) {
+  if (ev._endDate) return ev._endDate.key;
+  if (ev.endDay) {
+    const mi = monthIndex(ev.endMonth ?? ev.month);
+    if (mi !== undefined) {
+      const year = Number(ev.year) || new Date().getFullYear();
+      return year * 10000 + (mi + 1) * 100 + Number(ev.endDay);
+    }
+  }
+  return eventDateKey(ev);
+}
+
 async function main() {
   const manual = await loadManual();
   const facebook = await fetchFacebookEvents();
@@ -186,16 +208,22 @@ async function main() {
   // mais on injecte l'URL Facebook d'inscription quand l'événement y existe.
   // Les événements présents seulement sur Facebook sont ajoutés tels quels.
   const byKey = new Map();
+  const byFbId = new Map();
   const merged = [];
   for (const ev of manual) {
     const key = dedupKey(ev);
     if (byKey.has(key)) continue;
     byKey.set(key, ev);
+    // Index par identifiant Facebook explicite : champ `fbId` (numérique) ou
+    // `fbUrl` de la forme facebook.com/events/<id>. Appariement fiable, à
+    // privilégier sur le titre+date (qui casse si le titre curé diffère du SUMMARY FB).
+    const fid = ev.fbId ? String(ev.fbId) : fbIdFromUrl(ev.fbUrl);
+    if (fid) byFbId.set(fid, ev);
     merged.push(ev);
   }
   for (const ev of facebook) {
-    const key = dedupKey(ev);
-    const existing = byKey.get(key);
+    // Appariement prioritaire par identifiant FB, repli sur titre+date.
+    const existing = (ev._fbId && byFbId.get(ev._fbId)) || byKey.get(dedupKey(ev));
     if (existing) {
       // Même événement : on récupère le lien d'inscription Facebook si le
       // manuel n'en a pas de vrai (placeholder #contact).
@@ -204,7 +232,8 @@ async function main() {
       }
       continue;
     }
-    byKey.set(key, ev);
+    byKey.set(dedupKey(ev), ev);
+    if (ev._fbId) byFbId.set(ev._fbId, ev);
     merged.push(ev);
   }
 
@@ -213,12 +242,13 @@ async function main() {
   // conservés (à corriger à la main). Tri chronologique ensuite.
   const today = todayKey();
   const upcoming = merged.filter((ev) => {
-    const key = eventDateKey(ev);
+    const key = eventEndKey(ev); // date de FIN : un événement en cours reste affiché
     return key === null || key >= today;
   });
   const dropped = merged.length - upcoming.length;
   if (dropped > 0) info(`${dropped} événement(s) passé(s) retiré(s).`);
 
+  // Tri chronologique par date de début.
   upcoming.sort((a, b) => {
     const ka = eventDateKey(a) ?? Number.MAX_SAFE_INTEGER;
     const kb = eventDateKey(b) ?? Number.MAX_SAFE_INTEGER;
@@ -226,7 +256,7 @@ async function main() {
   });
 
   // Nettoyage des champs internes avant écriture.
-  const events = upcoming.map(({ _date, ...rest }) => rest);
+  const events = upcoming.map(({ _date, _endDate, _fbId, ...rest }) => rest);
 
   const source =
     facebook.length > 0 ? (manual.length > 0 ? 'merged' : 'facebook') : 'manual';

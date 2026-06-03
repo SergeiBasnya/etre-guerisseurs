@@ -5,6 +5,7 @@
     {
       "id": "stage-medecine-coeur-2026",
       "day": "19",
+      "endDay": "21",
       "month": "Juin",
       "year": "2026",
       "title": "Stage Médecine Toltèque du Cœur",
@@ -78,6 +79,7 @@
     {
       "id": "stage-maitrise-amour-2026",
       "day": "21",
+      "endDay": "23",
       "month": "Août",
       "year": "2026",
       "title": "Stage La Maîtrise de l'Amour",
@@ -94,6 +96,7 @@
     {
       "id": "stage-accepter-lacher-prise-2026",
       "day": "25",
+      "endDay": "27",
       "month": "Sept",
       "year": "2026",
       "title": "Stage ACCEPTER ET LÂCHER-PRISE — la quête de la vérité",
@@ -128,6 +131,7 @@
     {
       "id": "stage-maitrise-amour-automne-2026",
       "day": "22",
+      "endDay": "25",
       "month": "Oct",
       "year": "2026",
       "title": "Stage La Maîtrise de l'Amour — un art des relations en automne",
@@ -142,6 +146,7 @@
     {
       "id": "retraite-costa-rica-2026",
       "day": "07",
+      "endDay": "18",
       "month": "Nov",
       "year": "2026",
       "title": "Retraite spirituelle au Costa Rica",
@@ -156,6 +161,7 @@
     {
       "id": "stage-accords-attachements-2026",
       "day": "20",
+      "endDay": "22",
       "month": "Nov",
       "year": "2026",
       "title": "Stage Les Accords toltèques revisités à la lumière de nos attachements",
@@ -170,6 +176,7 @@
     {
       "id": "stage-mourir-2026",
       "day": "27",
+      "endDay": "29",
       "month": "Nov",
       "year": "2026",
       "title": "Stage MOURIR — embrasser l'ange de la mort",
