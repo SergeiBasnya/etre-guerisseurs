@@ -31,9 +31,18 @@
 # équivalent actuel. Pas de wildcard /agenda/* (casserait les vraies pages).
 /agenda/retraite-spirituelle-au-costa-rica-pratiquer-la-philosophie-tolteque-entre-mer-jungle-et-ocean/  /agenda/retraite-costa-rica-2026/  301
 /agenda/apprendre-et-maitriser-les-accords-tolteques-en-2026-un-a-un-au-rythme-des-saisons-4/            /agenda/cours-accords-saisons-2026/  301
+# Anciens événements passés (retrouvés via l'archive du WordPress) → agenda.
+/agenda/apprendre-les-accords-tolteques-en-2023-mai-bis/  /agenda/  301
+/agenda/conference-les-accords-tolteques-voiron/          /agenda/  301
+/agenda/marche-tolteque-au-sommet-2/                      /agenda/  301
 # Bases d'URL événements par défaut du plugin (au cas où d'anciens liens existent)
 /events/*   /agenda/   301
 /event/*    /agenda/   301
+
+# --- Archives WordPress (taxonomies & auteur) retrouvées via l'archive du site ---
+/category/articles/   /blog/                  301
+/category/stages/     /enseignement/#stages   301
+/author/pierrealexandre/   /praticien/        301
 
 # --- Page Témoignages masquée pour la mise en ligne (réactiver plus tard) ---
 /temoignages/   /   301
