@@ -14,7 +14,7 @@ interface Props {
 const {
   title = `${SITE.name} — Cabinet de soin & d'accompagnement`,
   description = SITE.baseline,
-  image = 'hero-accueil.jpg',
+  image = 'hero-accueil.webp',
   ogType = 'website',
 } = Astro.props;
 
@@ -36,7 +36,7 @@ const businessSchema = {
   url: SITE.url,
   telephone: CONTACT.phoneHref.replace('tel:', ''),
   email: CONTACT.email,
-  image: toAbs('hero-accueil.jpg'),
+  image: toAbs('hero-accueil.webp'),
   address: {
     '@type': 'PostalAddress',
     streetAddress: CONTACT.address.street,
@@ -101,7 +101,7 @@ const websiteSchema = {
     {/* Perf : précharger l'image LCP de l'accueil + les 2 polices principales
         (latin, poids courant) pour réduire le LCP et le FOUT. */}
     {isHome && (
-      <link rel="preload" as="image" href={asset('hero-accueil.jpg')} fetchpriority="high" />
+      <link rel="preload" as="image" href={asset('hero-accueil.webp')} fetchpriority="high" />
     )}
     <link rel="preload" as="font" type="font/woff2" href={asset('fonts/f5.woff2')} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={asset('fonts/f10.woff2')} crossorigin />
