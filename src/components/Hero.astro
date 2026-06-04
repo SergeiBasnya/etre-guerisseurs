@@ -1,11 +1,13 @@
 ---
 import { ANCHORS, ROUTES, asset } from '../consts';
 
-// Image hébergée en local (public/), optimisée — meilleur LCP que le hotlink.
-const HERO_IMG = asset('hero-accueil.webp');
+// Image hero auto-hébergée, servie en AVIF (≈93 Ko) avec fallback WebP via
+// image-set. Élément LCP → préchargé dans Base.astro.
+const HERO_AVIF = asset('hero-accueil.avif');
+const HERO_WEBP = asset('hero-accueil.webp');
 ---
 
-<section class="hero" style={`--hero-img:url('${HERO_IMG}')`}>
+<section class="hero" style={`--hero-avif:url('${HERO_AVIF}');--hero-webp:url('${HERO_WEBP}')`}>
   <div class="container">
     <div class="hero-content">
       <h1><span class="em">Artiste et guérisseur</span> de sa vie, au service de la création.</h1>
@@ -40,14 +42,30 @@ const HERO_IMG = asset('hero-accueil.webp');
     display: flex;
     align-items: center;
     padding: 160px 0 100px;
-    background: linear-gradient(
+    /* fallback universel (navigateurs sans image-set) */
+    background:
+      linear-gradient(
         105deg,
         rgba(30, 40, 42, 0.7) 0%,
         rgba(30, 40, 42, 0.45) 35%,
         rgba(30, 40, 42, 0.12) 60%,
         rgba(30, 40, 42, 0.3) 100%
       ),
-      var(--hero-img) center top / cover;
+      var(--hero-webp) center top / cover;
+    /* AVIF (≈93 Ko) avec fallback WebP pour les navigateurs compatibles image-set */
+    background:
+      linear-gradient(
+        105deg,
+        rgba(30, 40, 42, 0.7) 0%,
+        rgba(30, 40, 42, 0.45) 35%,
+        rgba(30, 40, 42, 0.12) 60%,
+        rgba(30, 40, 42, 0.3) 100%
+      ),
+      image-set(
+          var(--hero-avif) type('image/avif'),
+          var(--hero-webp) type('image/webp')
+        )
+        center top / cover;
     color: var(--white);
   }
   .hero .container {
