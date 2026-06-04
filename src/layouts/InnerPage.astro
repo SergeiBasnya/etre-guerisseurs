@@ -31,6 +31,8 @@ interface Props {
   bandImage?: string;
   /** Image de partage social (OG/Twitter). Par défaut : le bandImage s'il existe. */
   image?: string;
+  /** Type Open Graph (transmis à Base ; « article » pour le blog). */
+  ogType?: string;
 }
 
 const {
@@ -42,12 +44,13 @@ const {
   hideClosing = false,
   bandImage,
   image,
+  ogType,
   title = `${h1} — ${SITE.name}`,
 } = Astro.props;
 const hasImage = Boolean(bandImage);
 ---
 
-<Base title={title} description={description ?? lede} image={image ?? bandImage}>
+<Base title={title} description={description ?? lede} image={image ?? bandImage} ogType={ogType}>
   <TopBar />
   <Header solid={!hasImage} />
 

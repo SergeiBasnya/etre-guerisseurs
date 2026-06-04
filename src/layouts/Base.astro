@@ -7,15 +7,20 @@ interface Props {
   description?: string;
   /** Image de partage social (chemin public/ ou URL absolue). */
   image?: string;
+  /** Type Open Graph (website par défaut ; « article » pour le blog). */
+  ogType?: string;
 }
 
 const {
   title = `${SITE.name} — Cabinet de soin & d'accompagnement`,
   description = SITE.baseline,
   image = 'hero-accueil.jpg',
+  ogType = 'website',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+// Accueil : on précharge l'image hero (élément LCP) pour accélérer le rendu.
+const isHome = Astro.url.pathname === '/';
 /** Résout un chemin (public/ ou URL) en URL absolue pour les balises sociales. */
 const toAbs = (p: string): string =>
   new URL(p.startsWith('http') ? p : asset(p), Astro.site ?? SITE.url).href;
@@ -24,7 +29,7 @@ const ogImage = toAbs(image);
 // Schema.org — entreprise locale + praticien (émis sur tout le site).
 const businessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'HealthAndBeautyBusiness',
   '@id': `${SITE.url}/#business`,
   name: SITE.name,
   description: SITE.baseline,
@@ -38,6 +43,12 @@ const businessSchema = {
     postalCode: CONTACT.address.zip,
     addressLocality: CONTACT.address.city,
     addressCountry: 'FR',
+  },
+  // Coordonnées du cabinet de Mollans-sur-Ouvèze (signal local + Maps).
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 44.1862,
+    longitude: 5.1721,
   },
   areaServed: CONTACT.areaServed,
   founder: {
@@ -57,6 +68,18 @@ const businessSchema = {
     ? { sameAs: Object.values(SOCIALS).filter((u) => u !== '#') }
     : {}),
 };
+
+// Schema.org WebSite — ancre l'entité du site (Knowledge Graph, citations IA).
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.baseline,
+  inLanguage: 'fr-FR',
+  publisher: { '@id': `${SITE.url}/#business` },
+};
 ---
 
 <!doctype html>
@@ -75,8 +98,16 @@ const businessSchema = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    {/* Perf : précharger l'image LCP de l'accueil + les 2 polices principales
+        (latin, poids courant) pour réduire le LCP et le FOUT. */}
+    {isHome && (
+      <link rel="preload" as="image" href={asset('hero-accueil.jpg')} fetchpriority="high" />
+    )}
+    <link rel="preload" as="font" type="font/woff2" href={asset('fonts/f5.woff2')} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={asset('fonts/f10.woff2')} crossorigin />
+
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -90,8 +121,9 @@ const businessSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Données structurées : entreprise locale + praticien -->
+    <!-- Données structurées : entreprise locale + site -->
     <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
 
     <!-- Polices auto-hébergées (conformité RGPD : aucun appel à Google ; + perf) -->

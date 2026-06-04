@@ -29,6 +29,11 @@ const year = 2026;
         ))
       }
     </div>
+    <p class="foot-disclaimer">
+      Les soins et accompagnements proposés sont des pratiques de mieux-être
+      complémentaires. Ils ne constituent pas des actes médicaux et ne se
+      substituent pas à une consultation, un traitement ou un suivi médical.
+    </p>
     <div class="foot-bottom">
       <span>© {year} {SITE.name} — {SITE.intervenant}</span>
       <span>Tous droits réservés</span>
@@ -95,9 +100,17 @@ const year = 2026;
   .foot-col a:hover {
     color: var(--bg);
   }
-  .foot-bottom {
+  .foot-disclaimer {
     border-top: 1px solid rgba(250, 246, 240, 0.14);
-    padding-top: 28px;
+    padding-top: 24px;
+    margin-bottom: 22px;
+    font-size: 0.76rem;
+    line-height: 1.6;
+    max-width: 720px;
+    opacity: 0.55;
+  }
+  .foot-bottom {
+    padding-top: 0;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

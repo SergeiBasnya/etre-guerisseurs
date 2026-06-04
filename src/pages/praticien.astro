@@ -4,7 +4,7 @@ import SplitFeature from '../components/sections/SplitFeature.astro';
 import Timeline from '../components/sections/Timeline.astro';
 import IconList from '../components/sections/IconList.astro';
 import CtaBanner from '../components/sections/CtaBanner.astro';
-import { ROUTES, SITE, asset } from '../consts';
+import { ROUTES, SITE, SOCIALS, asset } from '../consts';
 
 const parcours = [
   {
@@ -53,6 +53,35 @@ const formations = [
   { icon: 'hand', title: 'Magnétisme', text: 'École des Guérisseurs (George Bergoz).' },
   { icon: 'moon', title: 'Cercles de Pardon', text: 'Formé par Olivier Clerc.' },
 ];
+
+// Schema.org Person — ancre l'autorité du praticien (E-E-A-T, Knowledge Graph).
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/praticien/#person`,
+  name: SITE.intervenant,
+  jobTitle: 'Enseignant toltèque, accompagnant et magnétiseur',
+  description:
+    'Enseignant, coach et magnétiseur, formé à la voie toltèque par Don Miguel et Don José Ruiz.',
+  url: new URL(ROUTES.praticien, SITE.url).href,
+  image: new URL(asset('pierre-alexandre.jpg'), SITE.url).href,
+  worksFor: { '@id': `${SITE.url}/#business` },
+  knowsAbout: [
+    'Voie toltèque',
+    'Accords toltèques',
+    'Magnétisme',
+    'Soins énergétiques',
+    'Coaching',
+    'Cercles de Pardon',
+    'PNL',
+  ],
+  hasCredential: [
+    'Coach certifié — métier de coach & accompagnement professionnel',
+    'Praticien PNL (Formation Évolution & Synergie)',
+    'Magnétisme — École des Guérisseurs (George Bergoz)',
+  ].map((name) => ({ '@type': 'EducationalOccupationalCredential', name })),
+  sameAs: Object.values(SOCIALS).filter((u) => u !== '#'),
+};
 ---
 
 <InnerPage
@@ -102,4 +131,6 @@ const formations = [
     altHref={ROUTES.agenda}
     variant="warm"
   />
+
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 </InnerPage>

@@ -7,6 +7,7 @@ interface AgendaEvent {
   id: string;
   slug?: string;
   day: string;
+  endDay?: string;
   month: string;
   year?: string;
   title: string;
@@ -52,10 +53,11 @@ const MOIS: Record<string, number> = {
   juil: 7, août: 8, aout: 8, sep: 9, sept: 9, oct: 10, nov: 11, déc: 12, dec: 12,
 };
 const moisNum = MOIS[(ev.month ?? '').toLowerCase()];
-const startDate =
-  ev.year && moisNum && ev.day
-    ? `${ev.year}-${String(moisNum).padStart(2, '0')}-${String(ev.day).padStart(2, '0')}`
-    : null;
+const isoDate = (d: string) =>
+  `${ev.year}-${String(moisNum).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+const startDate = ev.year && moisNum && ev.day ? isoDate(ev.day) : null;
+// endDate : jour de fin si stage multi-jours, sinon = startDate (même mois/année).
+const endDate = startDate ? isoDate(ev.endDay ?? ev.day) : null;
 const priceNum = (ev.price ?? '').match(/(\d+)/)?.[1];
 const eventImage = ev.image ? new URL(ev.image, Astro.site ?? SITE.url).href : undefined;
 const eventSchema = startDate
@@ -64,6 +66,7 @@ const eventSchema = startDate
       '@type': 'Event',
       name: ev.title,
       startDate,
+      ...(endDate ? { endDate } : {}),
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       eventStatus: 'https://schema.org/EventScheduled',
       ...(eventImage ? { image: [eventImage] } : {}),
@@ -71,7 +74,15 @@ const eventSchema = startDate
       location: {
         '@type': 'Place',
         name: place || 'Lieu à préciser',
-        address: ev.address ?? place,
+        ...(ev.address
+          ? {
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: ev.address,
+                addressCountry: 'FR',
+              },
+            }
+          : {}),
       },
       organizer: { '@type': 'Organization', name: SITE.name, url: SITE.url },
       performer: { '@type': 'Person', name: SITE.intervenant },

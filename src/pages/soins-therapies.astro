@@ -7,20 +7,20 @@ import FaqAccordion from '../components/sections/FaqAccordion.astro';
 import CtaBanner from '../components/sections/CtaBanner.astro';
 import { ROUTES } from '../consts';
 
-// Bienfaits déclarés par le magnétisme (texte client).
-// TODO-LEGAL : formulations « soigner les pathologies… » conservées telles
-// quelles à la demande du client. Risque d'allégation de santé (DGCCRF /
-// exercice illégal de la médecine). À faire valider juridiquement avant mise
-// en ligne. Cf. disclaimer dans la FAQ ci-dessous.
+// Domaines d'accompagnement du magnétisme (mieux-être, hors champ médical).
+// Formulations volontairement prudentes (« confort », « inconforts »,
+// « accompagner ») pour rester dans le registre du bien-être et éviter toute
+// allégation thérapeutique (cadre DGCCRF / exercice de la médecine). Un
+// disclaimer visible suit la liste, et la FAQ rappelle le rôle complémentaire.
 const bienfaits = [
-  'Débloquer et rééquilibrer le bassin, soulager l’arthrose de la hanche.',
-  'Pathologies du pied (entorses, maladie de Morton, épines, orteils en marteau).',
-  'Dos : lombalgies, sciatiques, lumbago, douleurs dorso-lombaires, névrites…',
-  'Bras, épaule, coude, poignet, colonne vertébrale.',
-  'Tête : céphalées de tension, migraines, névralgie d’Arnold…',
-  'Problèmes de peau dont les verrues.',
-  'Arthrose, tendinites, claquages, élongations, foulures, rhumatismes…',
-  'Contre-coups, cicatrices.',
+  'Confort du bassin et de la hanche.',
+  'Inconforts du pied (suites d’entorses, gênes plantaires…).',
+  'Dos : tensions lombaires, sciatalgies, inconforts dorso-lombaires…',
+  'Tensions du bras, de l’épaule, du coude, du poignet, de la colonne.',
+  'Tête : tensions, maux de tête, gênes cervico-crâniennes…',
+  'Inconforts de la peau.',
+  'Confort articulaire et musculaire (tensions, suites de foulures, raideurs…).',
+  'Suites de chocs, confort des cicatrices.',
 ];
 
 const bioelectrique = [
@@ -64,7 +64,7 @@ const tarifs = [
 <InnerPage
   eyebrow="Soins & thérapies"
   h1="Soins & thérapies par imposition des mains"
-  lede="Magnétisme et soins énergétiques pour soulager le corps, apaiser le système nerveux et relancer la circulation de l'énergie — en cabinet ou à distance."
+  lede="Magnétisme et soins énergétiques pour soutenir le corps, apaiser le système nerveux et relancer la circulation de l'énergie — en cabinet ou à distance."
   description="Magnétisme humain et soins énergétiques par imposition des mains avec Pierre-Alexandre Morales. En présence en Drôme et à Avignon, ou à distance."
   crumbs={[{ label: 'Soins & thérapies', href: ROUTES.soins }]}
   hideClosing
@@ -108,24 +108,30 @@ const tarifs = [
       bg="cream"
     />
 
-    <!-- TODO-LEGAL : section « ce qu'il permet » — allégations de santé à valider -->
     <section class="benefits bg-warm">
       <div class="container">
         <p class="eyebrow">Dans la tradition des guérisseurs</p>
-        <h2 class="section-title">Ce que le magnétisme <span class="em">permet</span></h2>
+        <h2 class="section-title">Ce que le magnétisme <span class="em">peut accompagner</span></h2>
         <p class="lede">
           Connu depuis la nuit des temps et s’inscrivant dans une tradition de
           magnétiseurs, rebouteux et guérisseurs de nos villes et campagnes, il
-          aide notamment à&nbsp;:
+          peut accompagner le mieux-être, notamment au niveau du&nbsp;:
         </p>
         <ul class="benefits-list">
           {bienfaits.map((b) => <li>{b}</li>)}
         </ul>
         <p class="benefits-foot">
-          Le magnétisme décongestionne les blessures, facilite la cicatrisation,
-          fluidifie la circulation de l’énergie et apaise le système nerveux. Les
-          soins se font le plus souvent par imposition des mains&nbsp;: il n’est
-          pas toujours nécessaire de toucher.
+          Le magnétisme vise à apaiser les tensions, soutenir le processus naturel
+          de récupération, fluidifier la circulation de l’énergie et apaiser le
+          système nerveux. Les soins se font le plus souvent par imposition des
+          mains&nbsp;: il n’est pas toujours nécessaire de toucher.
+        </p>
+        <p class="med-disclaimer">
+          <strong>Important —</strong> le magnétisme et les soins énergétiques sont
+          des pratiques de mieux-être complémentaires. Ils ne constituent pas des
+          actes médicaux, n’établissent aucun diagnostic et ne se substituent ni à
+          une consultation, ni à un traitement, ni à un suivi médical. En cas de
+          problème de santé, consultez un professionnel de santé.
         </p>
       </div>
     </section>
@@ -197,6 +203,20 @@ const tarifs = [
     max-width: 760px;
     color: var(--ink-soft);
     font-style: italic;
+  }
+  .med-disclaimer {
+    max-width: 760px;
+    margin-top: 28px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--sage);
+    background: var(--white);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .med-disclaimer strong {
+    color: var(--ink);
   }
   @media (max-width: 760px) {
     .benefits-list {

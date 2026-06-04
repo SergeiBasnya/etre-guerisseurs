@@ -1,0 +1,9 @@
+# En-têtes HTTP appliqués par Netlify à toutes les pages.
+# Durcissement de base (clickjacking, MIME sniffing, fuite de référent).
+# HSTS est déjà fourni nativement par Netlify. CSP volontairement omise pour
+# l'instant (risque de casser les scripts inline d'Astro sans nonce).
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
