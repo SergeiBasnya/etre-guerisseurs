@@ -149,7 +149,7 @@ import { ROUTES, CONTACT } from '../consts';
     position: absolute;
     left: -9999px;
   }
-  .consent {
+  .contact-form .consent {
     flex-direction: row;
     align-items: flex-start;
     gap: 10px;
@@ -158,11 +158,15 @@ import { ROUTES, CONTACT } from '../consts';
     color: var(--ink-soft);
     line-height: 1.5;
   }
-  .consent input {
-    margin-top: 3px;
+  /* Reset du style « champ texte » hérité de .contact-form input sur la case. */
+  .contact-form .consent input {
+    width: auto;
+    padding: 0;
+    margin-top: 2px;
+    border: 0;
     flex-shrink: 0;
   }
-  .consent a {
+  .contact-form .consent a {
     color: var(--terra);
   }
   .form-ok {
