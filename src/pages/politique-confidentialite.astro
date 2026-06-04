@@ -1,15 +1,153 @@
 ---
 import InnerPage from '../layouts/InnerPage.astro';
-import Placeholder from '../components/Placeholder.astro';
-import { ROUTES } from '../consts';
+import { ROUTES, CONTACT, SITE } from '../consts';
+
+// Dernière mise à jour de la politique (à actualiser à chaque modification).
+const maj = '4 juin 2026';
 ---
 
 <InnerPage
   eyebrow="Informations légales"
   h1="Politique de confidentialité"
-  lede="Traitement des données personnelles et utilisation des cookies (RGPD)."
+  lede="Comment vos données personnelles sont traitées sur ce site, conformément au RGPD et à la loi Informatique et Libertés."
   crumbs={[{ label: 'Politique de confidentialité', href: ROUTES.confidentialite }]}
   hideClosing
 >
-  <Placeholder note="Politique RGPD : données collectées (formulaire de contact, agenda), finalités, durée, droits, cookies. Indispensable avant la vente en ligne Stripe (phase 2)." />
+  <section class="legal">
+    <div class="container">
+      <p class="maj">Dernière mise à jour : {maj}</p>
+
+      <h2>1. Responsable du traitement</h2>
+      <p>
+        Le responsable du traitement des données collectées sur ce site est
+        l'éditeur du site, {SITE.intervenant}. Ses coordonnées complètes figurent
+        dans les <a href={ROUTES.mentions}>mentions légales</a>. Pour toute
+        question relative à vos données, vous pouvez le contacter à l'adresse
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+      </p>
+
+      <h2>2. Données collectées et finalités</h2>
+      <p>Ce site collecte des données personnelles uniquement lorsque vous les transmettez volontairement&nbsp;:</p>
+      <ul>
+        <li>
+          <strong>Formulaire de contact</strong> : nom, adresse e-mail, numéro de
+          téléphone (facultatif) et contenu de votre message. Ces données servent
+          exclusivement à traiter votre demande et à vous répondre.
+        </li>
+      </ul>
+      <p>
+        Le site ne réalise aucun profilage et n'utilise pas vos données à des fins
+        de prospection commerciale sans votre accord. L'agenda affiché est
+        alimenté par des sources publiques (page d'événements) et ne collecte
+        aucune donnée vous concernant.
+      </p>
+
+      <h2>3. Base légale</h2>
+      <p>
+        Le traitement des données du formulaire de contact repose sur votre
+        <strong>consentement</strong> (case à cocher) et sur l'intérêt légitime de
+        l'éditeur à répondre aux sollicitations qui lui sont adressées.
+      </p>
+
+      <h2>4. Destinataires des données</h2>
+      <p>
+        Vos données sont destinées au seul éditeur du site et ne sont ni vendues,
+        ni louées, ni cédées à des tiers à des fins commerciales. Elles peuvent
+        être traitées par notre prestataire technique d'hébergement, qui agit en
+        qualité de sous-traitant&nbsp;:
+      </p>
+      <ul>
+        <li>
+          <strong>Netlify, Inc.</strong> — hébergement du site et collecte des
+          messages du formulaire (service Netlify Forms). Netlify est susceptible
+          de transférer des données en dehors de l'Union européenne&nbsp;; ces
+          transferts sont encadrés par les clauses contractuelles types de la
+          Commission européenne.
+        </li>
+      </ul>
+
+      <h2>5. Durée de conservation</h2>
+      <p>
+        Les messages reçus via le formulaire de contact sont conservés pendant la
+        durée nécessaire au traitement de votre demande, puis archivés pour une
+        durée maximale de <strong>trois ans</strong> à compter de notre dernier
+        contact, avant suppression.
+      </p>
+
+      <h2>6. Cookies et mesure d'audience</h2>
+      <p>
+        Ce site <strong>n'utilise aucun cookie publicitaire ni outil de mesure
+        d'audience tiers</strong> (pas de Google Analytics, pas de pixel de réseau
+        social). Les polices de caractères sont hébergées directement sur le site
+        (aucun appel à Google Fonts). Aucun consentement aux cookies n'est donc
+        requis pour naviguer. Seuls des cookies strictement techniques, nécessaires
+        au bon fonctionnement de l'hébergement, peuvent être déposés.
+      </p>
+
+      <h2>7. Vos droits</h2>
+      <p>
+        Conformément au RGPD et à la loi Informatique et Libertés, vous disposez
+        des droits suivants sur vos données&nbsp;: droit d'accès, de rectification,
+        d'effacement, d'opposition, de limitation du traitement et de portabilité.
+        Vous pouvez exercer ces droits à tout moment en écrivant à
+        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+      </p>
+      <p>
+        Si vous estimez, après nous avoir contactés, que vos droits ne sont pas
+        respectés, vous pouvez adresser une réclamation à la
+        <strong>CNIL</strong> (Commission Nationale de l'Informatique et des
+        Libertés) — <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a>.
+      </p>
+    </div>
+  </section>
 </InnerPage>
+
+<style>
+  .legal {
+    padding: 64px 0 90px;
+  }
+  .legal .container {
+    max-width: 760px;
+  }
+  .legal .maj {
+    font-size: 0.85rem;
+    color: var(--sage);
+    margin-bottom: 36px;
+  }
+  .legal h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin: 40px 0 14px;
+  }
+  .legal h2:first-of-type {
+    margin-top: 0;
+  }
+  .legal p {
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .legal ul {
+    margin: 0 0 16px;
+    padding-left: 22px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .legal li {
+    margin-bottom: 10px;
+  }
+  .legal strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .legal a {
+    color: var(--terra);
+  }
+  @media (max-width: 900px) {
+    .legal {
+      padding: 48px 0 64px;
+    }
+  }
+</style>

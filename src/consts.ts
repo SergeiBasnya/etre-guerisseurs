@@ -79,6 +79,8 @@ export const ROUTES = {
   praticien: `${B}/praticien/`,
   agenda: `${B}/agenda/`,
   blog: `${B}/blog/`,
+  // Page masquée pour la mise en ligne (pas de page ni de lien footer tant
+  // qu'on n'a pas de vrais témoignages). Route conservée pour réactivation.
   temoignages: `${B}/temoignages/`,
   contact: `${B}/contact/`,
 
@@ -189,7 +191,8 @@ export const FOOTER_LINKS = [
   {
     title: 'Infos',
     links: [
-      { label: 'Témoignages', href: ROUTES.temoignages },
+      // Témoignages : page masquée jusqu'à réception de vrais témoignages
+      // (page supprimée + 301 vers l'accueil dans public/_redirects).
       { label: 'Blog', href: ROUTES.blog },
       { label: 'Contact', href: ROUTES.contact },
       { label: 'Mentions légales', href: ROUTES.mentions },

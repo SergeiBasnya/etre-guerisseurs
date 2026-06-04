@@ -1,15 +1,139 @@
 ---
 import InnerPage from '../layouts/InnerPage.astro';
-import Placeholder from '../components/Placeholder.astro';
-import { ROUTES } from '../consts';
+import { ROUTES, CONTACT, SITE } from '../consts';
+
+/*
+ * MENTIONS LÉGALES.
+ * Infos fournies par le client (depuis l'ancien site) : SIRET, APE, siège social.
+ * E-mail confirmé : contact@ (cf. CONTACT.email).
+ *
+ * Points à VÉRIFIER après le go-live (n'empêchent pas la mise en ligne, page
+ * propre côté public — ne PAS afficher de mention non confirmée) :
+ *   - Siège social : toujours 39 rue Salomon Reinach (Nîmes) ? Le cabinet a
+ *     déménagé à Mollans-sur-Ouvèze. Vérifier au registre (INSEE/INPI) ; ajuster
+ *     `EDITEUR.siege` si transféré.
+ *   - Statut juridique exact (« Entrepreneur individuel » retenu ; micro ?).
+ *   - Régime de TVA : si franchise en base (art. 293 B CGI), aucune mention TVA
+ *     requise ici. Si assujetti, ajouter le n° de TVA intracommunautaire.
+ *   - Médiateur de la consommation : à mentionner (nom + coordonnées) si l'éditeur
+ *     y est tenu / en a désigné un (art. L.612-1 Code de la consommation).
+ */
+const EDITEUR = {
+  nom: 'Pierre-Alexandre Morales',
+  statut: 'Entrepreneur individuel', // à confirmer (micro-entreprise ?)
+  siret: '752 320 184 00019',
+  ape: '8559A — Formation continue d’adultes',
+  siege: '39, rue Salomon Reinach, 30000 Nîmes, France',
+};
+const maj = '4 juin 2026';
 ---
 
 <InnerPage
   eyebrow="Informations légales"
   h1="Mentions légales"
-  lede="Éditeur du site, hébergeur et informations légales."
+  lede="Éditeur du site, hébergeur et informations légales obligatoires."
   crumbs={[{ label: 'Mentions légales', href: ROUTES.mentions }]}
   hideClosing
 >
-  <Placeholder note="Mentions légales : éditeur (raison sociale, SIRET, statut), directeur de publication, hébergeur, contact. À compléter avec les infos du client." />
+  <section class="legal">
+    <div class="container">
+      <p class="maj">Dernière mise à jour : {maj}</p>
+
+      <h2>Éditeur du site</h2>
+      <p>
+        Le présent site <strong>{SITE.url.replace('https://', '')}</strong> est
+        édité par&nbsp;:
+      </p>
+      <ul>
+        <li><strong>{EDITEUR.nom}</strong></li>
+        <li>Statut : {EDITEUR.statut}</li>
+        <li>Siège social : {EDITEUR.siege}</li>
+        <li>SIRET : {EDITEUR.siret}</li>
+        <li>Code APE : {EDITEUR.ape}</li>
+        <li>Téléphone : <a href={CONTACT.phoneHref}>{CONTACT.phone}</a></li>
+        <li>E-mail : <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+      </ul>
+      <p>
+        Lieu d'exercice (cabinet) : {CONTACT.address.street},
+        {CONTACT.address.zip} {CONTACT.address.city}.
+      </p>
+
+      <h2>Directeur de la publication</h2>
+      <p>{EDITEUR.nom}.</p>
+
+      <h2>Hébergeur</h2>
+      <p>
+        Le site est hébergé par <strong>Netlify, Inc.</strong><br />
+        512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis.<br />
+        Site web : <a href="https://www.netlify.com" target="_blank" rel="noopener">www.netlify.com</a>
+      </p>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus présents sur ce site (textes, photographies,
+        illustrations, logo, charte graphique) est protégé par le droit de la
+        propriété intellectuelle et demeure la propriété exclusive de l'éditeur ou
+        de leurs auteurs respectifs. Toute reproduction, représentation,
+        modification ou diffusion, totale ou partielle, sans autorisation
+        préalable écrite, est interdite.
+      </p>
+
+      <h2>Données personnelles</h2>
+      <p>
+        Le traitement des données personnelles collectées via ce site est décrit
+        dans notre <a href={ROUTES.confidentialite}>politique de confidentialité</a>.
+      </p>
+    </div>
+  </section>
 </InnerPage>
+
+<style>
+  .legal {
+    padding: 64px 0 90px;
+  }
+  .legal .container {
+    max-width: 760px;
+  }
+  .legal .maj {
+    font-size: 0.85rem;
+    color: var(--sage);
+    margin-bottom: 36px;
+  }
+  .legal h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin: 40px 0 14px;
+  }
+  .legal h2:first-of-type {
+    margin-top: 0;
+  }
+  .legal p {
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .legal ul {
+    margin: 0 0 16px;
+    padding-left: 22px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    list-style: none;
+  }
+  .legal li {
+    margin-bottom: 10px;
+  }
+  .legal strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .legal a {
+    color: var(--terra);
+  }
+  @media (max-width: 900px) {
+    .legal {
+      padding: 48px 0 64px;
+    }
+  }
+</style>

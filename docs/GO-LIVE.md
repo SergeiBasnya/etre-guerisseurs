@@ -10,7 +10,13 @@ Plan de bascule de l'ancien WordPress (`etreguerisseurs.com`) vers le nouveau si
 
 ## 1. Pré-bascule (sur l'URL Netlify temporaire)
 - [ ] Vérifier le site complet sur `https://website-client-etreguerisseurs.netlify.app` (nav, formulaire contact, agenda, blog, mobile).
-- [ ] **Contenu** : remplacer les derniers placeholders — 4 affiches agenda manquantes, vrais témoignages (pas de fake), valider Mentions légales / Politique de confidentialité (RGPD : polices déjà auto-hébergées ✓).
+- [x] **Formulaire de contact** branché sur **Netlify Forms** (champ caché `form-name`, honeypot anti-spam, case de consentement RGPD, redirection vers `/contact/?envoye=1` + message de confirmation).
+  - [ ] ⚠️ Dans Netlify : **Site settings → Forms → Form notifications** → ajouter une **notification e-mail** vers l'adresse du client (sinon les messages ne sont vus que dans le dashboard).
+  - [ ] Après le 1er déploiement, vérifier que le formulaire `contact` apparaît bien dans **Netlify → Forms**, puis faire un **envoi de test**.
+- [x] **Témoignages** : page masquée pour la mise en ligne (retirée du footer + sitemap, 301 vers l'accueil) — à réactiver quand de vrais témoignages seront fournis.
+- [x] **Politique de confidentialité** : rédigée (RGPD ; aucun traceur tiers, polices auto-hébergées ✓).
+- [x] **Mentions légales** : page rédigée et propre (éditeur, SIRET `752 320 184 00019`, APE 8559A, siège Nîmes, hébergeur Netlify, e-mail `contact@`). À vérifier après le go-live (n'empêche pas la mise en ligne) : siège social toujours à Nîmes (le cabinet a déménagé à Mollans) ? statut exact (micro ?) ? médiateur conso à mentionner si requis. Détails en commentaire dans `src/pages/mentions-legales.astro`.
+- [ ] **Contenu** restant : 4 affiches agenda (placeholders Unsplash), relecture des allégations de santé sur `soins-therapies` (déontologie).
 - [ ] **Variables d'env Netlify** (Site settings → Environment) :
   - `FB_ICAL_URL` (si la synchro agenda Facebook est prête — sinon agenda manuel).
   - `NETLIFY_BUILD_HOOK` (pour le rebuild quotidien de l'agenda).

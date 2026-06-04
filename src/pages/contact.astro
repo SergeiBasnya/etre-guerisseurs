@@ -39,18 +39,50 @@ import { ROUTES, CONTACT } from '../consts';
         </ul>
       </div>
 
-      <form class="contact-form" method="post" action="#">
-        <!-- TODO : connecter à un service d'envoi (Formspree / Resend / endpoint serverless). -->
+      {/* Netlify Forms : la détection se fait sur le HTML statique généré au
+          build (name + data-netlify + champ caché form-name + honeypot). Les
+          messages arrivent dans Netlify → Forms, avec notification email. */}
+      <form
+        class="contact-form"
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        action={`${ROUTES.contact}?envoye=1`}
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hp" hidden>
+          <label>Ne pas remplir : <input name="bot-field" /></label>
+        </p>
+        <p class="form-ok" role="status" hidden>
+          Merci, votre message a bien été envoyé. Je vous réponds au plus vite.
+        </p>
         <label>Nom <input type="text" name="name" required /></label>
         <label>Email <input type="email" name="email" required /></label>
         <label>Téléphone <input type="tel" name="phone" /></label>
         <label>Message <textarea name="message" rows="5" required></textarea></label>
+        <label class="consent">
+          <input type="checkbox" name="consent" required />
+          <span>
+            J'accepte que mes informations soient utilisées pour répondre à ma
+            demande, conformément à la <a href={ROUTES.confidentialite}>politique
+            de confidentialité</a>.
+          </span>
+        </label>
         <button type="submit" class="btn">Envoyer</button>
-        <p class="form-note">Formulaire à connecter (envoi d'email) — voir README.</p>
       </form>
     </div>
   </section>
 </InnerPage>
+
+<script>
+  // Netlify redirige vers ?envoye=1 après soumission réussie : on révèle la
+  // confirmation et on nettoie l'URL.
+  if (new URLSearchParams(location.search).has('envoye')) {
+    document.querySelector('.form-ok')?.removeAttribute('hidden');
+    history.replaceState(null, '', location.pathname);
+  }
+</script>
 
 <style>
   .contact-grid {
@@ -112,9 +144,34 @@ import { ROUTES, CONTACT } from '../consts';
     cursor: pointer;
     margin-top: 4px;
   }
-  .form-note {
-    font-size: 0.8rem;
-    color: var(--sage);
+  /* Champ anti-spam (honeypot) — masqué aux humains. */
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+  .consent {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .consent input {
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .consent a {
+    color: var(--terra);
+  }
+  .form-ok {
+    background: var(--bg-warm);
+    border: 1px solid var(--sage);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    color: var(--ink);
   }
   @media (max-width: 900px) {
     .contact-grid {

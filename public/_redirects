@@ -28,3 +28,6 @@
 # --- Anciens événements (plugin The Events Calendar) ---
 /events/*   /agenda/   301
 /event/*    /agenda/   301
+
+# --- Page Témoignages masquée pour la mise en ligne (réactiver plus tard) ---
+/temoignages/   /   301
