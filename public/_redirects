@@ -26,6 +26,12 @@
 /nouvelles-tolteques-de-mai/            /blog/                           301
 
 # --- Anciens événements (plugin The Events Calendar) ---
+# Les anciennes fiches événements vivaient sous /agenda/<slug-long>/ : on mappe
+# nominativement celles indexées (slugs ≠ des nouvelles fiches) vers leur
+# équivalent actuel. Pas de wildcard /agenda/* (casserait les vraies pages).
+/agenda/retraite-spirituelle-au-costa-rica-pratiquer-la-philosophie-tolteque-entre-mer-jungle-et-ocean/  /agenda/retraite-costa-rica-2026/  301
+/agenda/apprendre-et-maitriser-les-accords-tolteques-en-2026-un-a-un-au-rythme-des-saisons-4/            /agenda/cours-accords-saisons-2026/  301
+# Bases d'URL événements par défaut du plugin (au cas où d'anciens liens existent)
 /events/*   /agenda/   301
 /event/*    /agenda/   301
 
