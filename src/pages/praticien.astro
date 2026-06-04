@@ -3,8 +3,26 @@ import InnerPage from '../layouts/InnerPage.astro';
 import SplitFeature from '../components/sections/SplitFeature.astro';
 import Timeline from '../components/sections/Timeline.astro';
 import IconList from '../components/sections/IconList.astro';
+import VideoEmbed from '../components/sections/VideoEmbed.astro';
 import CtaBanner from '../components/sections/CtaBanner.astro';
 import { ROUTES, SITE, SOCIALS, asset } from '../consts';
+
+// Interview média « Plan Zen » — signal d'autorité / preuve de presse (E-E-A-T).
+const VIDEO = {
+  id: 'l-v0UI-3h5c',
+  title: 'Plan Zen avec Pierre-Alexandre Morales — Guérir par les enseignements toltèques',
+};
+const videoSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: VIDEO.title,
+  description:
+    'Interview de Pierre-Alexandre Morales dans l’émission « Plan Zen » : guérir et s’accomplir par la voie et les enseignements toltèques.',
+  thumbnailUrl: new URL(asset('video-plan-zen.webp'), SITE.url).href,
+  embedUrl: `https://www.youtube-nocookie.com/embed/${VIDEO.id}`,
+  contentUrl: `https://www.youtube.com/watch?v=${VIDEO.id}`,
+  publisher: { '@id': `${SITE.url}/#business` },
+};
 
 const parcours = [
   {
@@ -121,6 +139,22 @@ const personSchema = {
     bg="cream"
   />
 
+  <section class="media bg-warm">
+    <div class="container">
+      <p class="eyebrow">Dans les médias</p>
+      <h2 class="section-title">
+        En vidéo&nbsp;: <span class="em">guérir par les enseignements toltèques</span>
+      </h2>
+      <p class="lede">
+        Interview dans l’émission « Plan Zen » — la voie toltèque, le soin et
+        l’accompagnement, expliqués simplement.
+      </p>
+      <div class="media-video">
+        <VideoEmbed id={VIDEO.id} title={VIDEO.title} poster={asset('video-plan-zen.webp')} />
+      </div>
+    </div>
+  </section>
+
   <CtaBanner
     eyebrow="Faire connaissance"
     title="« C'est en vous aimant que vous changerez <span class='em'>le monde.</span> »"
@@ -133,4 +167,26 @@ const personSchema = {
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(videoSchema)} />
 </InnerPage>
+
+<style>
+  .media {
+    padding: 90px 0;
+  }
+  .media.bg-warm {
+    background: var(--bg-warm);
+  }
+  .media .lede {
+    max-width: 640px;
+    margin-bottom: 36px;
+  }
+  .media-video {
+    max-width: 820px;
+  }
+  @media (max-width: 900px) {
+    .media {
+      padding: 64px 0;
+    }
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+/**
+ * Embed YouTube « façade » (clic-pour-charger), respectueux de la vie privée et
+ * de la performance : on n'affiche qu'une miniature auto-hébergée ; l'iframe
+ * YouTube (domaine youtube-nocookie.com) n'est chargée qu'au clic de
+ * l'utilisateur. Aucun script ni cookie tiers avant action = RGPD propre, et
+ * zéro impact sur le LCP de la page.
+ */
+interface Props {
+  /** ID de la vidéo YouTube. */
+  id: string;
+  /** Titre accessible (aria-label + alt de la miniature). */
+  title: string;
+  /** Chemin de la miniature auto-hébergée (public/). */
+  poster: string;
+}
+const { id, title, poster } = Astro.props;
+---
+
+<div class="video-embed" data-ytid={id} data-title={title}>
+  <button class="ve-btn" type="button" aria-label={`Lire la vidéo : ${title}`}>
+    <img src={poster} alt={title} width="1280" height="720" loading="lazy" decoding="async" />
+    <span class="ve-play" aria-hidden="true">
+      <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" fill="#f00"/><path d="M27 34l18-10-18-10z" fill="#fff"/></svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.video-embed').forEach((el) => {
+    el.querySelector('.ve-btn')?.addEventListener('click', () => {
+      const id = el.dataset.ytid;
+      const title = el.dataset.title ?? 'Vidéo';
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = title;
+      iframe.loading = 'lazy';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      el.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .video-embed {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--ink);
+    box-shadow: 0 14px 40px rgba(46, 38, 32, 0.16);
+  }
+  .ve-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+    background: none;
+  }
+  .ve-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+  }
+  .ve-btn:hover img {
+    transform: scale(1.03);
+    opacity: 0.92;
+  }
+  .ve-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.4));
+    transition: transform 0.25s ease;
+  }
+  .ve-btn:hover .ve-play {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  .video-embed :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
