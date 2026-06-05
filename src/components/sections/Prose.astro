@@ -17,12 +17,25 @@ interface Props {
   /** Sommaire d'ancres optionnel (colonne latérale sticky). */
   toc?: TocItem[];
   bg?: 'cream' | 'white';
+  /** En-tête de section optionnel (suréclat + titre), au-dessus du corps. */
+  eyebrow?: string;
+  /** Titre de section (HTML autorisé, ex. <span class="em">). */
+  title?: string;
 }
-const { toc, bg = 'cream' } = Astro.props;
+const { toc, bg = 'cream', eyebrow, title } = Astro.props;
 const hasToc = Array.isArray(toc) && toc.length > 0;
+const hasHead = Boolean(eyebrow || title);
 ---
 
 <section class={`pz bg-${bg}`}>
+  {
+    hasHead && (
+      <div class="container pz-head">
+        {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+        {title && <h2 class="section-title reveal" set:html={title} />}
+      </div>
+    )
+  }
   <div class={`container pz-wrap ${hasToc ? 'with-toc' : ''}`}>
     {
       hasToc && (
@@ -114,6 +127,13 @@ const hasToc = Array.isArray(toc) && toc.length > 0;
   .pz-toc a:hover {
     color: var(--terra);
     border-color: var(--terra);
+  }
+
+  /* en-tête de section optionnel (aligné sur la colonne de texte centrée) */
+  .pz-head {
+    max-width: 68ch;
+    margin-inline: auto;
+    margin-bottom: 36px;
   }
 
   /* corps d'article */
