@@ -3,6 +3,25 @@
   "updatedAt": null,
   "events": [
     {
+      "id": "cours-accords-saisons-avignon-2026",
+      "day": "06",
+      "month": "Juin",
+      "year": "2026",
+      "title": "Apprendre et maîtriser les Accords Toltèques, un à un — à Avignon",
+      "description": "Programme annuel au rythme des saisons, en présence, au contact des quatre éléments — une séance par mois, à Avignon.",
+      "imageAlt": "Apprendre et maîtriser les Accords Toltèques en 2026, à Avignon",
+      "location": "270 Chemin du Saule, 84140 Avignon",
+      "address": "270 Chemin du Saule, 84140 Avignon",
+      "price": "Dès 70 €",
+      "free": false,
+      "url": "#contact",
+      "paragraphs": [
+        "Un cycle d'enseignement annuel, au rythme des saisons, pour apprendre et maîtriser les Accords Toltèques un à un. En présence, au contact des quatre éléments, dans un bel endroit au calme — une séance par mois, à Avignon.",
+        "Enseignements théoriques et pratiques, exercices et tâches pédagogiques, respirations et gestuelles conscientes (yoga toltèque), petits rituels avec l'esprit de la nature et accompagnement individuel. Accessible à tous, dynamique, vivant et orienté solution.",
+        "À l'issue du cycle, vous aurez la maîtrise des Accords dans votre quotidien : meilleure qualité de vie, efficacité relationnelle et santé globale."
+      ]
+    },
+    {
       "id": "stage-medecine-coeur-2026",
       "day": "19",
       "endDay": "21",
@@ -18,7 +37,6 @@
       "price": "350€",
       "free": false,
       "url": "#contact",
-      "fbUrl": "https://fb.me/e/4nOjjdmMY",
       "paragraphs": [
         "Dans les montagnes de la Drôme provençale, avec l'esprit de la nature. Cette session de trois jours sur la Médecine Toltèque du Cœur permet de parcourir la voie toltèque des trois maîtrises, pour vivre une vie meilleure avec soi et avec les autres, au plus près de votre rêve de paradis personnel.",
         "En ces temps incertains de changement et de chaos organisé, il importe plus que jamais de répondre aux aspirations de son âme, en alignement avec son être véritable, pour concrétiser son rêve de paradis personnel et collectif : en guérissant son cœur, en guérissant par le cœur. L'amour est la médecine qui accélère la guérison selon Don Miguel Ruiz — et la médecine du cœur la plus puissante de toutes."
@@ -40,13 +58,12 @@
       "day": "27",
       "month": "Juin",
       "year": "2026",
-      "title": "Apprendre et maîtriser les Accords Toltèques, un à un",
+      "title": "Apprendre et maîtriser les Accords Toltèques, un à un — à Nyons",
       "description": "Programme annuel au rythme des saisons, en présence, au contact des quatre éléments — un samedi matin par mois, à Nyons.",
       "image": "/agenda/apprendre-maitriser-accords.jpg",
       "imageAlt": "Affiche — Apprendre et maîtriser les Accords Toltèques en 2026, à Nyons",
-      "location": "7 Avenue de Verdun, 26110 Nyons · sam. 27 juin (9h–13h)",
+      "location": "7 Avenue de Verdun, 26110 Nyons",
       "address": "7 Avenue de Verdun, 26110 Nyons",
-      "dateRange": "Samedi 27 juin 2026, de 9h à 13h",
       "price": "Dès 70 €",
       "free": false,
       "url": "#contact",

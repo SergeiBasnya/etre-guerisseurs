@@ -45,7 +45,7 @@
       "price": "350€",
       "free": false,
       "url": "#contact",
-      "fbUrl": "https://fb.me/e/4nOjjdmMY",
+      "fbId": "26707936215484891",
       "paragraphs": [
         "Dans les montagnes de la Drôme provençale, avec l'esprit de la nature. Cette session de trois jours sur la Médecine Toltèque du Cœur permet de parcourir la voie toltèque des trois maîtrises, pour vivre une vie meilleure avec soi et avec les autres, au plus près de votre rêve de paradis personnel.",
         "En ces temps incertains de changement et de chaos organisé, il importe plus que jamais de répondre aux aspirations de son âme, en alignement avec son être véritable, pour concrétiser son rêve de paradis personnel et collectif : en guérissant son cœur, en guérissant par le cœur. L'amour est la médecine qui accélère la guérison selon Don Miguel Ruiz — et la médecine du cœur la plus puissante de toutes."
@@ -67,18 +67,41 @@
       "day": "27",
       "month": "Juin",
       "year": "2026",
-      "title": "Apprendre et maîtriser les Accords Toltèques, un à un",
+      "fbId": "1359823885135154",
+      "autoDate": true,
+      "timeLabel": "de 9h à 13h",
+      "title": "Apprendre et maîtriser les Accords Toltèques, un à un — à Nyons",
       "description": "Programme annuel au rythme des saisons, en présence, au contact des quatre éléments — un samedi matin par mois, à Nyons.",
       "image": "/agenda/apprendre-maitriser-accords.jpg",
       "imageAlt": "Affiche — Apprendre et maîtriser les Accords Toltèques en 2026, à Nyons",
-      "location": "7 Avenue de Verdun, 26110 Nyons · sam. 27 juin (9h–13h)",
+      "location": "7 Avenue de Verdun, 26110 Nyons",
       "address": "7 Avenue de Verdun, 26110 Nyons",
-      "dateRange": "Samedi 27 juin 2026, de 9h à 13h",
       "price": "Dès 70 €",
       "free": false,
       "url": "#contact",
       "paragraphs": [
         "Un cycle d'enseignement annuel, au rythme des saisons, pour apprendre et maîtriser les Accords Toltèques un à un. En présence, au contact des quatre éléments, dans un bel endroit de campagne au calme et au vert — un samedi matin par mois.",
+        "Enseignements théoriques et pratiques, exercices et tâches pédagogiques, respirations et gestuelles conscientes (yoga toltèque), petits rituels avec l'esprit de la nature et accompagnement individuel. Accessible à tous, dynamique, vivant et orienté solution.",
+        "À l'issue du cycle, vous aurez la maîtrise des Accords dans votre quotidien : meilleure qualité de vie, efficacité relationnelle et santé globale."
+      ]
+    },
+    {
+      "id": "cours-accords-saisons-avignon-2026",
+      "day": "06",
+      "month": "Juin",
+      "year": "2026",
+      "fbId": "25511684138452975",
+      "autoDate": true,
+      "title": "Apprendre et maîtriser les Accords Toltèques, un à un — à Avignon",
+      "description": "Programme annuel au rythme des saisons, en présence, au contact des quatre éléments — une séance par mois, à Avignon.",
+      "imageAlt": "Apprendre et maîtriser les Accords Toltèques en 2026, à Avignon",
+      "location": "270 Chemin du Saule, 84140 Avignon",
+      "address": "270 Chemin du Saule, 84140 Avignon",
+      "price": "Dès 70 €",
+      "free": false,
+      "url": "#contact",
+      "paragraphs": [
+        "Un cycle d'enseignement annuel, au rythme des saisons, pour apprendre et maîtriser les Accords Toltèques un à un. En présence, au contact des quatre éléments, dans un bel endroit au calme — une séance par mois, à Avignon.",
         "Enseignements théoriques et pratiques, exercices et tâches pédagogiques, respirations et gestuelles conscientes (yoga toltèque), petits rituels avec l'esprit de la nature et accompagnement individuel. Accessible à tous, dynamique, vivant et orienté solution.",
         "À l'issue du cycle, vous aurez la maîtrise des Accords dans votre quotidien : meilleure qualité de vie, efficacité relationnelle et santé globale."
       ]
@@ -98,6 +121,7 @@
       "price": "35 €",
       "free": false,
       "url": "#contact",
+      "fbId": "1377004790859546",
       "paragraphs": [
         "« Marcher les Accords Toltèques » et marcher sa parole : intégrer chaque accord par la respiration, le mouvement et l'intention. Une marche accompagnée qui combine temps d'enseignement, marche, haltes d'exercices, pauses méditatives et gestuelles conscientes.",
         "Au fil du parcours, chacun est invité à vivre les accords dans son quotidien — au contact de la nature, en fin de journée d'été."
@@ -118,7 +142,8 @@
       "dateRange": "Du 21 (9h) au 23 août (16h15) 2026",
       "price": "350 €",
       "free": false,
-      "url": "#contact"
+      "url": "#contact",
+      "fbId": "988232323877749"
     },
     {
       "id": "stage-accepter-lacher-prise-2026",
@@ -150,6 +175,7 @@
       "price": "Sur inscription",
       "free": false,
       "url": "#contact",
+      "fbId": "1521998256608170",
       "paragraphs": [
         "Une soirée autour du Toltecayotl : l'esprit, l'art de vivre et la sagesse légués par les Toltèques — les « Grands Artisans » du Mexique ancien — et leur résonance pour l'humanité d'aujourd'hui.",
         "Un temps de transmission et d'échange, accessible à tous, pour découvrir la voie toltèque et ses clés concrètes de transformation."
@@ -183,7 +209,8 @@
       "location": "Costa Rica · 7–18 nov",
       "price": "Sur inscription",
       "free": false,
-      "url": "#contact"
+      "url": "#contact",
+      "fbId": "782060514977542"
     },
     {
       "id": "stage-accords-attachements-2026",

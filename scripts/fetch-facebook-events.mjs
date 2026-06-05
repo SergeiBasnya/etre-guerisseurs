@@ -65,9 +65,18 @@ function dedupKey(ev) {
 function mapVevent(ve) {
   const date = ve.dtstart ? parseIcalDate(ve.dtstart) : null;
   const endDate = ve.dtend ? parseIcalDate(ve.dtend) : null;
-  const fbId = ve.uid && /^\d+$/.test(ve.uid.split('@')[0]) ? ve.uid.split('@')[0] : null;
-  const url =
-    ve.url || (fbId ? `https://www.facebook.com/events/${fbId}` : '#contact');
+  // Identifiant de l'événement « parent » : pris dans l'URL (stable, partagé par
+  // TOUTES les occurrences d'une série récurrente). L'UID iCal, lui, est propre à
+  // chaque occurrence (e<event_time_id>@facebook.com) → inutilisable pour replier
+  // une série ou l'apparier avec le manuel.
+  const fbId =
+    fbIdFromUrl(ve.url) ||
+    (ve.uid && /^\d+$/.test(ve.uid.replace(/^e/i, '').split('@')[0])
+      ? ve.uid.replace(/^e/i, '').split('@')[0]
+      : null);
+  // URL d'inscription « propre » (sans ?event_time_id), identique pour toutes les
+  // occurrences → c'est le bon lien à injecter dans la fiche curée.
+  const url = fbId ? `https://www.facebook.com/events/${fbId}` : ve.url || '#contact';
 
   // Description : on garde un extrait court (les descriptions FB sont longues).
   const desc = ve.description
@@ -200,9 +209,68 @@ function eventEndKey(ev) {
   return eventDateKey(ev);
 }
 
+const FR_MONTHS_FULL = [
+  'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+  'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+];
+const FR_WEEKDAYS = [
+  'dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi',
+];
+
+/**
+ * Replie une série récurrente (même id FB parent éclaté en N occurrences) en UNE
+ * seule entrée = la prochaine occurrence à venir (ou, à défaut, la plus proche).
+ * Les événements à occurrence unique passent inchangés.
+ */
+function collapseByParent(list, today) {
+  const groups = new Map();
+  list.forEach((ev, i) => {
+    const key = ev._fbId || `__solo_${i}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(ev);
+  });
+  const reps = [];
+  for (const occ of groups.values()) {
+    if (occ.length === 1) {
+      reps.push(occ[0]);
+      continue;
+    }
+    occ.sort(
+      (a, b) =>
+        (eventDateKey(a) ?? Number.MAX_SAFE_INTEGER) -
+        (eventDateKey(b) ?? Number.MAX_SAFE_INTEGER),
+    );
+    const next = occ.find((e) => (eventEndKey(e) ?? Number.MAX_SAFE_INTEGER) >= today);
+    reps.push(next || occ[0]);
+  }
+  return reps;
+}
+
+/**
+ * Reporte la date d'une occurrence Facebook sur une fiche manuelle `autoDate`
+ * (cours récurrent affiché « prochaine date seulement »). Met à jour le badge
+ * (day/month/year), la clé de tri interne et un libellé `dateRange` lisible.
+ */
+function applyAutoDate(manual, fbRep) {
+  const d = fbRep._date;
+  if (!d) return;
+  manual._date = d;
+  manual.day = String(d.d).padStart(2, '0');
+  manual.month = MONTHS_FR[d.m - 1];
+  manual.year = String(d.y);
+  const wd = FR_WEEKDAYS[new Date(Date.UTC(d.y, d.m - 1, d.d, 12)).getUTCDay()];
+  let range = `${wd[0].toUpperCase()}${wd.slice(1)} ${d.d} ${FR_MONTHS_FULL[d.m - 1]} ${d.y}`;
+  if (manual.timeLabel) range += `, ${manual.timeLabel}`;
+  manual.dateRange = range;
+}
+
 async function main() {
   const manual = await loadManual();
-  const facebook = await fetchFacebookEvents();
+  const today = todayKey();
+  const facebookAll = await fetchFacebookEvents();
+  const facebook = collapseByParent(facebookAll, today);
+  const collapsed = facebookAll.length - facebook.length;
+  if (collapsed > 0) info(`${collapsed} occurrence(s) récurrente(s) repliée(s) (séries → prochaine date).`);
 
   // Fusion par champ : le manuel porte l'affichage curé (titre, prix, lieu),
   // mais on injecte l'URL Facebook d'inscription quand l'événement y existe.
@@ -214,11 +282,18 @@ async function main() {
     const key = dedupKey(ev);
     if (byKey.has(key)) continue;
     byKey.set(key, ev);
-    // Index par identifiant Facebook explicite : champ `fbId` (numérique) ou
-    // `fbUrl` de la forme facebook.com/events/<id>. Appariement fiable, à
-    // privilégier sur le titre+date (qui casse si le titre curé diffère du SUMMARY FB).
-    const fid = ev.fbId ? String(ev.fbId) : fbIdFromUrl(ev.fbUrl);
-    if (fid) byFbId.set(fid, ev);
+    // Index par identifiant Facebook explicite : champ `fbId` (numérique, ou
+    // tableau si la fiche couvre plusieurs séries) ou `fbUrl` facebook.com/events/<id>.
+    // Appariement fiable, à privilégier sur le titre+date (qui casse si le titre
+    // curé diffère du SUMMARY FB).
+    const fids = Array.isArray(ev.fbId)
+      ? ev.fbId.map(String)
+      : ev.fbId
+        ? [String(ev.fbId)]
+        : fbIdFromUrl(ev.fbUrl)
+          ? [fbIdFromUrl(ev.fbUrl)]
+          : [];
+    for (const f of fids) byFbId.set(f, ev);
     merged.push(ev);
   }
   for (const ev of facebook) {
@@ -230,6 +305,8 @@ async function main() {
       if (ev.url && ev.url.includes('facebook.com') && (!existing.url || existing.url === '#contact')) {
         existing.url = ev.url;
       }
+      // Fiche curée « prochaine date » : elle adopte la date de l'occurrence FB.
+      if (existing.autoDate) applyAutoDate(existing, ev);
       continue;
     }
     byKey.set(dedupKey(ev), ev);
@@ -240,7 +317,6 @@ async function main() {
   // Filtre des événements passés (manuel + FB) : on ne garde que ceux dont la
   // date est aujourd'hui ou à venir. Les événements sans date déterminable sont
   // conservés (à corriger à la main). Tri chronologique ensuite.
-  const today = todayKey();
   const upcoming = merged.filter((ev) => {
     const key = eventEndKey(ev); // date de FIN : un événement en cours reste affiché
     return key === null || key >= today;
@@ -248,15 +324,35 @@ async function main() {
   const dropped = merged.length - upcoming.length;
   if (dropped > 0) info(`${dropped} événement(s) passé(s) retiré(s).`);
 
+  // Règle d'affichage (demande client) : on ne montre QUE les événements
+  // confirmés sur Facebook (lien d'inscription FB injecté). Les fiches manuelles
+  // sans pendant FB restent dans events-manual.json — éditables — mais sont
+  // masquées en attendant d'être créées sur Facebook ; elles réapparaîtront
+  // seules une fois leur `fbId` renseigné. Garde-fous : on n'applique ce filtre
+  // QUE si le flux a réellement été lu (sinon fallback manuel → jamais d'agenda
+  // vide) ; `"showWithoutFb": true` force l'affichage d'une fiche donnée.
+  let visible = upcoming;
+  if (facebook.length > 0) {
+    visible = upcoming.filter(
+      (ev) => (ev.url || '').includes('facebook.com') || ev.showWithoutFb === true,
+    );
+    const hidden = upcoming.length - visible.length;
+    if (hidden > 0) {
+      info(`${hidden} événement(s) sans pendant Facebook masqué(s) (en attente de création sur FB).`);
+    }
+  }
+
   // Tri chronologique par date de début.
-  upcoming.sort((a, b) => {
+  visible.sort((a, b) => {
     const ka = eventDateKey(a) ?? Number.MAX_SAFE_INTEGER;
     const kb = eventDateKey(b) ?? Number.MAX_SAFE_INTEGER;
     return ka - kb;
   });
 
   // Nettoyage des champs internes avant écriture.
-  const events = upcoming.map(({ _date, _endDate, _fbId, ...rest }) => rest);
+  const events = visible.map(
+    ({ _date, _endDate, _fbId, autoDate, timeLabel, fbId, showWithoutFb, ...rest }) => rest,
+  );
 
   const source =
     facebook.length > 0 ? (manual.length > 0 ? 'merged' : 'facebook') : 'manual';
