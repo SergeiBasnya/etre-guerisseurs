@@ -167,6 +167,11 @@ export const FOOTER_LINKS = [
       { label: 'Stages', href: ANCHORS.stages },
       { label: 'Formations', href: ANCHORS.formations },
       { label: 'Retraites spirituelles', href: ANCHORS.retraites },
+      {
+        label: 'Télécharger le programme (PDF)',
+        href: asset('documents/programme-etre-guerisseurs.pdf'),
+        external: true,
+      },
     ],
   },
   {
