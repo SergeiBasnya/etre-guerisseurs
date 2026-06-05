@@ -52,6 +52,7 @@ export const SAISONS: Saison[] = [
         id: 'renaitre',
         title: 'RENAÎTRE',
         subtitle: 'Être et bien-être impeccablement impeccable',
+        isNew: true,
         paragraphs: [
           "Se remettre au point zéro pour naître et renaître, prendre un nouveau départ et vivre un Renouveau pour l'année nouvelle par la tenségrité — une autre façon de vivre l'impeccabilité, thème central et élevé de ce nouveau stage pratique de printemps, abordé et revisité sous toutes ses facettes : spirituelle, émotionnelle, mentale, physique et psychique.",
           'Enseignement théorique et pratique, avec rituels, gestuelles conscientes et passes magnétiques.',
@@ -72,6 +73,7 @@ export const SAISONS: Saison[] = [
         id: 'aimer',
         title: 'AIMER',
         subtitle: "Choisir l'amour, libérer et adoucir le cœur",
+        isNew: true,
         paragraphs: [
           "Un stage d'été telle une porte ouverte montante vers le solstice de juin, le jour le plus long, pour émettre une intention claire et ferme de libération du cœur de sa prison de négativité — pour l'été, pour l'année, pour la bonne santé émotionnelle de votre âme, au travers des enseignements toltèques de l'amour.",
           "Dans un lieu de paradis des montagnes provençales (Hautes Baronnies et Haut Ventoux), vous apprendrez, au cours de ces trois jours, à conclure de nouveaux accords fondés sur l'amour et non sur la peur, après avoir effectué l'inventaire de vos conditionnements toxiques.",
@@ -148,6 +150,7 @@ export const SAISONS: Saison[] = [
         id: 'accepter-lacher-prise',
         title: 'ACCEPTER ET LÂCHER-PRISE',
         subtitle: 'La quête de la vérité selon les Toltèques',
+        isNew: true,
         paragraphs: [
           "Ce premier stage d'automne propose de parcourir maîtrises et accords de l'enseignement toltèque selon Don Miguel Ruiz et ses fils, Don José et Don Miguel Jr., en prenant le temps de s'arrêter sur chacun des accords — qui agissent comme des révélateurs de l'âme — et de faire le point, tel un bilan de l'été, dans la transition de l'automne, entre lumière et ombre.",
           "Nous œuvrerons avec l'énergie de l'équinoxe d'automne et ses changements significatifs vers l'hiver, saison de la terre et de la mort sur un plan symbolique. Que souhaitez-vous laisser partir dans votre vie en automne ? De quoi souhaitez-vous vous alléger ?",
@@ -243,6 +246,7 @@ export const SAISONS: Saison[] = [
         id: 'mourir',
         title: 'MOURIR',
         subtitle: "Embrasser l'ange de la mort",
+        isNew: true,
         paragraphs: [
           "Ce stage sur la médecine de l'hiver propose de parcourir maîtrises et accords de l'enseignement toltèque selon Don Miguel Ruiz et ses fils, Don José et Don Miguel Jr., en prenant le temps de s'arrêter sur chacun des accords, qui agissent comme des révélateurs de l'âme.",
           "Nous œuvrerons durant ces trois jours avec l'énergie de l'hiver, en ordre et alignés avec ses intentions, pour bien préparer le nouveau foyer, le nouveau feu intérieur — afin que l'hiver soit aussi une réjouissance de cette flamme qui éclaire et brille quand vient la nuit, la ténèbre hivernale, le long sommeil et la nuit noire de la saison froide : mort symbolique de ce qui n'est plus, pour renaître au printemps.",
