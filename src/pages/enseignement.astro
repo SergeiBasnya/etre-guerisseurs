@@ -59,10 +59,50 @@ import { ROUTES } from '../consts';
     </section>
   </div>
 
+  <!-- ============ ATELIERS ============ -->
+  <div id="ateliers">
+    <SplitFeature
+      eyebrow="2 · Ateliers"
+      title="Atelier de transformation relationnelle, <span class='em'>avec le Jeu des Accords Toltèques</span>"
+      paragraphs={[
+        "<em>« Jouer, c’est déjà gagner. »</em> — Don Miguel Ruiz. La voie du Jeu des Accords Toltèques, au rythme des saisons : un jeu efficace, orienté solution, pour des relations impeccables.",
+        "Ingénieux et astucieux, pratique et convivial, fonctionnel et efficace, le Jeu Toltèque permet de transformer une problématique relationnelle de votre vie quotidienne. Comment ? Au moyen d’un Accord Toltèque, au sein d’une communauté de joueurs, le temps d’une ou plusieurs parties.",
+        "Les résultats sont étonnants face à une problématique relationnelle bloquée : un moyen ludique, efficace et convivial de pratiquer la voie toltèque en un temps donné, tout en s’amusant.",
+      ]}
+      image="/enseignement/jeu-tolteque.webp"
+      imageAlt="Pierre-Alexandre Morales présentant Le Jeu des Accords Toltèques et ses cartes"
+      bg="cream"
+    />
+    <section class="band bg-cream">
+      <div class="container">
+        <div class="atelier-gallery reveal">
+          <figure>
+            <img src="/enseignement/atelier-groupe.webp" alt="Atelier du Jeu des Accords Toltèques en cours, autour de la table" loading="lazy" />
+          </figure>
+          <figure>
+            <img src="/enseignement/atelier-cartes.webp" alt="Le coffret du Jeu des Accords Toltèques et une carte du cinquième accord" loading="lazy" />
+          </figure>
+          <figure>
+            <img src="/enseignement/atelier-terrasse.webp" alt="Une partie du Jeu des Accords Toltèques en terrasse" loading="lazy" />
+          </figure>
+        </div>
+        <InfoBox
+          rows={[
+            { label: 'Lieux', value: 'Nyons (26) & Avignon (84) · autre lieu : nous consulter' },
+            { label: 'Durée', value: '3 heures' },
+            { label: 'Tarif', value: '55 €' },
+          ]}
+          ctaLabel="S’inscrire à un atelier"
+          ctaHref={ROUTES.contact}
+        />
+      </div>
+    </section>
+  </div>
+
   <!-- ============ STAGES ============ -->
   <div id="stages">
     <SeasonStages
-      eyebrow="2 · Stages"
+      eyebrow="3 · Stages"
       title="Stages pratiques de formation, <span class='em'>thématiques et saisonniers</span>"
       lede="Dans la nature, en résidentiel. Maîtrises, accords et clés d’enseignement toltèques, abordés saison après saison — au fil du cycle annuel."
       bg="cream"
@@ -72,7 +112,7 @@ import { ROUTES } from '../consts';
   <!-- ============ FORMATIONS ============ -->
   <div id="formations">
     <SplitFeature
-      eyebrow="3 · Formations"
+      eyebrow="4 · Formations"
       title="Deux cycles pour <span class='em'>maîtriser les accords</span>"
       paragraphs={[
         "<strong>La Voie de la Liberté Personnelle en dix leçons</strong> — maîtriser les Quatre Accords Toltèques. Une année (janvier→décembre ou mars→février), soit 60 heures sur dix journées de 6h. Pour particuliers et professionnels du bien-être, de la santé et de l’accompagnement. <em>Tarif : 950 €.</em>",
@@ -126,7 +166,7 @@ import { ROUTES } from '../consts';
   <!-- ============ RETRAITES ============ -->
   <div id="retraites">
     <SplitFeature
-      eyebrow="4 · Retraites spirituelles"
+      eyebrow="5 · Retraites spirituelles"
       title="Cinq à sept jours pour <span class='em'>se recréer</span>"
       paragraphs={[
         "Des sessions intensives en immersion dans la nature pour aborder l’esprit et la pratique du chamanisme toltèque et des philosophies du monde. Concilier le feu et l’eau, l’action et le repos, la méditation et la création.",
@@ -190,5 +230,36 @@ import { ROUTES } from '../consts';
 <style>
   .band {
     padding: 0 0 90px;
+  }
+
+  .atelier-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .atelier-gallery figure {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .atelier-gallery img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .atelier-gallery figure:hover img {
+    transform: scale(1.04);
+  }
+  @media (max-width: 640px) {
+    .atelier-gallery {
+      grid-template-columns: 1fr 1fr;
+    }
+    .atelier-gallery figure:first-child {
+      grid-column: 1 / -1;
+    }
   }
 </style>

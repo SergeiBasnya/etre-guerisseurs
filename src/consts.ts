@@ -91,6 +91,7 @@ export const ROUTES = {
 /* Ancres des sous-sections (deep-linking + menus déroulants). */
 export const ANCHORS = {
   cours: `${ROUTES.enseignement}#cours`,
+  ateliers: `${ROUTES.enseignement}#ateliers`,
   stages: `${ROUTES.enseignement}#stages`,
   formations: `${ROUTES.enseignement}#formations`,
   retraites: `${ROUTES.enseignement}#retraites`,
@@ -125,6 +126,7 @@ export const NAV: NavItem[] = [
     href: ROUTES.enseignement,
     children: [
       { label: 'Cours', href: ANCHORS.cours },
+      { label: 'Ateliers', href: ANCHORS.ateliers },
       { label: 'Stages', href: ANCHORS.stages },
       { label: 'Formations', href: ANCHORS.formations },
       { label: 'Retraites spirituelles', href: ANCHORS.retraites },
@@ -164,6 +166,7 @@ export const FOOTER_LINKS = [
     title: 'Enseignement',
     links: [
       { label: 'Cours', href: ANCHORS.cours },
+      { label: 'Ateliers', href: ANCHORS.ateliers },
       { label: 'Stages', href: ANCHORS.stages },
       { label: 'Formations', href: ANCHORS.formations },
       { label: 'Retraites spirituelles', href: ANCHORS.retraites },
